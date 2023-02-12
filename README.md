@@ -37,7 +37,6 @@ An app to remind you for all your important dates.
 - show license
 - enable/disable notifcation
 - global remind date and time
-   #### 5.1. License 
-
-- show license of all oss
+    #### 5.1. License 
+    - show license of all oss
 
