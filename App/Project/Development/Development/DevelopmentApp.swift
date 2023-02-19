@@ -1,17 +1,11 @@
 //
-//  DevelopmentApp.swift
-//  Development
-//
 //  Created by クォン ジュンヒョク on 2023/02/19.
 //
 
 import SwiftUI
+import AppKit
 
 @main
-struct DevelopmentApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
+struct DevelopmentApp: AppKit.App {
+    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
 }
