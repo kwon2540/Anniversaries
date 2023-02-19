@@ -2,6 +2,7 @@
 //  Created by クォン ジュンヒョク on 2023/02/19.
 //
 
+import AppFeature
 import UIKit
 import ComposableArchitecture
 
@@ -26,10 +27,12 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
 
 struct AppDelegateReducer: ReducerProtocol {
     struct State: Equatable {
+        var rootState = Root.State()
     }
 
     enum Action {
         case didFinishLaunching
+        case rootAction(Root.Action)
     }
 
     var body: some ReducerProtocol<State, Action> {
