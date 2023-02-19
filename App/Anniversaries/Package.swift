@@ -8,6 +8,7 @@ let package = Package(
     platforms: [.iOS(.v16)],
     products: [
         .library(name: "AppKit", targets: ["AppKit"]),
+        .library(name: "AppFeature", targets: ["AppFeature"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.51.0"),
@@ -15,6 +16,13 @@ let package = Package(
     targets: [
         .target(
             name: "AppKit",
+            dependencies: [
+                "AppFeature",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "AppFeature",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]

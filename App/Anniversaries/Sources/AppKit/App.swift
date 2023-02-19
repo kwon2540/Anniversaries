@@ -2,6 +2,7 @@
 //  Created by クォン ジュンヒョク on 2023/02/19.
 //
 
+import AppFeature
 import SwiftUI
 
 public protocol App: SwiftUI.App {
@@ -11,7 +12,12 @@ public protocol App: SwiftUI.App {
 extension App {
     public var body: some Scene {
         WindowGroup {
-            Text("Hello world")
+            RootView(
+                store: appDelegate.store.scope(
+                    state: \.rootState,
+                    action: AppDelegateReducer.Action.rootAction
+                )
+            )
         }
     }
 }
