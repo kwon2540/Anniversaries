@@ -10,10 +10,14 @@ let package = Package(
         .library(name: "AppKit", targets: ["AppKit"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.51.0"),
     ],
     targets: [
-        .target(name: "AppKit", dependencies: []),
+        .target(
+            name: "AppKit",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
     ]
 )
