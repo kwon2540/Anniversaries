@@ -29,6 +29,7 @@ An app to remind you for all your important dates.
   - remind date & time
   - memo
   - Image ??? 
+  - edit mode also
 
 ### 5. Settings
 
