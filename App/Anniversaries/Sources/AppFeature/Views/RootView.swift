@@ -14,11 +14,11 @@ public struct RootView: View {
     private let store: StoreOf<Root>
 
     public var body: some View {
-        SwitchStore(store.scope(state: \.phase, action: Root.Action.phaseAction)) {
-            CaseLet(state: /Root.State.Phase.launch, action: Root.Action.PhaseAction.launchAction) { store in
+        SwitchStore(store) {
+            CaseLet(state: /Root.State.launch, action: Root.Action.launchAction) { store in
                 LaunchView(store: store)
             }
-            CaseLet(state: /Root.State.Phase.home, action: Root.Action.PhaseAction.homeAction) { store in
+            CaseLet(state: /Root.State.home, action: Root.Action.homeAction) { store in
                 HomeView(store: store)
             }
         }

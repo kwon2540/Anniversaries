@@ -6,25 +6,19 @@ import ComposableArchitecture
 import Foundation
 import Home
 
-// show empty main view after splash
-// localize
 public struct Root: ReducerProtocol {
-    public struct State: Equatable {
-        public enum Phase: Equatable {
-            case launch(Launch.State)
-            case home(Home.State)
-        }
-        public var phase: Phase =  .launch(.init())
+    public enum State: Equatable {
+        case launch(Launch.State)
+        case home(Home.State)
         
-        public init() {}
+        public init() {
+            self = .launch(.init())
+        }
     }
     
     public enum Action {
-        public enum PhaseAction: Equatable {
-            case launchAction(Launch.Action)
-            case homeAction(Home.Action)
-        }
-        case phaseAction(PhaseAction)
+        case launchAction(Launch.Action)
+        case homeAction(Home.Action)
     }
     
     public init() {}
@@ -32,24 +26,18 @@ public struct Root: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .phaseAction(.launchAction(.onComplete(let anniversaries))):
-                state.phase = .home(.init(anniversaries: anniversaries))
-            case .phaseAction(.launchAction):
-                break
-            case .phaseAction(.homeAction):
+            case .launchAction(.onComplete(let anniversaries)):
+                state = .home(.init(anniversaries: anniversaries))
+            case .launchAction, .homeAction:
                 break
             }
             return .none
         }
-
-        Scope(state: \.phase, action: /Action.phaseAction) {
-            Reduce { _, _ in return .none }
-            .ifCaseLet(/State.Phase.launch, action: /Action.PhaseAction.launchAction) {
-                Launch()
-            }
-            .ifCaseLet(/State.Phase.home, action: /Action.PhaseAction.homeAction) {
-                Home()
-            }
+        .ifCaseLet(/State.launch, action: /Action.launchAction) {
+            Launch()
+        }
+        .ifCaseLet(/State.home, action: /Action.homeAction) {
+            Home()
         }
     }
 }
