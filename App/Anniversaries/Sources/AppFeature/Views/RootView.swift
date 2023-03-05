@@ -3,17 +3,25 @@
 //
 
 import ComposableArchitecture
+import Home
 import SwiftUI
 
 public struct RootView: View {
-    private let store: StoreOf<Root>
-
     public init(store: StoreOf<Root>) {
         self.store = store
     }
+    
+    private let store: StoreOf<Root>
 
     public var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        SwitchStore(store.scope(state: \.phase, action: Root.Action.phaseAction)) {
+            CaseLet(state: /Root.State.Phase.launch, action: Root.Action.PhaseAction.launchAction) { store in
+                LaunchView(store: store)
+            }
+            CaseLet(state: /Root.State.Phase.home, action: Root.Action.PhaseAction.homeAction) { store in
+                HomeView(store: store)
+            }
+        }
     }
 }
 

@@ -40,8 +40,14 @@ struct AppDelegateReducer: ReducerProtocol {
             switch action {
             case .didFinishLaunching:
                 break
+            case .rootAction(_):
+                break
             }
             return .none
+        }
+
+        Scope(state: \.rootState, action: /Action.rootAction) {
+            Root()
         }
     }
 }
