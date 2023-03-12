@@ -2,6 +2,7 @@
 //  Created by Maharjan Binish on 2023/03/05.
 //
 
+import AppUI
 import ComposableArchitecture
 import SwiftUI
 
@@ -13,7 +14,7 @@ public struct HomeView: View {
     var store: StoreOf<Home>
     
     public var body: some View {
-        Text("Home")
+        Text(L10n.Home.title)
     }
 }
 
