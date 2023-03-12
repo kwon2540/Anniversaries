@@ -6,7 +6,6 @@ import ComposableArchitecture
 import Foundation
 import Home
 
-//TODO: Complete Localize
 public struct Root: ReducerProtocol {
     public enum State: Equatable {
         case launch(Launch.State)

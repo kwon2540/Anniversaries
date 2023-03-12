@@ -14,7 +14,7 @@ public struct HomeView: View {
     var store: StoreOf<Home>
     
     public var body: some View {
-        Text("Home")
+        Text(L10n.Home.title)
     }
 }
 

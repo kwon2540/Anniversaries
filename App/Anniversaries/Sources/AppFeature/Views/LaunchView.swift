@@ -2,6 +2,7 @@
 //  Created by Maharjan Binish on 2023/02/26.
 //
 
+import AppUI
 import ComposableArchitecture
 import SwiftUI
 
@@ -10,7 +11,7 @@ struct LaunchView: View {
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            Text("LaunchView")
+            Text(L10n.Splash.title)
                 .onAppear {
                     viewStore.send(.onAppear)
                 }
