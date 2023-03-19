@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AppUI", targets: ["AppUI"]),
         .library(name: "Home", targets: ["Home"]),
+        .library(name: "Theme", targets: ["Theme"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.51.0"),
@@ -45,6 +46,13 @@ let package = Package(
         ),
         .target(
             name: "Home",
+            dependencies: [
+                "AppUI",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "Theme",
             dependencies: [
                 "AppUI",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
