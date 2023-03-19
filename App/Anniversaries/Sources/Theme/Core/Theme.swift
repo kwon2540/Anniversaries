@@ -5,6 +5,7 @@
 import ComposableArchitecture
 import Foundation
 import SwiftUI
+import UserDefaultsClient
 
 public struct Theme: ReducerProtocol {
     public struct State: Equatable {
@@ -13,22 +14,32 @@ public struct Theme: ReducerProtocol {
     }
 
     public enum Action: Equatable {
+        case onLaunch
         case presetChanged(Preset)
     }
+
+    public init() {}
+    
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
+            case .onLaunch:
+                state.currentPreset = .init(rawValue: userDefaultsClient.currentTheme()) ?? .default
+
             case .presetChanged(let preset):
                 state.currentPreset = preset
-                return .none
+                userDefaultsClient.setCurrentTheme(preset.rawValue)
             }
+
+            return .none
         }
     }
 }
 
 extension Theme {
-    public enum Preset {
+    public enum Preset: Int {
         case `default`
 
         public var backgroundColor: Color {
