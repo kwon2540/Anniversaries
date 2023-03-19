@@ -13,12 +13,12 @@ struct LaunchView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             Text(L10n.Splash.title)
                 .onAppear {
-                    viewStore.send(.onAppear)
+                    viewStore.send(.view(.onAppear))
                 }
                 .alert(
                     store.scope(
                         state: \.alertState,
-                        action: Launch.Action.alertAction
+                        action: Launch.Action.alert
                     ),
                     dismiss: .onDismiss
                 )

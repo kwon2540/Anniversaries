@@ -26,8 +26,9 @@ public struct Root: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .launchAction(.onComplete(let anniversaries)):
+            case .launchAction(.delegate(.onComplete(let anniversaries))):
                 state = .home(.init(anniversaries: anniversaries))
+
             case .launchAction, .homeAction:
                 break
             }
