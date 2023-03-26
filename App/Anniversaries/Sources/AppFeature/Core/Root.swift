@@ -5,11 +5,13 @@
 import ComposableArchitecture
 import Foundation
 import Home
+import Theme
 
 public struct Root: ReducerProtocol {
     public struct State: Equatable {
         var launchState: Launch.State?
         var homeState: Home.State?
+        var themeState = Theme.State()
         
         public init() {
             self.launchState = .init(themeState: themeState)
@@ -22,12 +24,17 @@ public struct Root: ReducerProtocol {
     }
     
     public init() {}
-
+    
     public var body: some ReducerProtocol<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
             case .launchAction(.delegate(.onComplete(let anniversaries))):
                 state.homeState = .init(anniversaries: anniversaries, themeState: state.themeState)
+                state.launchState = nil
+            case .launchAction(.themeAction(.onLaunchFinished)):
+                if let themeState = state.launchState?.themeState {
+                    state.themeState = themeState
+                }
 
             case .launchAction, .homeAction:
                 break

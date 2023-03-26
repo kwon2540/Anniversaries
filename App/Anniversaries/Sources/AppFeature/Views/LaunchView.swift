@@ -30,7 +30,7 @@ struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
         LaunchView(
             store: Store(
-                initialState: .init(),
+                initialState: .init(themeState: .init()),
                 reducer: Launch()
             )
         )

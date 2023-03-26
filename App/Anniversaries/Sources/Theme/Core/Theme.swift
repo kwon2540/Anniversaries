@@ -16,6 +16,7 @@ public struct Theme: ReducerProtocol {
     public enum Action: Equatable {
         case onLaunch
         case presetChanged(Preset)
+        case onLaunchFinished
     }
 
     public init() {}
@@ -27,10 +28,14 @@ public struct Theme: ReducerProtocol {
             switch action {
             case .onLaunch:
                 state.currentPreset = .init(rawValue: userDefaultsClient.currentTheme()) ?? .default
+                return .init(value: .onLaunchFinished)
 
             case .presetChanged(let preset):
                 state.currentPreset = preset
                 userDefaultsClient.setCurrentTheme(preset.rawValue)
+
+            case .onLaunchFinished:
+                break
             }
 
             return .none

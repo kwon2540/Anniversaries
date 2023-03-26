@@ -4,9 +4,12 @@
 
 import ComposableArchitecture
 import Foundation
+import Theme
 
 public struct Launch: ReducerProtocol {
     public struct State: Equatable {
+        var themeState: Theme.State
+        var theme: Theme.Preset = .default
         var alertState: AlertState<Action.AlertAction>?
     }
 
@@ -33,6 +36,7 @@ public struct Launch: ReducerProtocol {
         case inner(InnerAction)
         case alert(AlertAction)
         case delegate(DelegateAction)
+        case themeAction(Theme.Action)
     }
 
     @Dependency(\.continuousClock) var clock // TODO: delete
@@ -41,7 +45,10 @@ public struct Launch: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .view(.onAppear):
-                return .init(value: .inner(.fetchAnniversaries))
+                return .concatenate(
+                    .init(value: .themeAction(.onLaunch)),
+                    .init(value: .inner(.fetchAnniversaries))
+                )
 
             case .inner(.fetchAnniversaries):
                 return .task {
@@ -66,11 +73,15 @@ public struct Launch: ReducerProtocol {
             case .alert(.onDismiss):
                 state.alertState = nil
                 
-            case .delegate:
+            case .delegate, .themeAction:
                 break
             }
 
             return .none
+        }
+
+        Scope(state: \.themeState, action: /Action.themeAction) {
+            Theme()
         }
     }
 }
