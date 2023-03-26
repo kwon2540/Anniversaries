@@ -22,7 +22,10 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(
             store: .init(
-                initialState: .init(anniversaries: "Anniversaries"),
+                initialState: .init(
+                    anniversaries: "Anniversaries",
+                    themeState: .init()
+                ),
                 reducer: Home()
             )
         )
