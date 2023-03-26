@@ -7,16 +7,16 @@ import Foundation
 import Home
 
 public struct Root: ReducerProtocol {
-    public enum State: Equatable {
-        case launch(Launch.State)
-        case home(Home.State)
+    public struct State: Equatable {
+        var launchState: Launch.State?
+        var homeState: Home.State?
         
         public init() {
-            self = .launch(.init())
+            self.launchState = .init(themeState: themeState)
         }
     }
     
-    public enum Action {
+    public enum Action: Equatable {
         case launchAction(Launch.Action)
         case homeAction(Home.Action)
     }
@@ -24,20 +24,20 @@ public struct Root: ReducerProtocol {
     public init() {}
 
     public var body: some ReducerProtocol<State, Action> {
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
             case .launchAction(.delegate(.onComplete(let anniversaries))):
-                state = .home(.init(anniversaries: anniversaries))
+                state.homeState = .init(anniversaries: anniversaries, themeState: state.themeState)
 
             case .launchAction, .homeAction:
                 break
             }
             return .none
         }
-        .ifCaseLet(/State.launch, action: /Action.launchAction) {
+        .ifLet(\.launchState, action: /Action.launchAction) {
             Launch()
         }
-        .ifCaseLet(/State.home, action: /Action.homeAction) {
+        .ifLet(\.homeState, action: /Action.homeAction) {
             Home()
         }
     }
