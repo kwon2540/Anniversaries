@@ -50,6 +50,7 @@ let package = Package(
             name: "Home",
             dependencies: [
                 "AppUI",
+                "Theme",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
