@@ -28,13 +28,14 @@ public struct Root: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .launchAction(.delegate(.onComplete(let anniversaries))):
-                state.homeState = .init(anniversaries: anniversaries, themeState: state.themeState)
-                state.launchState = nil
-            case .launchAction(.themeAction(.onLaunchFinished)):
+            case .launchAction(.themeAction(.onLoaded)):
                 if let themeState = state.launchState?.themeState {
                     state.themeState = themeState
                 }
+
+            case .launchAction(.delegate(.onComplete(let anniversaries))):
+                state.homeState = .init(anniversaries: anniversaries, themeState: state.themeState)
+                state.launchState = nil
 
             case .launchAction, .homeAction:
                 break

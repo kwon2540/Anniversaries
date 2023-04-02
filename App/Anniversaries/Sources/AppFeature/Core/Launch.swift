@@ -41,14 +41,11 @@ public struct Launch: ReducerProtocol {
     @Dependency(\.continuousClock) var clock // TODO: delete
 
     public var body: some ReducerProtocol<State, Action> {
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
             case .view(.onAppear):
-                return .concatenate(
-                    .init(value: .themeAction(.onLaunch)),
-                    .init(value: .inner(.fetchAnniversaries))
-                )
-
+                return .init(value: .themeAction(.onLaunch))
+                
             case .inner(.fetchAnniversaries):
                 return .task {
                     try await clock.sleep(for: .seconds(3)) // TODO: delete
@@ -71,6 +68,9 @@ public struct Launch: ReducerProtocol {
 
             case .alert(.onDismiss):
                 state.alertState = nil
+
+            case .themeAction(.onLoaded):
+                return .init(value: .inner(.fetchAnniversaries))
 
             case .delegate, .themeAction:
                 break
