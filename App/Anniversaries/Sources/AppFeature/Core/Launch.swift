@@ -9,7 +9,6 @@ import Theme
 public struct Launch: ReducerProtocol {
     public struct State: Equatable {
         var themeState: Theme.State
-        var theme: Theme.Preset = .default
         var alertState: AlertState<Action.AlertAction>?
     }
 
@@ -72,7 +71,7 @@ public struct Launch: ReducerProtocol {
 
             case .alert(.onDismiss):
                 state.alertState = nil
-                
+
             case .delegate, .themeAction:
                 break
             }

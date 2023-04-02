@@ -15,7 +15,6 @@ public struct Home: ReducerProtocol {
 
         var anniversaries: String
         var themeState: Theme.State
-        public var theme: Theme.Preset = .default
     }
 
     public enum Action: Equatable {
