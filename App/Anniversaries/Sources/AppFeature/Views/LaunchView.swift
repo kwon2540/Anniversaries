@@ -13,7 +13,7 @@ struct LaunchView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             Text(L10n.Splash.title)
                 .onAppear {
-                    viewStore.send(.view(.onAppear))
+                    viewStore.send(.onAppear)
                 }
                 .alert(
                     store.scope(
@@ -30,7 +30,7 @@ struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
         LaunchView(
             store: Store(
-                initialState: .init(),
+                initialState: .init(themeState: .init()),
                 reducer: Launch()
             )
         )

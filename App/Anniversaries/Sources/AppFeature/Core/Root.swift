@@ -5,39 +5,47 @@
 import ComposableArchitecture
 import Foundation
 import Home
+import Theme
 
 public struct Root: ReducerProtocol {
-    public enum State: Equatable {
-        case launch(Launch.State)
-        case home(Home.State)
+    public struct State: Equatable {
+        var launchState: Launch.State?
+        var homeState: Home.State?
+        var themeState = Theme.State()
         
         public init() {
-            self = .launch(.init())
+            self.launchState = .init(themeState: themeState)
         }
     }
     
-    public enum Action {
+    public enum Action: Equatable {
         case launchAction(Launch.Action)
         case homeAction(Home.Action)
     }
     
     public init() {}
-
+    
     public var body: some ReducerProtocol<State, Action> {
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
+            case .launchAction(.themeAction(.onLoaded)):
+                if let themeState = state.launchState?.themeState {
+                    state.themeState = themeState
+                }
+
             case .launchAction(.delegate(.onComplete(let anniversaries))):
-                state = .home(.init(anniversaries: anniversaries))
+                state.homeState = .init(anniversaries: anniversaries, themeState: state.themeState)
+                state.launchState = nil
 
             case .launchAction, .homeAction:
                 break
             }
             return .none
         }
-        .ifCaseLet(/State.launch, action: /Action.launchAction) {
+        .ifLet(\.launchState, action: /Action.launchAction) {
             Launch()
         }
-        .ifCaseLet(/State.home, action: /Action.homeAction) {
+        .ifLet(\.homeState, action: /Action.homeAction) {
             Home()
         }
     }

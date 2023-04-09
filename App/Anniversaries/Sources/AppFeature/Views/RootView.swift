@@ -14,14 +14,8 @@ public struct RootView: View {
     private let store: StoreOf<Root>
 
     public var body: some View {
-        SwitchStore(store) {
-            CaseLet(state: /Root.State.launch, action: Root.Action.launchAction) { store in
-                LaunchView(store: store)
-            }
-            CaseLet(state: /Root.State.home, action: Root.Action.homeAction) { store in
-                HomeView(store: store)
-            }
-        }
+        IfLetStore(store.scope(state: \.launchState, action: Root.Action.launchAction), then: LaunchView.init(store:))
+        IfLetStore(store.scope(state: \.homeState, action: Root.Action.homeAction), then: HomeView.init(store:))
     }
 }
 
