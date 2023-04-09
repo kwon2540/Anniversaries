@@ -9,25 +9,25 @@ import Theme
 public struct Launch: ReducerProtocol {
     public struct State: Equatable {
         var themeState: Theme.State
-        var alertState: AlertState<Action.AlertAction>?
+        var alertState: AlertState<Action.Alert>?
     }
 
     public enum Action: Equatable {
-            case onAppear
-            case fetchAnniversaries
-            case anniversariesResponse(TaskResult<String>)
+        case onAppear
+        case fetchAnniversaries
+        case anniversariesResponse(TaskResult<String>)
 
-        public enum AlertAction: Equatable {
+        public enum Alert: Equatable {
             case onReload
             case onDismiss
         }
 
-        public enum DelegateAction: Equatable {
+        public enum Delegate: Equatable {
             case onComplete(String) // TODO: pass anniversaries as loaded data
         }
 
-        case alert(AlertAction)
-        case delegate(DelegateAction)
+        case alert(Alert)
+        case delegate(Delegate)
         case themeAction(Theme.Action)
     }
 

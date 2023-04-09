@@ -20,10 +20,10 @@ public struct Home: ReducerProtocol {
     public enum Action: Equatable {
         case onAppear
 
-        public enum DelegateAction: Equatable {
+        public enum Delegate: Equatable {
         }
 
-        case delegate(DelegateAction)
+        case delegate(Delegate)
         case themeAction(Theme.Action)
     }
 
