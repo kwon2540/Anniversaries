@@ -18,18 +18,11 @@ public struct Home: ReducerProtocol {
     }
 
     public enum Action: Equatable {
-        public enum ViewAction: Equatable {
-            case onAppear
-        }
-
-        public enum InnerAction: Equatable {
-        }
+        case onAppear
 
         public enum DelegateAction: Equatable {
         }
 
-        case view(ViewAction)
-        case inner(InnerAction)
         case delegate(DelegateAction)
         case themeAction(Theme.Action)
     }
@@ -37,12 +30,18 @@ public struct Home: ReducerProtocol {
     public init() {}
 
     public var body: some ReducerProtocol<State, Action> {
-        Reduce { state, action in
-            return .none
-        }
-
         Scope(state: \.themeState, action: /Action.themeAction) {
             Theme()
+        }
+
+        Reduce<State, Action> { state, action in
+            switch action {
+            case .onAppear:
+                break
+            case .themeAction:
+                break
+            }
+            return .none
         }
     }
 }
