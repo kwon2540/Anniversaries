@@ -11,7 +11,13 @@ import UserDefaultsClient
 public struct Theme: ReducerProtocol {
     public struct State: Equatable {
         public init() {}
-        public var currentPreset: Preset = .default
+        var currentPreset: Preset?
+        public var foregroundColor: Color {
+            (currentPreset ?? .default).foregroundColor
+        }
+        public var backgroundColor: Color {
+            (currentPreset ?? .default).backgroundColor
+        }
     }
 
     public enum Action: Equatable {
