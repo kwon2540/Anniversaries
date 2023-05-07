@@ -9,19 +9,18 @@ import Theme
 
 public struct Root: Reducer {
     public struct State: Equatable {
-        @PresentationState var destination: Destination.State?
         var themeState = Theme.State()
-
+        var launchState: Launch.State?
+        var homeState: Home.State?
+        
         public init() {
-            self.destination = .launch(.init(themeState: themeState))
+            self.launchState = .init(themeState: themeState)
         }
     }
     
     public enum Action: Equatable {
         case launchAction(Launch.Action)
         case homeAction(Home.Action)
-
-        case destination(PresentationAction<Destination.Action>)
     }
     
     public init() {}
@@ -29,46 +28,25 @@ public struct Root: Reducer {
     public var body: some ReducerProtocol<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .destination(.presented(.launchAction(.themeAction(.onLoaded)))):
-                if let destination = state.destination, case let .launch(launchState) = destination {
-                    state.themeState = launchState.themeState
+            case .launchAction(.themeAction(.onLoaded)):
+                if let themeState = state.launchState?.themeState {
+                    state.themeState = themeState
                 }
 
-            case .destination(.presented(.launchAction(.delegate(.onComplete(let anniversaries))))):
-                state.destination = .home(.init(anniversaries: anniversaries, themeState: state.themeState))
+            case .launchAction(.delegate(.onComplete(let anniversaries))):
+                state.homeState = .init(anniversaries: anniversaries, themeState: state.themeState)
+                state.launchState = nil
 
-            case .launchAction, .homeAction, .destination:
+            case .launchAction, .homeAction:
                 break
             }
             return .none
         }
-        .ifLet(\.$destination, action: /Action.destination) {
-            Destination()
+        .ifLet(\.launchState, action: /Action.launchAction) {
+            Launch()
         }
-    }
-}
-
-// MARK: Destination
-extension Root {
-    public struct Destination: Reducer {
-        public enum State: Equatable {
-            case launch(Launch.State)
-            case home(Home.State)
-        }
-
-        public enum Action: Equatable {
-            case launchAction(Launch.Action)
-            case homeAction(Home.Action)
-        }
-
-        public var body: some ReducerOf<Self> {
-            Scope(state: /State.launch, action: /Action.launchAction) {
-                Launch()
-            }
-
-            Scope(state: /State.home, action: /Action.homeAction) {
-                Home()
-            }
+        .ifLet(\.homeState, action: /Action.homeAction) {
+            Home()
         }
     }
 }
