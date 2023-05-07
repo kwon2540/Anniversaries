@@ -18,7 +18,7 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
         return store
     }
 
-    private(set) lazy var viewStore = ViewStore(store)
+    private(set) lazy var viewStore = ViewStore(store, observe: { $0 })
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
         return true

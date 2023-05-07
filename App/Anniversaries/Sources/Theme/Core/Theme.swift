@@ -35,7 +35,7 @@ public struct Theme: ReducerProtocol {
             switch action {
             case .onLaunch:
                 state.currentPreset = .init(rawValue: userDefaultsClient.currentTheme()) ?? .default
-                return .init(value: .onLoaded)
+                return .send(.onLoaded)
 
             case .presetChanged(let preset):
                 state.currentPreset = preset
