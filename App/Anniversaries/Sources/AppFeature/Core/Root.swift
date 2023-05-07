@@ -12,11 +12,8 @@ public struct Root: Reducer {
         @PresentationState var destination: Destination.State?
         var themeState = Theme.State()
 
-        var launchState: Launch.State?
-        var homeState: Home.State?
-        
         public init() {
-            self.launchState = .init(themeState: themeState)
+            self.destination = .launch(.init(themeState: themeState))
         }
     }
     
@@ -32,14 +29,13 @@ public struct Root: Reducer {
     public var body: some ReducerProtocol<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .launchAction(.themeAction(.onLoaded)):
-                if let themeState = state.launchState?.themeState {
-                    state.themeState = themeState
+            case .destination(.presented(.launchAction(.themeAction(.onLoaded)))):
+                if let destination = state.destination, case let .launch(launchState) = destination {
+                    state.themeState = launchState.themeState
                 }
 
-            case .launchAction(.delegate(.onComplete(let anniversaries))):
-                state.homeState = .init(anniversaries: anniversaries, themeState: state.themeState)
-                state.launchState = nil
+            case .destination(.presented(.launchAction(.delegate(.onComplete(let anniversaries))))):
+                state.destination = .home(.init(anniversaries: anniversaries, themeState: state.themeState))
 
             case .launchAction, .homeAction, .destination:
                 break
@@ -49,17 +45,10 @@ public struct Root: Reducer {
         .ifLet(\.$destination, action: /Action.destination) {
             Destination()
         }
-        /*
-        .ifLet(\.launchState, action: /Action.launchAction) {
-            Launch()
-        }
-        .ifLet(\.homeState, action: /Action.homeAction) {
-            Home()
-        }
-        */
     }
 }
 
+// MARK: Destination
 extension Root {
     public struct Destination: Reducer {
         public enum State: Equatable {
