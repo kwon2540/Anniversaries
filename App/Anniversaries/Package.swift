@@ -14,9 +14,10 @@ let package = Package(
         .library(name: "Home", targets: ["Home"]),
         .library(name: "Theme", targets: ["Theme"]),
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
+        .library(name: "Settings", targets: ["Settings"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.51.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
         .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", exact: "6.6.2")
     ],
     targets: [
@@ -64,6 +65,12 @@ let package = Package(
         ),
         .target(
             name: "UserDefaultsClient",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "Settings",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
