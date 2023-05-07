@@ -7,11 +7,13 @@ import Foundation
 import Home
 import Theme
 
-public struct Root: ReducerProtocol {
+public struct Root: Reducer {
     public struct State: Equatable {
+        @PresentationState var destination: Destination.State?
+        var themeState = Theme.State()
+
         var launchState: Launch.State?
         var homeState: Home.State?
-        var themeState = Theme.State()
         
         public init() {
             self.launchState = .init(themeState: themeState)
@@ -21,6 +23,8 @@ public struct Root: ReducerProtocol {
     public enum Action: Equatable {
         case launchAction(Launch.Action)
         case homeAction(Home.Action)
+
+        case destination(PresentationAction<Destination.Action>)
     }
     
     public init() {}
@@ -37,16 +41,45 @@ public struct Root: ReducerProtocol {
                 state.homeState = .init(anniversaries: anniversaries, themeState: state.themeState)
                 state.launchState = nil
 
-            case .launchAction, .homeAction:
+            case .launchAction, .homeAction, .destination:
                 break
             }
             return .none
         }
+        .ifLet(\.$destination, action: /Action.destination) {
+            Destination()
+        }
+        /*
         .ifLet(\.launchState, action: /Action.launchAction) {
             Launch()
         }
         .ifLet(\.homeState, action: /Action.homeAction) {
             Home()
+        }
+        */
+    }
+}
+
+extension Root {
+    public struct Destination: Reducer {
+        public enum State: Equatable {
+            case launch(Launch.State)
+            case home(Home.State)
+        }
+
+        public enum Action: Equatable {
+            case launchAction(Launch.Action)
+            case homeAction(Home.Action)
+        }
+
+        public var body: some ReducerOf<Self> {
+            Scope(state: /State.launch, action: /Action.launchAction) {
+                Launch()
+            }
+
+            Scope(state: /State.home, action: /Action.homeAction) {
+                Home()
+            }
         }
     }
 }
