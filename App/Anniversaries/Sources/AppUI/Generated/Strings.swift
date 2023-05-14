@@ -11,8 +11,8 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 public enum L10n {
   public enum Home {
-    /// Home
-    public static let title = L10n.tr("Localizable", "home.title", fallback: "Home")
+    /// Anniversaries
+    public static let title = L10n.tr("Localizable", "home.title", fallback: "Anniversaries")
   }
   public enum Splash {
     /// Anniversaries
