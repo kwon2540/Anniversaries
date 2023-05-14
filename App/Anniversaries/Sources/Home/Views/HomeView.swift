@@ -12,7 +12,7 @@ public struct HomeView: View {
         self.store = store
     }
 
-    var store: StoreOf<Home>
+    private var store: StoreOf<Home>
     
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
@@ -20,25 +20,83 @@ public struct HomeView: View {
                 ScrollView{
                     Text(L10n.Home.title)
                 }
-                .navigationTitle("Home")
+                .navigationTitle(L10n.Home.title)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            viewStore.send(.settingsButtonTapped)
-                        } label: {
-                            Image(systemName: "gearshape")
-                                .foregroundColor(Asset.Colors.black.swiftUIColor)
-                        }
+                        menu(viewStore: viewStore)
+                    }
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        addButton(viewStore: viewStore)
                     }
                 }
-                .navigationDestination(
-                    store: store.scope(state: \.$destination, action: Home.Action.destination),
-                    state: /Home.Destination.State.settings,
-                    action: Home.Destination.Action.settingsAction
-                ) { store in
-                    SettingsView(store: store)
-                }
             }
+        }
+    }
+
+    private func menu(viewStore: ViewStoreOf<Home>) -> some View {
+        Menu {
+            Button {
+                viewStore.send(.editButtonTapped)
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+
+            Menu {
+                Button("Default(Date)") {
+                    viewStore.send(.sortByButtonTapped(.date))
+                }
+                Button("Date") {
+                    viewStore.send(.sortByButtonTapped(.date))
+                }
+                Button("Created") {
+                    viewStore.send(.sortByButtonTapped(.created))
+                }
+                Button("Name") {
+                    viewStore.send(.sortByButtonTapped(.name))
+                }
+            } label: {
+                Label("Sort By", systemImage: "arrow.up.arrow.down")
+            }
+
+            Menu {
+                Button("Default(Midnight Sky)") {
+                    viewStore.send(.themeButtonTapped(.midnightSky))
+                }
+                Button("Midnight Sky") {
+                    viewStore.send(.themeButtonTapped(.midnightSky))
+                }
+                Button("Sunrise Glow") {
+                    viewStore.send(.themeButtonTapped(.sunriseGlow))
+                }
+                Button("Forest Walk") {
+                    viewStore.send(.themeButtonTapped(.forestWalk))
+                }
+                Button("Cherry Blossom") {
+                    viewStore.send(.themeButtonTapped(.cherryBlossom))
+                }
+                Button("Ocean Breeze") {
+                    viewStore.send(.themeButtonTapped(.oceanBreeze))
+                }
+            } label: {
+                Label("Theme", systemImage: "paintpalette")
+            }
+        } label: {
+            Image(systemName: "ellipsis.circle")
+                .foregroundColor(viewStore.themeState.backgroundColor)
+        }
+    }
+
+    private func addButton(viewStore: ViewStoreOf<Home>) -> some View {
+        Group {
+            Spacer()
+
+            Button {
+                viewStore.send(.addButtonTapped)
+            } label: {
+                Image(systemName: "square.and.pencil")
+                    .foregroundColor(viewStore.themeState.backgroundColor)
+            }
+            .buttonStyle(.plain)
         }
     }
 }

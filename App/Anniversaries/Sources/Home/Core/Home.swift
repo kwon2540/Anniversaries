@@ -22,10 +22,18 @@ public struct Home: Reducer {
     public enum Action: Equatable {
         public enum Delegate: Equatable {
         }
+        public enum Sort: Equatable {
+            case date
+            case created
+            case name
+        }
 
         case destination(PresentationAction<Destination.Action>)
         case onAppear
-        case settingsButtonTapped
+        case editButtonTapped
+        case sortByButtonTapped(Sort)
+        case themeButtonTapped(Theme.Preset)
+        case addButtonTapped
         case delegate(Delegate)
         case themeAction(Theme.Action)
     }
@@ -42,12 +50,21 @@ public struct Home: Reducer {
             case .onAppear:
                 break
 
-            case .settingsButtonTapped:
-                state.destination = .settings(.init())
+            case .editButtonTapped:
+                break
 
-            case .themeAction:
+            case .sortByButtonTapped(let sort):
+                break
+
+            case .themeButtonTapped(let theme):
+                return .send(.themeAction(.presetChanged(theme)))
+
+            case .addButtonTapped:
                 break
                 
+            case .themeAction:
+                break
+
             case .destination:
                 break
             }
