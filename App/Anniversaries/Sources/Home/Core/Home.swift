@@ -17,15 +17,12 @@ public struct Home: Reducer {
         @PresentationState var destination: Destination.State?
         var anniversaries: String
         var themeState: Theme.State
+        var currentSort: Sort.Kind = .defaultDate
+        var currentSortOrder: Sort.Order = .newest
     }
 
     public enum Action: Equatable {
         public enum Delegate: Equatable {
-        }
-        public enum Sort: Equatable {
-            case date
-            case created
-            case name
         }
 
         case destination(PresentationAction<Destination.Action>)
@@ -41,6 +38,8 @@ public struct Home: Reducer {
 
     public init() {}
 
+    @Dependency(\.userDefaultsClient) private var userDefaultClient
+
     public var body: some ReducerProtocol<State, Action> {
         Scope(state: \.themeState, action: /Action.themeAction) {
             Theme()
@@ -49,13 +48,21 @@ public struct Home: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
-                break
+                state.currentSort = userDefaultClient.currentAnniversariesSort()
+                state.currentSortOrder = userDefaultClient.currentAnniversariesSortOrder()
 
             case .editButtonTapped:
                 break
 
             case .sortByButtonTapped(let sort):
-                break
+                // TODO: Perform Sort Logic
+                state.currentSort = sort
+                userDefaultClient.setCurrentAnniversariesSort(sort)
+
+            case .sortOrderButtonTapped(let sortOrder):
+                // TODO: Perform Sort Logic
+                state.currentSortOrder = sortOrder
+                userDefaultClient.setCurrentAnniversariesSortOrder(sortOrder)
 
             case .themeButtonTapped(let theme):
                 return .send(.themeAction(.presetChanged(theme)))
