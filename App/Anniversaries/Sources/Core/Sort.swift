@@ -4,15 +4,18 @@
 
 import Foundation
 
-/// Sorting factor for Anniversaries
-public enum Sort: Equatable, Codable {
-    case date
-    case created
-    case name
-}
 
-/// Sorting order for Anniversaries
-public enum SortOrder: Equatable, Codable {
-    case newest
-    case oldest
+public enum Sort {
+    /// Sorting factor for Anniversaries
+    public enum Kind: Codable {
+        case date
+        case created
+        case name
+    }
+
+    /// Sorting order for Anniversaries
+    public enum Order: Codable {
+        case newest
+        case oldest
+    }
 }

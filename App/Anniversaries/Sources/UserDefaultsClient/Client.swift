@@ -9,10 +9,10 @@ import Dependencies
 public struct UserDefaultsClient {
     public var currentTheme: () -> Int
     public var setCurrentTheme: (Int) -> Void
-    public var currentAnniversariesSort: () -> Sort
-    public var setCurrentAnniversariesSort: (Sort) -> Void
-    public var currentAnniversariesSortOrder: () -> Core.SortOrder
-    public var setCurrentAnniversariesSortOrder: (Core.SortOrder) -> Void
+    public var currentAnniversariesSort: () -> Sort.Kind
+    public var setCurrentAnniversariesSort: (Sort.Kind) -> Void
+    public var currentAnniversariesSortOrder: () -> Sort.Order
+    public var setCurrentAnniversariesSortOrder: (Sort.Order) -> Void
 }
 
 extension DependencyValues {

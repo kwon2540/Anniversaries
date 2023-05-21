@@ -31,7 +31,8 @@ public struct Home: Reducer {
         case destination(PresentationAction<Destination.Action>)
         case onAppear
         case editButtonTapped
-        case sortByButtonTapped(Sort)
+        case sortByButtonTapped(Sort.Kind)
+        case sortOrderButtonTapped(Sort.Order)
         case themeButtonTapped(Theme.Preset)
         case addButtonTapped
         case delegate(Delegate)

@@ -33,7 +33,7 @@ extension UserDefaultsClient {
             },
             currentAnniversariesSort: {
                 guard let data = userDefaults.data(forKey: Keys.currentAnniversariesSort),
-                      let sort = try? jsonDecoder.decode(Sort.self, from: data) else {
+                      let sort = try? jsonDecoder.decode(Sort.Kind.self, from: data) else {
                     return .date
                 }
 
@@ -49,7 +49,7 @@ extension UserDefaultsClient {
             },
             currentAnniversariesSortOrder: {
                 guard let data = userDefaults.data(forKey: Keys.currentAnniversariesSortOrder),
-                      let sortOrder = try? jsonDecoder.decode(Core.SortOrder.self, from: data)  else {
+                      let sortOrder = try? jsonDecoder.decode(Sort.Order.self, from: data)  else {
                     return .newest
                 }
 
@@ -66,25 +66,3 @@ extension UserDefaultsClient {
         )
     }
 }
-
-//
-//get {
-//    guard let data = data(forKey: Key.myShops.rawValue) else {
-//        return []
-//    }
-//    let jsonDecoder = JSONDecoder()
-//    do {
-//        return try jsonDecoder.decode([ResponseValues.B01_B02_B03_B04MyShopList.MyShop].self, from: data)
-//    } catch {
-//        assertionFailure("Failed UserDefaults.myShops.get: \(error)")
-//        return []
-//    }
-//}
-//set {
-//    let jsonEncoder = JSONEncoder()
-//    do {
-//        set(try jsonEncoder.encode(newValue), forKey: Key.myShops.rawValue)
-//    } catch {
-//        assertionFailure("Failed UserDefaults.myShops.set: \(error)")
-//    }
-//}
