@@ -8,6 +8,7 @@ import Foundation
 public enum Sort {
     /// Sorting factor for Anniversaries
     public enum Kind: Codable {
+        case defaultDate
         case date
         case created
         case name
