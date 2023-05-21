@@ -11,7 +11,7 @@ import UserDefaultsClient
 public struct Theme: ReducerProtocol {
     public struct State: Equatable {
         public init() {}
-        var currentPreset: Preset?
+        public var currentPreset: Preset?
         public var foregroundColor: Color {
             (currentPreset ?? .default).foregroundColor
         }
@@ -35,7 +35,7 @@ public struct Theme: ReducerProtocol {
             switch action {
             case .onLaunch:
                 state.currentPreset = .init(rawValue: userDefaultsClient.currentTheme()) ?? .default
-                return .init(value: .onLoaded)
+                return .send(.onLoaded)
 
             case .presetChanged(let preset):
                 state.currentPreset = preset

@@ -7,11 +7,11 @@ import Foundation
 import Home
 import Theme
 
-public struct Root: ReducerProtocol {
+public struct Root: Reducer {
     public struct State: Equatable {
+        var themeState = Theme.State()
         var launchState: Launch.State?
         var homeState: Home.State?
-        var themeState = Theme.State()
         
         public init() {
             self.launchState = .init(themeState: themeState)

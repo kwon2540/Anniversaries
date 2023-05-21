@@ -37,7 +37,7 @@ public struct Launch: ReducerProtocol {
         Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
-                return .init(value: .themeAction(.onLaunch))
+                return .send(.themeAction(.onLaunch))
                 
             case .fetchAnniversaries:
                 return .task {
@@ -46,7 +46,7 @@ public struct Launch: ReducerProtocol {
                 }
 
             case .anniversariesResponse(.success(let anniversaries)):
-                return .init(value: .delegate(.onComplete(anniversaries)))
+                return .send(.delegate(.onComplete(anniversaries)))
 
             case .anniversariesResponse(.failure):
                 state.alertState = .init(
@@ -57,13 +57,13 @@ public struct Launch: ReducerProtocol {
 
             case .alert(.onReload):
                 state.alertState = nil
-                return .init(value: .fetchAnniversaries)
+                return .send(.fetchAnniversaries)
 
             case .alert(.onDismiss):
                 state.alertState = nil
 
             case .themeAction(.onLoaded):
-                return .init(value: .fetchAnniversaries)
+                return .send(.fetchAnniversaries)
 
             case .delegate, .themeAction:
                 break
