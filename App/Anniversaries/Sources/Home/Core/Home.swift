@@ -5,6 +5,7 @@
 import ComposableArchitecture
 import Foundation
 import Theme
+import Core
 
 public struct Home: Reducer {
     public struct State: Equatable {
