@@ -5,7 +5,6 @@
 import ComposableArchitecture
 import Foundation
 import Theme
-import Settings
 
 public struct Home: Reducer {
     public struct State: Equatable {
@@ -80,15 +79,15 @@ public struct Home: Reducer {
 extension Home {
     public struct Destination: Reducer {
         public enum State: Equatable {
-            case settings(Settings.State)
         }
 
         public enum Action: Equatable {
-            case settingsAction(Settings.Action)
         }
 
         public var body: some ReducerOf<Self> {
-            Scope(state: /State.settings, action: /Action.settingsAction, child: Settings.init)
+            Reduce { state, action in
+                return .none
+            }
         }
     }
 }

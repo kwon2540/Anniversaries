@@ -5,7 +5,6 @@
 import AppUI
 import ComposableArchitecture
 import SwiftUI
-import Settings
 
 public struct HomeView: View {
     public init(store: StoreOf<Home>) {
