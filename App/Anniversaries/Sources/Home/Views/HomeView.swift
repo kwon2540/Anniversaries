@@ -28,6 +28,9 @@ public struct HomeView: View {
                         addButton(viewStore: viewStore)
                     }
                 }
+                .onAppear {
+                    viewStore.send(.onAppear)
+                }
             }
         }
     }
@@ -41,41 +44,107 @@ public struct HomeView: View {
             }
 
             Menu {
-                Button("Default(Date)") {
-                    viewStore.send(.sortByButtonTapped(.date))
-                }
-                Button("Date") {
-                    viewStore.send(.sortByButtonTapped(.date))
-                }
-                Button("Created") {
-                    viewStore.send(.sortByButtonTapped(.created))
-                }
-                Button("Name") {
-                    viewStore.send(.sortByButtonTapped(.name))
-                }
+                Toggle(
+                    "Default(Date)",
+                    isOn: viewStore.binding(
+                        get: { $0.currentSort == .defaultDate },
+                        send: .sortByButtonTapped(.defaultDate)
+                    )
+                )
+
+                Toggle(
+                    "Date",
+                    isOn: viewStore.binding(
+                        get: { $0.currentSort == .date },
+                        send: .sortByButtonTapped(.date)
+                    )
+                )
+
+                Toggle(
+                    "Created",
+                    isOn: viewStore.binding(
+                        get: { $0.currentSort == .created },
+                        send: .sortByButtonTapped(.created)
+                    )
+                )
+
+                Toggle(
+                    "Name",
+                    isOn: viewStore.binding(
+                        get: { $0.currentSort == .name },
+                        send: .sortByButtonTapped(.name)
+                    )
+                )
+
+                Divider()
+
+                Toggle(
+                    "Newest First",
+                    isOn: viewStore.binding(
+                        get: { $0.currentSortOrder == .newest },
+                        send: .sortOrderButtonTapped(.newest)
+                    )
+                )
+
+                Toggle(
+                    "Oldest First",
+                    isOn: viewStore.binding(
+                        get: { $0.currentSortOrder == .oldest },
+                        send: .sortOrderButtonTapped(.oldest)
+                    )
+                )
             } label: {
                 Label("Sort By", systemImage: "arrow.up.arrow.down")
             }
 
             Menu {
-                Button("Default(Midnight Sky)") {
-                    viewStore.send(.themeButtonTapped(.midnightSky))
-                }
-                Button("Midnight Sky") {
-                    viewStore.send(.themeButtonTapped(.midnightSky))
-                }
-                Button("Sunrise Glow") {
-                    viewStore.send(.themeButtonTapped(.sunriseGlow))
-                }
-                Button("Forest Walk") {
-                    viewStore.send(.themeButtonTapped(.forestWalk))
-                }
-                Button("Cherry Blossom") {
-                    viewStore.send(.themeButtonTapped(.cherryBlossom))
-                }
-                Button("Ocean Breeze") {
-                    viewStore.send(.themeButtonTapped(.oceanBreeze))
-                }
+                Toggle(
+                    "Default(Midnight Sky)",
+                    isOn: viewStore.binding(
+                        get: { $0.themeState.currentPreset == .default },
+                        send: .themeButtonTapped(.default)
+                    )
+                )
+
+                Toggle(
+                    "Midnight Sky",
+                    isOn: viewStore.binding(
+                        get: { $0.themeState.currentPreset == .midnightSky },
+                        send: .themeButtonTapped(.midnightSky)
+                    )
+                )
+
+                Toggle(
+                    "Sunrise Glow",
+                    isOn: viewStore.binding(
+                        get: { $0.themeState.currentPreset == .sunriseGlow },
+                        send: .themeButtonTapped(.sunriseGlow)
+                    )
+                )
+
+                Toggle(
+                    "Forest Walk",
+                    isOn: viewStore.binding(
+                        get: { $0.themeState.currentPreset == .forestWalk },
+                        send: .themeButtonTapped(.forestWalk)
+                    )
+                )
+
+                Toggle(
+                    "Cherry Blossom",
+                    isOn: viewStore.binding(
+                        get: { $0.themeState.currentPreset == .cherryBlossom },
+                        send: .themeButtonTapped(.cherryBlossom)
+                    )
+                )
+
+                Toggle(
+                    "Ocean Breeze",
+                    isOn: viewStore.binding(
+                        get: { $0.themeState.currentPreset == .oceanBreeze },
+                        send: .themeButtonTapped(.oceanBreeze)
+                    )
+                )
             } label: {
                 Label("Theme", systemImage: "paintpalette")
             }
