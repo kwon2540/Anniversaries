@@ -15,6 +15,7 @@ let package = Package(
         .library(name: "Theme", targets: ["Theme"]),
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
         .library(name: "Core", targets: ["Core"]),
+        .library(name: "Anniversary", targets: ["Anniversary"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
@@ -53,6 +54,7 @@ let package = Package(
                 "Core",
                 "AppUI",
                 "Theme",
+                "Anniversary",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -74,6 +76,13 @@ let package = Package(
         .target(
             name: "Core",
             dependencies: []
+        ),
+        .target(
+            name: "Anniversary",
+            dependencies: [
+                "AppUI",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
         ),
         .testTarget(
             name: "ThemeTests",
