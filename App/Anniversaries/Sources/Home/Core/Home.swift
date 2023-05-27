@@ -69,7 +69,7 @@ public struct Home: Reducer {
                 return .send(.themeAction(.presetChanged(theme)))
 
             case .addButtonTapped:
-                break
+                state.destination = .anniversary(.init())
                 
             case .themeAction:
                 break
