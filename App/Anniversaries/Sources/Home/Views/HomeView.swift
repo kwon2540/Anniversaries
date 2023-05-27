@@ -4,6 +4,7 @@
 
 import AppUI
 import ComposableArchitecture
+import Core
 import SwiftUI
 
 public struct HomeView: View {
@@ -44,55 +45,27 @@ public struct HomeView: View {
             }
 
             Menu {
-                Toggle(
-                    "Default(Date)",
-                    isOn: viewStore.binding(
-                        get: { $0.currentSort == .defaultDate },
-                        send: .sortByButtonTapped(.defaultDate)
+                ForEach(Sort.Kind.allCases, id: \.self) { sort in
+                    Toggle(
+                        sort.rawValue,
+                        isOn: viewStore.binding(
+                            get: { $0.currentSort == sort },
+                            send: .sortByButtonTapped(sort)
+                        )
                     )
-                )
-
-                Toggle(
-                    "Date",
-                    isOn: viewStore.binding(
-                        get: { $0.currentSort == .date },
-                        send: .sortByButtonTapped(.date)
-                    )
-                )
-
-                Toggle(
-                    "Created",
-                    isOn: viewStore.binding(
-                        get: { $0.currentSort == .created },
-                        send: .sortByButtonTapped(.created)
-                    )
-                )
-
-                Toggle(
-                    "Name",
-                    isOn: viewStore.binding(
-                        get: { $0.currentSort == .name },
-                        send: .sortByButtonTapped(.name)
-                    )
-                )
+                }
 
                 Divider()
 
-                Toggle(
-                    "Newest First",
-                    isOn: viewStore.binding(
-                        get: { $0.currentSortOrder == .newest },
-                        send: .sortOrderButtonTapped(.newest)
+                ForEach(Sort.Order.allCases, id: \.self) { sortOrder in
+                    Toggle(
+                        sortOrder.rawValue,
+                        isOn: viewStore.binding(
+                            get: { $0.currentSortOrder == sortOrder },
+                            send: .sortOrderButtonTapped(sortOrder)
+                        )
                     )
-                )
-
-                Toggle(
-                    "Oldest First",
-                    isOn: viewStore.binding(
-                        get: { $0.currentSortOrder == .oldest },
-                        send: .sortOrderButtonTapped(.oldest)
-                    )
-                )
+                }
             } label: {
                 Label("Sort By", systemImage: "arrow.up.arrow.down")
             }
