@@ -40,7 +40,7 @@ public struct Home: Reducer {
 
     @Dependency(\.userDefaultsClient) private var userDefaultClient
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<Self> {
         Scope(state: \.themeState, action: /Action.themeAction) {
             Theme()
         }

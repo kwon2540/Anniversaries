@@ -25,7 +25,7 @@ public struct Root: Reducer {
     
     public init() {}
     
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
             case .launchAction(.themeAction(.onLoaded)):
