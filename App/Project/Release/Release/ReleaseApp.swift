@@ -3,9 +3,9 @@
 //
 
 import SwiftUI
-import AppKit
+import Anniversaries
 
 @main
-struct ReleaseApp: AppKit.App {
+struct ReleaseApp: Anniversaries.App {
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
 }
