@@ -42,9 +42,6 @@ let package = Package(
             dependencies: [],
             resources: [
                 .process("Resources"),
-            ],
-            plugins: [
-                .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
             ]
         ),
         .target(
