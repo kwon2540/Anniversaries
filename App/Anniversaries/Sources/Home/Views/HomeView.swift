@@ -6,6 +6,7 @@ import AppUI
 import ComposableArchitecture
 import Core
 import SwiftUI
+import LocalizeString
 
 public struct HomeView: View {
     public init(store: StoreOf<Home>) {
@@ -18,9 +19,9 @@ public struct HomeView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
                 ScrollView{
-                    Text("home.title")
+                    Text(#localize("home.title"))
                 }
-                .navigationTitle("home.title")
+                .navigationTitle(#localize("home.title"))
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         menu(viewStore: viewStore)

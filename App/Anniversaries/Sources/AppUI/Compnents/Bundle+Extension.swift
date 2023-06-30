@@ -4,7 +4,7 @@
 
 import Foundation
 
-//public extension Bundle {
-//
-//    public static var appUI: Bundle { .module }
-//}
+public extension Bundle {
+
+    static var appUI: Bundle { .module }
+}

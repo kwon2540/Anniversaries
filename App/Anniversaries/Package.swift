@@ -2,11 +2,12 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+import CompilerPluginSupport
 
 let package = Package(
     name: "Anniversaries",
     defaultLocalization: "en",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v16), .macOS(.v13)],
     products: [
         .library(name: "Anniversaries", targets: ["Anniversaries"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
@@ -15,9 +16,11 @@ let package = Package(
         .library(name: "Theme", targets: ["Theme"]),
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
         .library(name: "Core", targets: ["Core"]),
+        .library(name: "LocalizeString", targets: ["LocalizeString"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
     ],
     targets: [
         .target(
@@ -33,6 +36,7 @@ let package = Package(
                 "AppUI",
                 "Home",
                 "Theme",
+                "LocalizeString",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -49,6 +53,7 @@ let package = Package(
                 "Core",
                 "AppUI",
                 "Theme",
+                "LocalizeString",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -71,11 +76,24 @@ let package = Package(
             name: "Core",
             dependencies: []
         ),
+        .target(
+            name: "LocalizeString",
+            dependencies: [
+                "LocalizeStringMacro"
+            ]
+        ),
         .testTarget(
             name: "ThemeTests",
             dependencies: [
                 "Theme",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .macro(
+            name: "LocalizeStringMacro",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
             ]
         ),
     ]
