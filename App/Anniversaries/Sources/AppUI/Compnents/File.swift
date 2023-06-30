@@ -3,3 +3,8 @@
 //
 
 import Foundation
+
+//public extension Bundle {
+//
+//    public static var appUI: Bundle { .module }
+//}

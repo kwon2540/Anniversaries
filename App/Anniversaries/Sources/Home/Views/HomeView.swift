@@ -13,14 +13,14 @@ public struct HomeView: View {
     }
 
     private var store: StoreOf<Home>
-    
+
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
                 ScrollView{
-                    Text(L10n.Home.title)
+                    Text("home.title")
                 }
-                .navigationTitle(L10n.Home.title)
+                .navigationTitle("home.title")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         menu(viewStore: viewStore)

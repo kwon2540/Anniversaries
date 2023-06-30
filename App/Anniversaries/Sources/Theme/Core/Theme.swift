@@ -64,34 +64,34 @@ extension Theme {
         public var backgroundColor: Color {
             switch self {
             case .default:
-                return Asset.Colors.white.swiftUIColor
+                return Color("dark_blue") // Color.white// Asset.Colors.white.swiftUIColor
             case .midnightSky:
-                return Asset.Colors.darkBlue.swiftUIColor
+                return Color.blue//Asset.Colors.darkBlue.swiftUIColor
             case .sunriseGlow:
-                return Asset.Colors.orange.swiftUIColor
+                return Color.orange//Asset.Colors.orange.swiftUIColor
             case .forestWalk:
-                return Asset.Colors.forestGreen.swiftUIColor
+                return Color.white//Asset.Colors.forestGreen.swiftUIColor
             case .cherryBlossom:
-                return Asset.Colors.softRed.swiftUIColor
+                return Color.white//Asset.Colors.softRed.swiftUIColor
             case .oceanBreeze:
-                return Asset.Colors.skyBlue.swiftUIColor
+                return Color.white//Asset.Colors.skyBlue.swiftUIColor
             }
         }
 
         public var foregroundColor: Color {
             switch self {
             case .default:
-                return Asset.Colors.black.swiftUIColor
+                return Color.white//Asset.Colors.black.swiftUIColor
             case .midnightSky:
-                return Asset.Colors.lightGray.swiftUIColor
+                return Color.white//Asset.Colors.lightGray.swiftUIColor
             case .sunriseGlow:
-                return Asset.Colors.darkBlue.swiftUIColor
+                return Color.white//Asset.Colors.darkBlue.swiftUIColor
             case .forestWalk:
-                return Asset.Colors.white.swiftUIColor
+                return Color.white//Asset.Colors.white.swiftUIColor
             case .cherryBlossom:
-                return Asset.Colors.lightYellow.swiftUIColor
+                return Color.white//Asset.Colors.lightYellow.swiftUIColor
             case .oceanBreeze:
-                return Asset.Colors.white.swiftUIColor
+                return Color.white//Asset.Colors.white.swiftUIColor
             }
         }
     }

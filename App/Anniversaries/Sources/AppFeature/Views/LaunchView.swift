@@ -11,7 +11,7 @@ struct LaunchView: View {
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            Text(L10n.Splash.title)
+            Text("L10n.Splash.title")
                 .onAppear {
                     viewStore.send(.onAppear)
                 }
