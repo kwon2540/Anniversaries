@@ -16,7 +16,6 @@ let package = Package(
         .library(name: "Theme", targets: ["Theme"]),
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
         .library(name: "Core", targets: ["Core"]),
-        .library(name: "LocalizeString", targets: ["LocalizeString"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
@@ -36,13 +35,14 @@ let package = Package(
                 "AppUI",
                 "Home",
                 "Theme",
-                "LocalizeString",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
             name: "AppUI",
-            dependencies: [],
+            dependencies: [
+                "AppMacros",
+            ],
             resources: [
                 .process("Resources"),
             ]
@@ -53,7 +53,6 @@ let package = Package(
                 "Core",
                 "AppUI",
                 "Theme",
-                "LocalizeString",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -76,12 +75,6 @@ let package = Package(
             name: "Core",
             dependencies: []
         ),
-        .target(
-            name: "LocalizeString",
-            dependencies: [
-                "LocalizeStringMacro"
-            ]
-        ),
         .testTarget(
             name: "ThemeTests",
             dependencies: [
@@ -90,7 +83,7 @@ let package = Package(
             ]
         ),
         .macro(
-            name: "LocalizeStringMacro",
+            name: "AppMacros",
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax")

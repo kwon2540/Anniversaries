@@ -4,7 +4,6 @@
 
 import AppUI
 import ComposableArchitecture
-import LocalizeString
 import SwiftUI
 
 struct LaunchView: View {
@@ -12,7 +11,7 @@ struct LaunchView: View {
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            Text(#localize("splash.title"))
+            Text(#localized("splash.title"))
                 .onAppear {
                     viewStore.send(.onAppear)
                 }
