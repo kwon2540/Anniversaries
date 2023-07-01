@@ -73,12 +73,12 @@
       }
     },
     {
-      "identity" : "swiftgenplugin",
+      "identity" : "swift-syntax",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftGen/SwiftGenPlugin",
+      "location" : "https://github.com/apple/swift-syntax.git",
       "state" : {
-        "revision" : "879b85a470cacd70c19e22eb7e11a3aed66f4068",
-        "version" : "6.6.2"
+        "revision" : "f1e9245226002bb134884345d4809b9543da3666",
+        "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-06-17-a"
       }
     },
     {

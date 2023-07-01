@@ -1,14 +1,15 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+import CompilerPluginSupport
 
 let package = Package(
     name: "Anniversaries",
     defaultLocalization: "en",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v16), .macOS(.v13)],
     products: [
-        .library(name: "AppKit", targets: ["AppKit"]),
+        .library(name: "Anniversaries", targets: ["Anniversaries"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AppUI", targets: ["AppUI"]),
         .library(name: "Home", targets: ["Home"]),
@@ -18,11 +19,11 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
-        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", exact: "6.6.2")
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
     ],
     targets: [
         .target(
-            name: "AppKit",
+            name: "Anniversaries",
             dependencies: [
                 "AppFeature",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -39,12 +40,11 @@ let package = Package(
         ),
         .target(
             name: "AppUI",
-            dependencies: [],
+            dependencies: [
+                "AppMacros",
+            ],
             resources: [
                 .process("Resources"),
-            ],
-            plugins: [
-                .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
             ]
         ),
         .target(
@@ -80,6 +80,20 @@ let package = Package(
             dependencies: [
                 "Theme",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .testTarget(
+            name: "AppMacrosTests",
+            dependencies: [
+                "AppMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
+        .macro(
+            name: "AppMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
             ]
         ),
     ]
