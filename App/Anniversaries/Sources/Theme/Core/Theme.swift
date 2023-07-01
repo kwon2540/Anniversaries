@@ -27,7 +27,7 @@ public struct Theme: ReducerProtocol {
     }
 
     public init() {}
-    
+
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public var body: some ReducerProtocol<State, Action> {
@@ -59,39 +59,37 @@ extension Theme {
         case cherryBlossom
         case oceanBreeze
 
-
-
         public var backgroundColor: Color {
             switch self {
             case .default:
-                return Color("dark_blue") // Color.white// Asset.Colors.white.swiftUIColor
+                return #color("dark_blue")
             case .midnightSky:
-                return Color.blue//Asset.Colors.darkBlue.swiftUIColor
+                return #color("dark_blue")
             case .sunriseGlow:
-                return Color.orange//Asset.Colors.orange.swiftUIColor
+                return #color("orange")
             case .forestWalk:
-                return Color.white//Asset.Colors.forestGreen.swiftUIColor
+                return #color("forest_green")
             case .cherryBlossom:
-                return Color.white//Asset.Colors.softRed.swiftUIColor
+                return #color("soft_red")
             case .oceanBreeze:
-                return Color.white//Asset.Colors.skyBlue.swiftUIColor
+                return #color("sky_blue")
             }
         }
 
         public var foregroundColor: Color {
             switch self {
             case .default:
-                return Color.white//Asset.Colors.black.swiftUIColor
+                return #color("black")
             case .midnightSky:
-                return Color.white//Asset.Colors.lightGray.swiftUIColor
+                return #color("light_gray")
             case .sunriseGlow:
-                return Color.white//Asset.Colors.darkBlue.swiftUIColor
+                return #color("dark_blue")
             case .forestWalk:
-                return Color.white//Asset.Colors.white.swiftUIColor
+                return #color("white")
             case .cherryBlossom:
-                return Color.white//Asset.Colors.lightYellow.swiftUIColor
+                return #color("light_yellow")
             case .oceanBreeze:
-                return Color.white//Asset.Colors.white.swiftUIColor
+                return #color("white")
             }
         }
     }
