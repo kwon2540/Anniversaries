@@ -18,9 +18,9 @@ public struct HomeView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
                 ScrollView{
-                    Text(#localized("home.title"))
+                    Text(#localized("Anniversaries"))
                 }
-                .navigationTitle(#localized("home.title"))
+                .navigationTitle(#localized("Anniversaries"))
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         menu(viewStore: viewStore)
