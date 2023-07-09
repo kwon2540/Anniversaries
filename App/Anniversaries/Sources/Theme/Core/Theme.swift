@@ -27,7 +27,7 @@ public struct Theme: Reducer {
     }
 
     public init() {}
-    
+
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public var body: some ReducerOf<Self> {
@@ -59,39 +59,37 @@ extension Theme {
         case cherryBlossom
         case oceanBreeze
 
-
-
         public var backgroundColor: Color {
             switch self {
             case .default:
-                return Asset.Colors.white.swiftUIColor
+                return #color("dark_blue")
             case .midnightSky:
-                return Asset.Colors.darkBlue.swiftUIColor
+                return #color("dark_blue")
             case .sunriseGlow:
-                return Asset.Colors.orange.swiftUIColor
+                return #color("orange")
             case .forestWalk:
-                return Asset.Colors.forestGreen.swiftUIColor
+                return #color("forest_green")
             case .cherryBlossom:
-                return Asset.Colors.softRed.swiftUIColor
+                return #color("soft_red")
             case .oceanBreeze:
-                return Asset.Colors.skyBlue.swiftUIColor
+                return #color("sky_blue")
             }
         }
 
         public var foregroundColor: Color {
             switch self {
             case .default:
-                return Asset.Colors.black.swiftUIColor
+                return #color("black")
             case .midnightSky:
-                return Asset.Colors.lightGray.swiftUIColor
+                return #color("light_gray")
             case .sunriseGlow:
-                return Asset.Colors.darkBlue.swiftUIColor
+                return #color("dark_blue")
             case .forestWalk:
-                return Asset.Colors.white.swiftUIColor
+                return #color("white")
             case .cherryBlossom:
-                return Asset.Colors.lightYellow.swiftUIColor
+                return #color("light_yellow")
             case .oceanBreeze:
-                return Asset.Colors.white.swiftUIColor
+                return #color("white")
             }
         }
     }
