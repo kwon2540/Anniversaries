@@ -5,6 +5,7 @@
 import AppUI
 import ComposableArchitecture
 import SwiftUI
+import RemindScheduler
 
 private extension Anniversary.State.Mode {
     var title: String {
@@ -77,7 +78,7 @@ public struct AnniversaryView: View {
                     Section {
                         LabeledContent("Remind") {
                             Button {
-                                reminds.append(.init(date: .constant(.now)))
+                                viewStore.send(.addRemindButtonTapped)
                                 // +タップしたらモーダルでDateとTimeとRepeatを決める画面を表示する
                                 // 全てToggleでOn/OffできるようにしてDefaultはDateはOn、TimeはOff
                                 // RepeatはDefaultはOnで下に毎年リマインドすることを案内し
@@ -117,6 +118,12 @@ public struct AnniversaryView: View {
                         }
                     }
                 }
+                .sheet(
+                    store: store.scope(state: \.$destination, action: Anniversary.Action.destination),
+                    state: /Destination.State.remind,
+                    action: Destination.Action.remind,
+                    content: RemindSchedulerView.init(store:)
+                )
             }
         }
     }

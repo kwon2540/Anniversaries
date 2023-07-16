@@ -16,12 +16,15 @@ public struct Anniversary: Reducer {
             self.mode = mode
         }
 
+        @PresentationState var destination: Destination.State?
         var mode: Mode
     }
 
     public enum Action: Equatable {
+        case destination(PresentationAction<Destination.Action>)
         case cancelButtonTapped
         case completeButtonTapped
+        case addRemindButtonTapped
     }
 
     public init() {}
@@ -39,8 +42,17 @@ public struct Anniversary: Reducer {
                 return .fireAndForget {
                     await dismiss()
                 }
+
+            case .addRemindButtonTapped:
+                state.destination = .remind(.init())
+
+            case .destination:
+                break
             }
             return .none
+        }
+        .ifLet(\.$destination, action: /Action.destination) {
+            Destination()
         }
     }
 }
