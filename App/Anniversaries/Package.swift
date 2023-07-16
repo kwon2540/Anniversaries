@@ -7,7 +7,7 @@ import CompilerPluginSupport
 let package = Package(
     name: "Anniversaries",
     defaultLocalization: "en",
-    platforms: [.iOS(.v16), .macOS(.v13)],
+    platforms: [.iOS(.v17), .macOS(.v13)],
     products: [
         .library(name: "Anniversaries", targets: ["Anniversaries"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
