@@ -4,6 +4,7 @@
 
 import ComposableArchitecture
 import SwiftUI
+import AppUI
 
 public struct RemindSchedulerView: View {
     public init(store: StoreOf<RemindScheduler>) {
@@ -12,8 +13,30 @@ public struct RemindSchedulerView: View {
 
     private let store: StoreOf<RemindScheduler>
 
+    @State private var isRepeat: Bool = true
+
     public var body: some View {
-        Text("Hello World")
+        WithViewStore(store, observe:  { $0 }) { viewStore in
+            NavigationView {
+                VStack {
+                    Form {
+                        Section {
+
+                        }
+
+                        Section {
+                            Toggle(isOn: $isRepeat) {
+                                Label {
+                                    Text(#localized("Repeat"))
+                                } icon: {
+                                    FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
+                                }
+                            }
+                        }
+                    }
+                }
+                .navigationTitle(#localized("Date & Time"))
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
@@ -32,6 +55,7 @@ public struct RemindSchedulerView: View {
                     }
                 }
             }
+        }
     }
 }
 
