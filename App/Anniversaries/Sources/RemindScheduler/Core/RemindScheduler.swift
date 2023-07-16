@@ -11,13 +11,27 @@ public struct RemindScheduler: Reducer {
     }
 
     public enum Action: Equatable {
+        case cancelButtonTapped
+        case applyButtonTapped
     }
 
     public init() {}
 
+    @Dependency(\.dismiss) private var dismiss
+
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
-            return .none
+            switch action {
+            case .cancelButtonTapped:
+                return .fireAndForget {
+                    await dismiss()
+                }
+
+            case .applyButtonTapped:
+                return .fireAndForget {
+                    await dismiss()
+                }
+            }
         }
     }
 }

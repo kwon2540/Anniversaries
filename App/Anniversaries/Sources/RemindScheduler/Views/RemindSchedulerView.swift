@@ -14,6 +14,24 @@ public struct RemindSchedulerView: View {
 
     public var body: some View {
         Text("Hello World")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            viewStore.send(.cancelButtonTapped)
+                        } label: {
+                            Text(#localized("Cancel"))
+                        }
+                    }
+
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            viewStore.send(.applyButtonTapped)
+                        } label: {
+                            Text(#localized("Apply"))
+                        }
+                    }
+                }
+            }
     }
 }
 
