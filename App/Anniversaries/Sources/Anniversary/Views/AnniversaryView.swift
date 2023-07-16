@@ -54,7 +54,7 @@ public struct AnniversaryView: View {
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationView {
-                List {
+                Form {
                     Section {
                         Picker("Kind", selection: $selectedKind) {
                             Text("birth").tag(Kind.birth)
