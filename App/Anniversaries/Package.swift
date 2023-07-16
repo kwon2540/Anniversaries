@@ -17,6 +17,7 @@ let package = Package(
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
         .library(name: "Core", targets: ["Core"]),
         .library(name: "Anniversary", targets: ["Anniversary"]),
+        .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
@@ -79,6 +80,14 @@ let package = Package(
         ),
         .target(
             name: "Anniversary",
+            dependencies: [
+                "AppUI",
+                "RemindScheduler",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "RemindScheduler",
             dependencies: [
                 "AppUI",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
