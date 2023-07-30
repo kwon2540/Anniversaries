@@ -6,7 +6,7 @@ import ComposableArchitecture
 import Foundation
 import Theme
 
-public struct Launch: ReducerProtocol {
+public struct Launch: Reducer {
     public struct State: Equatable {
         var themeState: Theme.State
         var alertState: AlertState<Action.Alert>?
@@ -33,16 +33,16 @@ public struct Launch: ReducerProtocol {
 
     @Dependency(\.continuousClock) var clock // TODO: delete
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
                 return .send(.themeAction(.onLaunch))
                 
             case .fetchAnniversaries:
-                return .task {
+                return .run { send in
                     try await clock.sleep(for: .seconds(1)) // TODO: delete
-                    return await .anniversariesResponse(TaskResult { return "TODO" })
+                    return await send(.anniversariesResponse(TaskResult { return "TODO" }))
                 }
 
             case .anniversariesResponse(.success(let anniversaries)):

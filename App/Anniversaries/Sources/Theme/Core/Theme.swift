@@ -8,7 +8,7 @@ import Foundation
 import SwiftUI
 import UserDefaultsClient
 
-public struct Theme: ReducerProtocol {
+public struct Theme: Reducer {
     public struct State: Equatable {
         public init() {}
         public var currentPreset: Preset?
@@ -30,7 +30,7 @@ public struct Theme: ReducerProtocol {
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onLaunch:

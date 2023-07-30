@@ -2,6 +2,7 @@
 //  Created by Maharjan Binish on 2023/03/05.
 //
 
+import Anniversary
 import AppUI
 import ComposableArchitecture
 import Core
@@ -32,6 +33,12 @@ public struct HomeView: View {
                 .onAppear {
                     viewStore.send(.onAppear)
                 }
+                .sheet(
+                    store: store.scope(state: \.$destination, action: Home.Action.destination),
+                    state: /Home.Destination.State.anniversary,
+                    action: Home.Destination.Action.anniversary,
+                    content: AnniversaryView.init(store:)
+                )
             }
         }
     }
@@ -150,7 +157,7 @@ struct HomeView_Previews: PreviewProvider {
                     anniversaries: "Anniversaries",
                     themeState: .init()
                 ),
-                reducer: Home()
+                reducer: Home.init
             )
         )
     }

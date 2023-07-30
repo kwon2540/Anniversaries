@@ -2,6 +2,7 @@
 //  Created by Maharjan Binish on 2023/03/05.
 //
 
+import Anniversary
 import ComposableArchitecture
 import Foundation
 import Theme
@@ -40,7 +41,7 @@ public struct Home: Reducer {
 
     @Dependency(\.userDefaultsClient) private var userDefaultClient
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<Self> {
         Scope(state: \.themeState, action: /Action.themeAction) {
             Theme()
         }
@@ -68,7 +69,7 @@ public struct Home: Reducer {
                 return .send(.themeAction(.presetChanged(theme)))
 
             case .addButtonTapped:
-                break
+                state.destination = .anniversary(.init(mode: .new))
                 
             case .themeAction:
                 break
@@ -88,15 +89,15 @@ public struct Home: Reducer {
 extension Home {
     public struct Destination: Reducer {
         public enum State: Equatable {
+            case anniversary(Anniversary.State)
         }
 
         public enum Action: Equatable {
+            case anniversary(Anniversary.Action)
         }
 
         public var body: some ReducerOf<Self> {
-            Reduce { state, action in
-                return .none
-            }
+            Scope(state: /State.anniversary, action: /Action.anniversary, child: Anniversary.init)
         }
     }
 }
