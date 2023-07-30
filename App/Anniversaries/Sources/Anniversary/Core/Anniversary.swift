@@ -35,11 +35,11 @@ public struct Anniversary: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .cancelButtonTapped:
-                return .fireAndForget {
+                return .run { _ in
                     await dismiss()
                 }
             case .completeButtonTapped:
-                return .fireAndForget {
+                return .run { _ in
                     await dismiss()
                 }
 

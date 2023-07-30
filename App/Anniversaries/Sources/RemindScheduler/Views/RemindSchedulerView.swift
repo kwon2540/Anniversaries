@@ -61,9 +61,9 @@ public struct RemindSchedulerView: View {
 
 #Preview {
     RemindSchedulerView(
-        store: .init(
+        store: Store(
             initialState: RemindScheduler.State(),
-            reducer: RemindScheduler()
+            reducer: RemindScheduler.init
         )
     )
 }

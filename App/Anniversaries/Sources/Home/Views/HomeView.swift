@@ -157,7 +157,7 @@ struct HomeView_Previews: PreviewProvider {
                     anniversaries: "Anniversaries",
                     themeState: .init()
                 ),
-                reducer: Home()
+                reducer: Home.init
             )
         )
     }

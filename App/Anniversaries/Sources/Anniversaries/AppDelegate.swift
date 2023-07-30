@@ -13,7 +13,7 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
         if let _store {
             return _store
         }
-        let store = Store(initialState: AppDelegateReducer.State(), reducer: AppDelegateReducer())
+        let store = Store(initialState: AppDelegateReducer.State(), reducer: AppDelegateReducer.init)
         self._store = store
         return store
     }
@@ -25,7 +25,7 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
-struct AppDelegateReducer: ReducerProtocol {
+struct AppDelegateReducer: Reducer {
     struct State: Equatable {
         var rootState = Root.State()
     }
@@ -35,7 +35,7 @@ struct AppDelegateReducer: ReducerProtocol {
         case rootAction(Root.Action)
     }
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .didFinishLaunching:

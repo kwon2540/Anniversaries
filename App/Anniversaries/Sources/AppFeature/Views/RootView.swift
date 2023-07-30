@@ -24,7 +24,7 @@ struct RootView_Previews: PreviewProvider {
         RootView(
             store: .init(
                 initialState: .init(),
-                reducer: Root()
+                reducer: Root.init
             )
         )
     }

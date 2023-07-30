@@ -23,12 +23,12 @@ public struct RemindScheduler: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .cancelButtonTapped:
-                return .fireAndForget {
+                return .run { _ in
                     await dismiss()
                 }
 
             case .applyButtonTapped:
-                return .fireAndForget {
+                return .run { _ in
                     await dismiss()
                 }
             }

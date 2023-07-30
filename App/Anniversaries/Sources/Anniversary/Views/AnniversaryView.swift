@@ -131,9 +131,9 @@ public struct AnniversaryView: View {
 
 struct AnniversaryView_Previews: PreviewProvider {
     static var previews: some View {
-        AnniversaryView(store: .init(initialState: .init(mode: .new), reducer: Anniversary()))
+        AnniversaryView(store: .init(initialState: .init(mode: .new), reducer: Anniversary.init))
             .previewDisplayName("New")
-        AnniversaryView(store: .init(initialState: .init(mode: .edit), reducer: Anniversary()))
+        AnniversaryView(store: .init(initialState: .init(mode: .edit), reducer: Anniversary.init))
             .previewDisplayName("Edit")
     }
 }

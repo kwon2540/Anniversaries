@@ -40,9 +40,9 @@ public struct Launch: Reducer {
                 return .send(.themeAction(.onLaunch))
                 
             case .fetchAnniversaries:
-                return .task {
+                return .run { send in
                     try await clock.sleep(for: .seconds(1)) // TODO: delete
-                    return await .anniversariesResponse(TaskResult { return "TODO" })
+                    return await send(.anniversariesResponse(TaskResult { return "TODO" }))
                 }
 
             case .anniversariesResponse(.success(let anniversaries)):
