@@ -21,7 +21,7 @@ public struct FormIcon: View {
                 Image(systemName: systemName)
                     .resizable()
                     .scaledToFit()
-                    .padding(4)
+                    .padding(5)
                     .foregroundColor(.white)
             }
     }
@@ -32,11 +32,11 @@ public struct FormIcon: View {
         columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 3),
         spacing: 8) {
             FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
+            FormIcon(backgroundColor: "#e74c3c", systemName: "calendar")
             FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
+            FormIcon(backgroundColor: "#e74c3c", systemName: "calendar")
             FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
-            FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
-            FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
-            FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
+            FormIcon(backgroundColor: "#e74c3c", systemName: "calendar")
             FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
         }
 }
