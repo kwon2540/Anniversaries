@@ -9,7 +9,7 @@ import Theme
 public struct Launch: Reducer {
     public struct State: Equatable {
         var themeState: Theme.State
-        var alertState: AlertState<Action.Alert>?
+        @PresentationState var alert: AlertState<Action.Alert>?
     }
 
     public enum Action: Equatable {
@@ -18,15 +18,14 @@ public struct Launch: Reducer {
         case anniversariesResponse(TaskResult<String>)
 
         public enum Alert: Equatable {
-            case onReload
-            case onDismiss
+            case reloadButtonTapped
         }
 
         public enum Delegate: Equatable {
             case onComplete(String) // TODO: pass anniversaries as loaded data
         }
 
-        case alert(Alert)
+        case alert(PresentationAction<Alert>)
         case delegate(Delegate)
         case themeAction(Theme.Action)
     }
@@ -49,31 +48,34 @@ public struct Launch: Reducer {
                 return .send(.delegate(.onComplete(anniversaries)))
 
             case .anniversariesResponse(.failure):
-                state.alertState = .init(
-                    title: TextState("Error"),
-                    message: TextState("Couldn't load data."),
-                    buttons: [.cancel(TextState("Retry"), action: .send(.onReload))]
-                )
+                state.alert = AlertState {
+                    TextState("Error")
+                } actions: {
+                    ButtonState(action: .reloadButtonTapped) {
+                        TextState("Retry")
+                    }
+                } message:  {
+                    TextState("Couldn't load data.")
+                }
 
-            case .alert(.onReload):
-                state.alertState = nil
+            case .alert(.presented(.reloadButtonTapped)):
+                state.alert = nil
                 return .send(.fetchAnniversaries)
-
-            case .alert(.onDismiss):
-                state.alertState = nil
 
             case .themeAction(.onLoaded):
                 return .send(.fetchAnniversaries)
 
-            case .delegate, .themeAction:
+            case .delegate, .themeAction, .alert:
                 break
             }
 
             return .none
         }
+        .ifLet(\.$alert, action: /Action.alert)
 
         Scope(state: \.themeState, action: /Action.themeAction) {
             Theme()
         }
+
     }
 }
