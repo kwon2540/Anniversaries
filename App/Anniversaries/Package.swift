@@ -9,7 +9,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.iOS(.v17), .macOS(.v13)],
     products: [
-        .library(name: "Anniversaries", targets: ["Anniversaries"]),
+        .library(name: "AnniversariesKit", targets: ["AnniversariesKit"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AppUI", targets: ["AppUI"]),
         .library(name: "Home", targets: ["Home"]),
@@ -25,7 +25,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Anniversaries",
+            name: "AnniversariesKit",
             dependencies: [
                 "AppFeature",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

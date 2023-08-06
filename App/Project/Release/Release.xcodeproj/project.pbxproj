@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		338B49DA2A35642B000A77EB /* Anniversaries in Frameworks */ = {isa = PBXBuildFile; productRef = 338B49D92A35642B000A77EB /* Anniversaries */; };
 		6473439B29A1C4B10032EFF2 /* ReleaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */; };
 		6473439F29A1C4B30032EFF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6473439E29A1C4B30032EFF2 /* Assets.xcassets */; };
 		647343A229A1C4B30032EFF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 647343A129A1C4B30032EFF2 /* Preview Assets.xcassets */; };
+		64D6A69F2A7F4BA400793CF1 /* AnniversariesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 64D6A69E2A7F4BA400793CF1 /* AnniversariesKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				338B49DA2A35642B000A77EB /* Anniversaries in Frameworks */,
+				64D6A69F2A7F4BA400793CF1 /* AnniversariesKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +91,7 @@
 			);
 			name = Release;
 			packageProductDependencies = (
-				338B49D92A35642B000A77EB /* Anniversaries */,
+				64D6A69E2A7F4BA400793CF1 /* AnniversariesKit */,
 			);
 			productName = Release;
 			productReference = 6473439729A1C4B10032EFF2 /* Release.app */;
@@ -354,9 +354,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		338B49D92A35642B000A77EB /* Anniversaries */ = {
+		64D6A69E2A7F4BA400793CF1 /* AnniversariesKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Anniversaries;
+			productName = AnniversariesKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
