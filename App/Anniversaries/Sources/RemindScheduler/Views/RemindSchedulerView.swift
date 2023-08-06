@@ -11,84 +11,98 @@ import AppUI
  TODO:
  
  Add animation...
- Add Caution Text
- Center icon
+ add proper date to Today Label..
  */
 
 public struct RemindSchedulerView: View {
     public init(store: StoreOf<RemindScheduler>) {
         self.store = store
     }
-
+    
     private let store: StoreOf<RemindScheduler>
-
+    
     public var body: some View {
         WithViewStore(store, observe:  { $0 }) { viewStore in
             NavigationView {
                 Form {
                     Section {
-                        Button {
-                            viewStore.send(.dateTapped)
-                        } label: {
-                            Label {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(#localized("Date"))
-                                        .foregroundStyle(.black)
-
-                                    Text(viewStore.selectedDate.formatted(.calendarDate))
-                                        .font(.caption)
-                                        .foregroundColor(Color(uiColor: .link))
+                        Group {
+                            Button {
+                                viewStore.send(.dateTapped)
+                            } label: {
+                                HStack(spacing: 16) {
+                                    FormIcon(backgroundColor: "#e74c3c", systemName: "calendar")
+                                    
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(#localized("Date"))
+                                            .foregroundStyle(.black)
+                                        
+                                        Text(viewStore.selectedDate.formatted(.calendarDate))
+                                            .font(.caption)
+                                            .foregroundColor(Color(uiColor: .link))
+                                    }
                                 }
-                            } icon: {
-                                FormIcon(backgroundColor: "#e74c3c", systemName: "calendar")
+                            }
+                            
+                            if viewStore.isDateExpanded {
+                                DatePicker(
+                                    "Start Date",
+                                    selection: viewStore.$selectedDate,
+                                    displayedComponents: [.date]
+                                )
+                                .datePickerStyle(.graphical)
                             }
                         }
-
-                        if viewStore.isDateExpanded {
-                            DatePicker(
-                                "Start Date",
-                                selection: viewStore.$selectedDate,
-                                displayedComponents: [.date]
-                            )
-                            .datePickerStyle(.graphical)
+                        .animation(.default, value: viewStore.isDateExpanded)
+                        
+                        Group {
+                            Toggle(isOn: viewStore.$isCustomTime) {
+                                Button {
+                                    viewStore.send(.timeTapped)
+                                } label: {
+                                    HStack(spacing: 16) {
+                                        FormIcon(backgroundColor: "#007aff", systemName: "clock.fill")
+                                        
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text(#localized("Time"))
+                                                .foregroundStyle(.black)
+                                            if viewStore.isCustomTime {
+                                                Text(viewStore.selectedDate.formatted(.calendarDate))
+                                                    .font(.caption)
+                                                    .foregroundStyle(Color(uiColor: .link))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            if viewStore.isCustomTime && viewStore.isTimeExpanded {
+                                DatePicker(
+                                    "Start Date",
+                                    selection: viewStore.$selectedDate,
+                                    displayedComponents: [.hourAndMinute]
+                                )
+                                .datePickerStyle(.wheel)
+                            }
                         }
-
-                        Toggle(isOn: viewStore.$isCustomTime) {
-                            Button {
-                                viewStore.send(.timeTapped)
-                            } label: {
-                                Label {
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text(#localized("Time"))
-                                            .foregroundStyle(.black)
-
+                        .animation(.default, value: viewStore.isTimeExpanded)
+                    }
+                    
+                    Section {
+                        Toggle(isOn: viewStore.$isRepeat) {
+                            HStack(spacing: 16) {
+                                FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(#localized("Repeat"))
+                                    
+                                    if viewStore.isRepeat {
                                         Text(viewStore.selectedDate.formatted(.calendarDate))
                                             .font(.caption)
                                             .foregroundStyle(Color(uiColor: .link))
                                     }
-                                } icon: {
-                                    FormIcon(backgroundColor: "#007aff", systemName: "clock.fill")
                                 }
                             }
-                        }
-
-                        if viewStore.isCustomTime && viewStore.isTimeExpanded {
-                            DatePicker(
-                                "Start Date",
-                                selection: viewStore.$selectedDate,
-                                displayedComponents: [.hourAndMinute]
-                            )
-                            .datePickerStyle(.wheel)
-                        }
-                    }
-
-                    Section {
-                        Toggle(isOn: viewStore.$isRepeat) {
-                            Label {
-                                Text(#localized("Repeat"))
-                            } icon: {
-                                FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
-                            }
+                            .animation(.default, value: viewStore.isRepeat)
                         }
                     }
                 }
@@ -102,7 +116,7 @@ public struct RemindSchedulerView: View {
                             Text(#localized("Cancel"))
                         }
                     }
-
+                    
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             viewStore.send(.applyButtonTapped)
