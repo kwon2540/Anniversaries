@@ -101,8 +101,8 @@ public struct RemindSchedulerView: View {
 
     private func datePickerItem(selection: Binding<Date>) -> some View {
         DatePicker(
-            "",
-            selection: selection,
+            "", selection: selection,
+            in: .now...,
             displayedComponents: [.date]
         )
         .datePickerStyle(.graphical)
