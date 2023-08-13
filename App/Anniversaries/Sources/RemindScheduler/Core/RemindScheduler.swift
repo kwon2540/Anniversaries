@@ -8,7 +8,6 @@ import Foundation
 public struct RemindScheduler: Reducer {
     public struct State: Equatable {
         @BindingState var selectedDate: Date = .now
-//        @BindingState var selectedTime: Date = .now
         @BindingState var isRepeat = true
         @BindingState var isCustomTime = false
 
