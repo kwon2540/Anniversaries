@@ -185,6 +185,23 @@
         }
       }
     },
+    "If you have enabled the repeat feature, we will send you a reminder on the date you specify each year." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リピート機能を有効にした場合、毎年指定された日時に通知いたします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반복 기능을 활성화 하신 경우, 매년 지정하신 날짜에 알림을 보내드리겠습니다."
+          }
+        }
+      }
+    },
     "New" : {
       "extractionState" : "manual",
       "localizations" : {
