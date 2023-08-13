@@ -25,77 +25,38 @@ public struct RemindSchedulerView: View {
             NavigationView {
                 Form {
                     Section {
-                        Button {
+                        // Date Row
+                        dateItem(description: viewStore.selectedDate.formatted(.calendarDate)) {
                             viewStore.send(.dateTapped, animation: .default)
-                        } label: {
-                            HStack(spacing: 16) {
-                                FormIcon(backgroundColor: "#e74c3c", systemName: "calendar")
-
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(#localized("Date"))
-                                        .foregroundStyle(.black)
-
-                                    Text(viewStore.selectedDate.formatted(.calendarDate))
-                                        .font(.caption)
-                                        .foregroundColor(Color(uiColor: .link))
-                                }
-                            }
                         }
 
+                        // Date Selection Picker
                         if viewStore.isDateExpanded {
-                            DatePicker(
-                                "Start Date",
-                                selection: viewStore.$selectedDate,
-                                displayedComponents: [.date]
-                            )
-                            .datePickerStyle(.graphical)
+                            datePickerItem(selection: viewStore.$selectedDate)
                         }
 
-                        Toggle(isOn: viewStore.$isCustomTime.animation()) {
-                            Button {
-                                viewStore.send(.timeTapped, animation: .default)
-                            } label: {
-                                HStack(spacing: 16) {
-                                    FormIcon(backgroundColor: "#007aff", systemName: "clock.fill")
-
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text(#localized("Time"))
-                                            .foregroundStyle(.black)
-                                        if viewStore.isCustomTime {
-                                            Text(viewStore.selectedDate.formatted(.calendarDate))
-                                                .font(.caption)
-                                                .foregroundStyle(Color(uiColor: .link))
-                                        }
-                                    }
-                                }
-                            }
+                        // Time Row
+                        timeItem(
+                            isOn: viewStore.$isCustomTime.animation(),
+                            isCustomTime: viewStore.isCustomTime,
+                            description: viewStore.selectedDate.formatted(.calendarDate) // Fix
+                        ) {
+                            viewStore.send(.timeTapped, animation: .default)
                         }
 
+                        // Time Selection Picker
                         if viewStore.isCustomTime && viewStore.isTimeExpanded {
-                            DatePicker(
-                                "Start Date",
-                                selection: viewStore.$selectedDate,
-                                displayedComponents: [.hourAndMinute]
-                            )
-                            .datePickerStyle(.wheel)
+                            timePickerItem(selection: viewStore.$selectedDate) // Fix
                         }
                     }
 
                     Section {
-                        Toggle(isOn: viewStore.$isRepeat.animation()) {
-                            HStack(spacing: 16) {
-                                FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(#localized("Repeat"))
-
-                                    if viewStore.isRepeat {
-                                        Text(viewStore.selectedDate.formatted(.calendarDate))
-                                            .font(.caption)
-                                            .foregroundStyle(Color(uiColor: .link))
-                                    }
-                                }
-                            }
-                        }
+                        // Repeat Row
+                        repeatItem(
+                            isOn: viewStore.$isRepeat.animation(),
+                            isRepeat: viewStore.isRepeat,
+                            description: viewStore.selectedDate.formatted(.calendarDate)
+                        )
                     }
                 }
                 .navigationTitle(#localized("Date & Time"))
@@ -115,6 +76,78 @@ public struct RemindSchedulerView: View {
                         } label: {
                             Text(#localized("Apply"))
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private func dateItem(description: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 16) {
+                FormIcon(backgroundColor: "#e74c3c", systemName: "calendar")
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(#localized("Date"))
+                        .foregroundStyle(.black)
+
+                    Text(description)
+                        .font(.caption)
+                        .foregroundColor(Color(uiColor: .link))
+                }
+            }
+        }
+    }
+
+    private func datePickerItem(selection: Binding<Date>) -> some View {
+        DatePicker(
+            "",
+            selection: selection,
+            displayedComponents: [.date]
+        )
+        .datePickerStyle(.graphical)
+    }
+
+    private func timeItem(isOn: Binding<Bool>, isCustomTime: Bool, description: String, action: @escaping () -> Void) -> some View {
+        Toggle(isOn: isOn) {
+            Button(action: action) {
+                HStack(spacing: 16) {
+                    FormIcon(backgroundColor: "#007aff", systemName: "clock.fill")
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(#localized("Time"))
+                            .foregroundStyle(.black)
+                        if isCustomTime {
+                            Text(description)
+                                .font(.caption)
+                                .foregroundStyle(Color(uiColor: .link))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func timePickerItem(selection: Binding<Date>) -> some View {
+        DatePicker(
+            "",
+            selection: selection,
+            displayedComponents: [.hourAndMinute]
+        )
+        .datePickerStyle(.wheel)
+    }
+
+    private func repeatItem(isOn: Binding<Bool>, isRepeat: Bool, description: String) -> some View {
+        Toggle(isOn: isOn) {
+            HStack(spacing: 16) {
+                FormIcon(backgroundColor: "#c5c5c7", systemName: "repeat")
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(#localized("Repeat"))
+
+                    if isRepeat {
+                        Text(description)
+                            .font(.caption)
+                            .foregroundStyle(Color(uiColor: .link))
                     }
                 }
             }
