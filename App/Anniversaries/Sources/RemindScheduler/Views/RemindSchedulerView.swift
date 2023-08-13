@@ -39,14 +39,14 @@ public struct RemindSchedulerView: View {
                         timeItem(
                             isOn: viewStore.$isCustomTime.animation(),
                             isCustomTime: viewStore.isCustomTime,
-                            description: viewStore.selectedDate.formatted(.calendarDate) // Fix
+                            description: viewStore.selectedDate.formatted(.calendarTime)
                         ) {
                             viewStore.send(.timeTapped, animation: .default)
                         }
 
                         // Time Selection Picker
                         if viewStore.isCustomTime && viewStore.isTimeExpanded {
-                            timePickerItem(selection: viewStore.$selectedDate) // Fix
+                            timePickerItem(selection: viewStore.$selectedDate)
                         }
                     }
 

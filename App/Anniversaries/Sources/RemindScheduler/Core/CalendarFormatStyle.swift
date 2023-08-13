@@ -30,5 +30,6 @@ struct CalendarTimeStyle: FormatStyle {
 }
 
 extension FormatStyle where Self == CalendarTimeStyle {
+    /// - note: `.dateTime.hour().minute()` can also be used for similar effect.
     static var calendarTime: CalendarTimeStyle { .init() }
 }
