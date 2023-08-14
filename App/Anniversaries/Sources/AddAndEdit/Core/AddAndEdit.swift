@@ -6,6 +6,13 @@ import ComposableArchitecture
 import Foundation
 import CoreKit
 
+public enum AnniversaryKind {
+    case birth
+    case marriage
+    case death
+    case other
+}
+
 public struct AddAndEdit: Reducer {
     public struct State: Equatable {
         public enum Mode {
@@ -18,11 +25,15 @@ public struct AddAndEdit: Reducer {
         }
 
         @PresentationState var destination: Destination.State?
+        @BindingState var selectedKind: AnniversaryKind = .birth
+        @BindingState var date: Date = .now
+        
         var mode: Mode
         var reminds: [Remind] = []
     }
 
-    public enum Action: Equatable {
+    public enum Action: BindableAction, Equatable {
+        case binding(BindingAction<State>)
         case destination(PresentationAction<Destination.Action>)
         case cancelButtonTapped
         case completeButtonTapped
@@ -34,6 +45,8 @@ public struct AddAndEdit: Reducer {
     @Dependency(\.dismiss) private var dismiss
 
     public var body: some ReducerOf<Self> {
+        BindingReducer()
+
         Reduce<State, Action> { state, action in
             switch action {
             case .cancelButtonTapped:
@@ -51,7 +64,7 @@ public struct AddAndEdit: Reducer {
             case .destination(.presented(.remind(.remindApplied(let remind)))):
                 state.reminds.append(remind)
 
-            case .destination:
+            case .destination, .binding:
                 break
             }
             return .none

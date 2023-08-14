@@ -28,17 +28,13 @@ private extension AddAndEdit.State.Mode {
 }
 
 public struct AddAndEditView: View {
-//    struct Remind: Identifiable {
-//        let id = UUID()
-//        @Binding var date: Date
-//    }
-
-    enum Kind {
-        case birth
-        case marriage
-        case death
-        case other
-    }
+/*
+ Delete added remind date
+ pass anniversary date to remind and set that as default date for remind
+ localize kind and other refactoring
+ Swift Data(separate branch)
+ Separate AnniversaryKind to different file
+ */
 
     public init(store: StoreOf<AddAndEdit>) {
         self.store = store
@@ -46,23 +42,18 @@ public struct AddAndEditView: View {
 
     private var store: StoreOf<AddAndEdit>
 
-    @State private var selectedKind: Kind = .birth
-    @State private var date = Date()
-//    @State private var reminds: [Remind] = []
-    @State private var bool = false
-
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationView {
                 Form {
                     Section {
-                        Picker("Kind", selection: $selectedKind) {
-                            Text("birth").tag(Kind.birth)
-                            Text("marriage").tag(Kind.marriage)
-                            Text("death").tag(Kind.death)
-                            Text("other").tag(Kind.other)
+                        Picker("Kind", selection: viewStore.$selectedKind) {
+                            Text("birth").tag(AnniversaryKind.birth)
+                            Text("marriage").tag(AnniversaryKind.marriage)
+                            Text("death").tag(AnniversaryKind.death)
+                            Text("other").tag(AnniversaryKind.other)
                         }
-                        if case .other = selectedKind {
+                        if case .other = viewStore.selectedKind {
                             TextField("Title", text: .constant(""))
                         }
                     }
@@ -70,7 +61,7 @@ public struct AddAndEditView: View {
                         TextField("Name", text: .constant(""))
                         DatePicker(
                             "Date",
-                            selection: $date,
+                            selection: viewStore.$date,
                             displayedComponents: [.date]
                         )
                         .datePickerStyle(.compact)
