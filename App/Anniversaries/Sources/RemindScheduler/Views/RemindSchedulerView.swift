@@ -44,7 +44,7 @@ public struct RemindSchedulerView: View {
                         
                         // Date Selection Picker
                         if viewStore.isDateExpanded {
-                            datePickerItem(selection: viewStore.$selectedDate)
+                            datePickerItem(selection: viewStore.$selectedDate, startDate: viewStore.startDate)
                         }
                         
                         // Time Row
@@ -109,10 +109,10 @@ public struct RemindSchedulerView: View {
         }
     }
     
-    private func datePickerItem(selection: Binding<Date>) -> some View {
+    private func datePickerItem(selection: Binding<Date>, startDate: Date) -> some View {
         DatePicker(
             "", selection: selection,
-            in: .now...,
+            in: startDate...,
             displayedComponents: [.date]
         )
         .datePickerStyle(.graphical)

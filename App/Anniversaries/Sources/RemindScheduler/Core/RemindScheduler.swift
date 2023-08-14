@@ -8,14 +8,19 @@ import CoreKit
 
 public struct RemindScheduler: Reducer {
     public struct State: Equatable {
-        @BindingState var selectedDate: Date = .now
+        @BindingState var selectedDate: Date
         @BindingState var isRepeat = true
         @BindingState var isCustomTime = false
+        let startDate: Date
 
         var isDateExpanded = true
         var isTimeExpanded = false
 
-        public init() {}
+        public init() {
+            let date = Calendar.current.startOfDay(for: .now)
+            self.selectedDate = date
+            self.startDate = date
+        }
     }
 
     public enum Action: BindableAction, Equatable {
@@ -38,6 +43,9 @@ public struct RemindScheduler: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .binding(\.$isCustomTime):
+                if !state.isCustomTime {
+                    state.selectedDate = Calendar.current.startOfDay(for: state.selectedDate)
+                }
                 state.isTimeExpanded = state.isCustomTime
 
             case .cancelButtonTapped:

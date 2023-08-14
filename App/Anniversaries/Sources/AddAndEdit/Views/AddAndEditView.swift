@@ -90,6 +90,7 @@ public struct AddAndEditView: View {
                         }
                         ForEach(viewStore.reminds, id: \.self) { remind in
                             Text(remind.date.formatted())
+                                .padding(.leading, 8)
                         }
                     }
                     Section {
