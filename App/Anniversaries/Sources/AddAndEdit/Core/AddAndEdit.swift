@@ -6,7 +6,7 @@ import ComposableArchitecture
 import Foundation
 import Core
 
-public struct Anniversary: Reducer {
+public struct AddAndEdit: Reducer {
     public struct State: Equatable {
         public enum Mode {
             case new

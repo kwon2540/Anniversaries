@@ -2,7 +2,7 @@
 //  Created by Maharjan Binish on 2023/03/05.
 //
 
-import Anniversary
+import AddAndEdit
 import ComposableArchitecture
 import Foundation
 import Theme
@@ -86,15 +86,15 @@ public struct Home: Reducer {
 extension Home {
     public struct Destination: Reducer {
         public enum State: Equatable {
-            case anniversary(Anniversary.State)
+            case anniversary(AddAndEdit.State)
         }
 
         public enum Action: Equatable {
-            case anniversary(Anniversary.Action)
+            case anniversary(AddAndEdit.Action)
         }
 
         public var body: some ReducerOf<Self> {
-            Scope(state: /State.anniversary, action: /Action.anniversary, child: Anniversary.init)
+            Scope(state: /State.anniversary, action: /Action.anniversary, child: AddAndEdit.init)
         }
     }
 }

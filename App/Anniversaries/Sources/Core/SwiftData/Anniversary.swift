@@ -5,12 +5,12 @@
 import Foundation
 import SwiftData
 
-@Model
-public class Anniversary {
-    public var reminds: [Remind]
-}
+//@Model
+//public class Anniversary {
+//    public var reminds: [Remind]
+//}
 
-public struct Remind {
+public struct Remind: Hashable { 
     public init(date: Date, isRepeat: Bool) {
         self.date = date
         self.isRepeat = isRepeat

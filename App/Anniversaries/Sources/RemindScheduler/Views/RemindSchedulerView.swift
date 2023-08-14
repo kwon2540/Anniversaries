@@ -5,12 +5,24 @@
 import ComposableArchitecture
 import SwiftUI
 import AppUI
+import Core
 
 
 /*
  TODO:
  
  add proper date to Today Label..
+
+ kind
+ name
+ anniversary date
+ remind date [RemindDate]
+ memo
+
+
+RemindDate
+ date(timer)
+ isRepeat
  */
 
 public struct RemindSchedulerView: View {

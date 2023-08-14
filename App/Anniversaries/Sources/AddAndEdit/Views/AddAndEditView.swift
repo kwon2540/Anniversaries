@@ -7,7 +7,7 @@ import ComposableArchitecture
 import SwiftUI
 import RemindScheduler
 
-private extension Anniversary.State.Mode {
+private extension AddAndEdit.State.Mode {
     var title: String {
         switch self {
         case .new:
@@ -27,7 +27,7 @@ private extension Anniversary.State.Mode {
     }
 }
 
-public struct AnniversaryView: View {
+public struct AddAndEditView: View {
 //    struct Remind: Identifiable {
 //        let id = UUID()
 //        @Binding var date: Date
@@ -40,11 +40,11 @@ public struct AnniversaryView: View {
         case other
     }
 
-    public init(store: StoreOf<Anniversary>) {
+    public init(store: StoreOf<AddAndEdit>) {
         self.store = store
     }
 
-    private var store: StoreOf<Anniversary>
+    private var store: StoreOf<AddAndEdit>
 
     @State private var selectedKind: Kind = .birth
     @State private var date = Date()
@@ -112,7 +112,7 @@ public struct AnniversaryView: View {
                     }
                 }
                 .sheet(
-                    store: store.scope(state: \.$destination, action: Anniversary.Action.destination),
+                    store: store.scope(state: \.$destination, action: AddAndEdit.Action.destination),
                     state: /Destination.State.remind,
                     action: Destination.Action.remind,
                     content: RemindSchedulerView.init(store:)
@@ -124,9 +124,9 @@ public struct AnniversaryView: View {
 
 struct AnniversaryView_Previews: PreviewProvider {
     static var previews: some View {
-        AnniversaryView(store: .init(initialState: .init(mode: .new), reducer: Anniversary.init))
+        AddAndEditView(store: .init(initialState: .init(mode: .new), reducer: AddAndEdit.init))
             .previewDisplayName("New")
-        AnniversaryView(store: .init(initialState: .init(mode: .edit), reducer: Anniversary.init))
+        AddAndEditView(store: .init(initialState: .init(mode: .edit), reducer: AddAndEdit.init))
             .previewDisplayName("Edit")
     }
 }

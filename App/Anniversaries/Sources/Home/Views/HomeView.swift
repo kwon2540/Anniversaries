@@ -2,7 +2,7 @@
 //  Created by Maharjan Binish on 2023/03/05.
 //
 
-import Anniversary
+import AddAndEdit
 import AppUI
 import ComposableArchitecture
 import Core
@@ -37,7 +37,7 @@ public struct HomeView: View {
                     store: store.scope(state: \.$destination, action: Home.Action.destination),
                     state: /Home.Destination.State.anniversary,
                     action: Home.Destination.Action.anniversary,
-                    content: AnniversaryView.init(store:)
+                    content: AddAndEditView.init(store:)
                 )
             }
         }
