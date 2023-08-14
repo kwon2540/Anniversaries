@@ -4,6 +4,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Core
 
 public struct RemindScheduler: Reducer {
     public struct State: Equatable {
@@ -23,6 +24,8 @@ public struct RemindScheduler: Reducer {
         case applyButtonTapped
         case dateTapped
         case timeTapped
+
+        case remindApplied(Remind)
     }
 
     public init() {}
@@ -43,6 +46,12 @@ public struct RemindScheduler: Reducer {
                 }
 
             case .applyButtonTapped:
+                return .run { [state] send in
+                    let remind = Remind(date: state.selectedDate, isRepeat: state.isRepeat)
+                    await send(.remindApplied(remind))
+                }
+
+            case .remindApplied:
                 return .run { _ in
                     await dismiss()
                 }

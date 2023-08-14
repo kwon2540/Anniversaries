@@ -4,6 +4,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Core
 
 public struct Anniversary: Reducer {
     public struct State: Equatable {
@@ -18,6 +19,7 @@ public struct Anniversary: Reducer {
 
         @PresentationState var destination: Destination.State?
         var mode: Mode
+        var reminds: [Remind] = []
     }
 
     public enum Action: Equatable {
@@ -45,6 +47,9 @@ public struct Anniversary: Reducer {
 
             case .addRemindButtonTapped:
                 state.destination = .remind(.init())
+
+            case .destination(.presented(.remind(.remindApplied(let remind)))):
+                state.reminds.append(remind)
 
             case .destination:
                 break

@@ -28,10 +28,10 @@ private extension Anniversary.State.Mode {
 }
 
 public struct AnniversaryView: View {
-    struct Remind: Identifiable {
-        let id = UUID()
-        @Binding var date: Date
-    }
+//    struct Remind: Identifiable {
+//        let id = UUID()
+//        @Binding var date: Date
+//    }
 
     enum Kind {
         case birth
@@ -48,7 +48,7 @@ public struct AnniversaryView: View {
 
     @State private var selectedKind: Kind = .birth
     @State private var date = Date()
-    @State private var reminds: [Remind] = []
+//    @State private var reminds: [Remind] = []
     @State private var bool = false
 
     public var body: some View {
@@ -88,15 +88,8 @@ public struct AnniversaryView: View {
                                 Image(systemName: "plus")
                             }
                         }
-                        ForEach(reminds) { remind in
-                            DatePicker(
-                                "",
-                                selection: remind.$date,
-                                in: .now...,
-                                displayedComponents: [.date, .hourAndMinute]
-                            )
-                            .datePickerStyle(.compact)
-                            .labelsHidden()
+                        ForEach(viewStore.reminds, id: \.self) { remind in
+                            Text(remind.date.formatted())
                         }
                     }
                     Section {
