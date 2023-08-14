@@ -15,7 +15,7 @@ let package = Package(
         .library(name: "Home", targets: ["Home"]),
         .library(name: "Theme", targets: ["Theme"]),
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
-        .library(name: "Core", targets: ["Core"]),
+        .library(name: "CoreKit", targets: ["CoreKit"]),
         .library(name: "AddAndEdit", targets: ["AddAndEdit"]),
         .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
     ],
@@ -52,7 +52,7 @@ let package = Package(
         .target(
             name: "Home",
             dependencies: [
-                "Core",
+                "CoreKit",
                 "AppUI",
                 "Theme",
                 "AddAndEdit",
@@ -70,12 +70,12 @@ let package = Package(
         .target(
             name: "UserDefaultsClient",
             dependencies: [
-                "Core",
+                "CoreKit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
-            name: "Core",
+            name: "CoreKit",
             dependencies: []
         ),
         .target(

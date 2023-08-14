@@ -4,7 +4,7 @@
 
 import ComposableArchitecture
 import Foundation
-import Core
+import CoreKit
 
 public struct AddAndEdit: Reducer {
     public struct State: Equatable {

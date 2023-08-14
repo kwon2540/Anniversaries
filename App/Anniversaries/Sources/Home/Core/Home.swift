@@ -6,7 +6,7 @@ import AddAndEdit
 import ComposableArchitecture
 import Foundation
 import Theme
-import Core
+import CoreKit
 
 public struct Home: Reducer {
     public struct State: Equatable {

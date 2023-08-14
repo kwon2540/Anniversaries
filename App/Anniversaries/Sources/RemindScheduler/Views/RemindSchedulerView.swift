@@ -5,7 +5,7 @@
 import ComposableArchitecture
 import SwiftUI
 import AppUI
-import Core
+import CoreKit
 
 
 /*

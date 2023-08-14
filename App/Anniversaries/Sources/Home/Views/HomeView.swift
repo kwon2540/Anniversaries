@@ -5,7 +5,7 @@
 import AddAndEdit
 import AppUI
 import ComposableArchitecture
-import Core
+import CoreKit
 import SwiftUI
 
 public struct HomeView: View {
