@@ -29,7 +29,6 @@ private extension AddAndEdit.State.Mode {
 
 public struct AddAndEditView: View {
 /*
- Delete added remind date
  pass anniversary date to remind and set that as default date for remind
  localize kind and other refactoring
  Swift Data(separate branch)
@@ -79,9 +78,13 @@ public struct AddAndEditView: View {
                                 Image(systemName: "plus")
                             }
                         }
+                        
                         ForEach(viewStore.reminds, id: \.self) { remind in
                             Text(remind.date.formatted())
                                 .padding(.leading, 8)
+                        }
+                        .onDelete { indexSet in
+                            viewStore.send(.deleteRemind(indexSet))
                         }
                     }
                     Section {

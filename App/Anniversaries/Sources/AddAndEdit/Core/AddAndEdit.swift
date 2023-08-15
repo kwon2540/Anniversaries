@@ -27,7 +27,7 @@ public struct AddAndEdit: Reducer {
         @PresentationState var destination: Destination.State?
         @BindingState var selectedKind: AnniversaryKind = .birth
         @BindingState var date: Date = .now
-        
+
         var mode: Mode
         var reminds: [Remind] = []
     }
@@ -38,6 +38,7 @@ public struct AddAndEdit: Reducer {
         case cancelButtonTapped
         case completeButtonTapped
         case addRemindButtonTapped
+        case deleteRemind(IndexSet)
     }
 
     public init() {}
@@ -63,6 +64,9 @@ public struct AddAndEdit: Reducer {
 
             case .destination(.presented(.remind(.remindApplied(let remind)))):
                 state.reminds.append(remind)
+
+            case .deleteRemind(let indexSet):
+                state.reminds.remove(atOffsets: indexSet)
 
             case .destination, .binding:
                 break
