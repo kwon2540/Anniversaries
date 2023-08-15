@@ -2,11 +2,11 @@
 //  Created by Maharjan Binish on 2023/03/05.
 //
 
-import Anniversary
+import AddAndEdit
 import ComposableArchitecture
 import Foundation
 import Theme
-import Core
+import CoreKit
 
 public struct Home: Reducer {
     public struct State: Equatable {
@@ -71,10 +71,7 @@ public struct Home: Reducer {
             case .addButtonTapped:
                 state.destination = .anniversary(.init(mode: .new))
                 
-            case .themeAction:
-                break
-
-            case .destination:
+            case .themeAction, .destination:
                 break
             }
             return .none
@@ -89,15 +86,15 @@ public struct Home: Reducer {
 extension Home {
     public struct Destination: Reducer {
         public enum State: Equatable {
-            case anniversary(Anniversary.State)
+            case anniversary(AddAndEdit.State)
         }
 
         public enum Action: Equatable {
-            case anniversary(Anniversary.Action)
+            case anniversary(AddAndEdit.Action)
         }
 
         public var body: some ReducerOf<Self> {
-            Scope(state: /State.anniversary, action: /Action.anniversary, child: Anniversary.init)
+            Scope(state: /State.anniversary, action: /Action.anniversary, child: AddAndEdit.init)
         }
     }
 }

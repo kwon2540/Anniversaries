@@ -7,7 +7,7 @@ import ComposableArchitecture
 import SwiftUI
 import RemindScheduler
 
-private extension Anniversary.State.Mode {
+private extension AddAndEdit.State.Mode {
     var title: String {
         switch self {
         case .new:
@@ -27,56 +27,60 @@ private extension Anniversary.State.Mode {
     }
 }
 
-public struct AnniversaryView: View {
-    struct Remind: Identifiable {
-        let id = UUID()
-        @Binding var date: Date
+private extension AddAndEdit.State.Kind {
+    var title: String {
+        switch self {
+        case .birth:
+            return #localized("Birthday")
+        case .marriage:
+            return #localized("Marriage Anniversary")
+        case .death:
+            return #localized("Death Anniversary")
+        case .others:
+            return #localized("Others")
+        }
     }
+}
 
-    enum Kind {
-        case birth
-        case marriage
-        case death
-        case other
-    }
+public struct AddAndEditView: View {
+/*
+ TODO
 
-    public init(store: StoreOf<Anniversary>) {
+ Swift Data(separate branch)
+ Move Kind to Core Module
+ */
+
+    public init(store: StoreOf<AddAndEdit>) {
         self.store = store
     }
 
-    private var store: StoreOf<Anniversary>
-
-    @State private var selectedKind: Kind = .birth
-    @State private var date = Date()
-    @State private var reminds: [Remind] = []
-    @State private var bool = false
+    private var store: StoreOf<AddAndEdit>
 
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationView {
                 Form {
                     Section {
-                        Picker("Kind", selection: $selectedKind) {
-                            Text("birth").tag(Kind.birth)
-                            Text("marriage").tag(Kind.marriage)
-                            Text("death").tag(Kind.death)
-                            Text("other").tag(Kind.other)
+                        Picker(#localized("Kind"), selection: viewStore.$selectedKind) {
+                            ForEach(AddAndEdit.State.Kind.allCases, id: \.self) { kind in
+                                Text(kind.title).tag(kind)
+                            }
                         }
-                        if case .other = selectedKind {
-                            TextField("Title", text: .constant(""))
+                        if case .others = viewStore.selectedKind {
+                            TextField(#localized("Title"), text: viewStore.$othersTitle)
                         }
                     }
                     Section {
-                        TextField("Name", text: .constant(""))
+                        TextField(#localized("Name"), text: viewStore.$name)
                         DatePicker(
-                            "Date",
-                            selection: $date,
+                            #localized("Date"),
+                            selection: viewStore.$date,
                             displayedComponents: [.date]
                         )
                         .datePickerStyle(.compact)
                     }
                     Section {
-                        LabeledContent("Remind") {
+                        LabeledContent(#localized("Remind")) {
                             Button {
                                 viewStore.send(.addRemindButtonTapped)
                                 // +タップしたらモーダルでDateとTimeとRepeatを決める画面を表示する
@@ -88,19 +92,17 @@ public struct AnniversaryView: View {
                                 Image(systemName: "plus")
                             }
                         }
-                        ForEach(reminds) { remind in
-                            DatePicker(
-                                "",
-                                selection: remind.$date,
-                                in: .now...,
-                                displayedComponents: [.date, .hourAndMinute]
-                            )
-                            .datePickerStyle(.compact)
-                            .labelsHidden()
+                        
+                        ForEach(viewStore.reminds, id: \.self) { remind in
+                            Text(remind.date.formatted())
+                                .padding(.leading, 8)
+                        }
+                        .onDelete { indexSet in
+                            viewStore.send(.deleteRemind(indexSet))
                         }
                     }
                     Section {
-                        TextField("Memo", text: .constant(""))
+                        TextField(#localized("Memo"), text: viewStore.$memo)
                             .frame(height: 100, alignment: .top)
                     }
                 }
@@ -119,7 +121,7 @@ public struct AnniversaryView: View {
                     }
                 }
                 .sheet(
-                    store: store.scope(state: \.$destination, action: Anniversary.Action.destination),
+                    store: store.scope(state: \.$destination, action: AddAndEdit.Action.destination),
                     state: /Destination.State.remind,
                     action: Destination.Action.remind,
                     content: RemindSchedulerView.init(store:)
@@ -131,9 +133,9 @@ public struct AnniversaryView: View {
 
 struct AnniversaryView_Previews: PreviewProvider {
     static var previews: some View {
-        AnniversaryView(store: .init(initialState: .init(mode: .new), reducer: Anniversary.init))
+        AddAndEditView(store: .init(initialState: .init(mode: .new), reducer: AddAndEdit.init))
             .previewDisplayName("New")
-        AnniversaryView(store: .init(initialState: .init(mode: .edit), reducer: Anniversary.init))
+        AddAndEditView(store: .init(initialState: .init(mode: .edit), reducer: AddAndEdit.init))
             .previewDisplayName("Edit")
     }
 }

@@ -15,13 +15,7 @@ struct LaunchView: View {
                 .onAppear {
                     viewStore.send(.onAppear)
                 }
-                .alert(
-                    store.scope(
-                        state: \.alertState,
-                        action: Launch.Action.alert
-                    ),
-                    dismiss: .onDismiss
-                )
+                .alert(store: store.scope(state: \.$alert, action: { .alert($0) }))
         }
     }
 }

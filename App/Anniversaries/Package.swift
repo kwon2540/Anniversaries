@@ -9,23 +9,23 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.iOS(.v17), .macOS(.v13)],
     products: [
-        .library(name: "Anniversaries", targets: ["Anniversaries"]),
+        .library(name: "AnniversariesKit", targets: ["AnniversariesKit"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AppUI", targets: ["AppUI"]),
         .library(name: "Home", targets: ["Home"]),
         .library(name: "Theme", targets: ["Theme"]),
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
-        .library(name: "Core", targets: ["Core"]),
-        .library(name: "Anniversary", targets: ["Anniversary"]),
+        .library(name: "CoreKit", targets: ["CoreKit"]),
+        .library(name: "AddAndEdit", targets: ["AddAndEdit"]),
         .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "release/1.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.0.0"),
         .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
     ],
     targets: [
         .target(
-            name: "Anniversaries",
+            name: "AnniversariesKit",
             dependencies: [
                 "AppFeature",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -52,10 +52,10 @@ let package = Package(
         .target(
             name: "Home",
             dependencies: [
-                "Core",
+                "CoreKit",
                 "AppUI",
                 "Theme",
-                "Anniversary",
+                "AddAndEdit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -70,16 +70,16 @@ let package = Package(
         .target(
             name: "UserDefaultsClient",
             dependencies: [
-                "Core",
+                "CoreKit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
-            name: "Core",
+            name: "CoreKit",
             dependencies: []
         ),
         .target(
-            name: "Anniversary",
+            name: "AddAndEdit",
             dependencies: [
                 "AppUI",
                 "RemindScheduler",

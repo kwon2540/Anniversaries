@@ -2,7 +2,7 @@
 //  Created by Maharjan Binish on 2023/03/19.
 //
 
-import Core
+import CoreKit
 import Foundation
 import Dependencies
 
