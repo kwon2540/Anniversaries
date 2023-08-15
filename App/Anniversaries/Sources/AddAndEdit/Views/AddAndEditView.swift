@@ -44,9 +44,7 @@ private extension AddAndEdit.State.Kind {
 
 public struct AddAndEditView: View {
 /*
- localize kind and other refactoring
  Swift Data(separate branch)
- Separate AnniversaryKind to different file
  */
 
     public init(store: StoreOf<AddAndEdit>) {
@@ -60,26 +58,26 @@ public struct AddAndEditView: View {
             NavigationView {
                 Form {
                     Section {
-                        Picker("Kind", selection: viewStore.$selectedKind) {
+                        Picker(#localized("Kind"), selection: viewStore.$selectedKind) {
                             ForEach(AddAndEdit.State.Kind.allCases, id: \.self) { kind in
                                 Text(kind.title).tag(kind)
                             }
                         }
                         if case .others = viewStore.selectedKind {
-                            TextField("Title", text: viewStore.$othersTitle)
+                            TextField(#localized("Title"), text: viewStore.$othersTitle)
                         }
                     }
                     Section {
-                        TextField("Name", text: viewStore.$name)
+                        TextField(#localized("Name"), text: viewStore.$name)
                         DatePicker(
-                            "Date",
+                            #localized("Date"),
                             selection: viewStore.$date,
                             displayedComponents: [.date]
                         )
                         .datePickerStyle(.compact)
                     }
                     Section {
-                        LabeledContent("Remind") {
+                        LabeledContent(#localized("Remind")) {
                             Button {
                                 viewStore.send(.addRemindButtonTapped)
                                 // +タップしたらモーダルでDateとTimeとRepeatを決める画面を表示する
@@ -101,7 +99,7 @@ public struct AddAndEditView: View {
                         }
                     }
                     Section {
-                        TextField("Memo", text: viewStore.$memo)
+                        TextField(#localized("Memo"), text: viewStore.$memo)
                             .frame(height: 100, alignment: .top)
                     }
                 }

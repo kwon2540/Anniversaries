@@ -73,6 +73,12 @@
     "Birthday" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthday"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -159,6 +165,12 @@
     "Death Anniversary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Death Anniversary"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -222,6 +234,12 @@
     "If you have enabled the repeat feature, we will send you a reminder on the date you specify each year." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you have enabled the repeat feature, we will send you a reminder on the date you specify each year."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -236,9 +254,38 @@
         }
       }
     },
+    "Kind" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kind"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "種類"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "종류"
+          }
+        }
+      }
+    },
     "Marriage Anniversary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marriage Anniversary"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -249,6 +296,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "결혼기념일"
+          }
+        }
+      }
+    },
+    "Memo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メモ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메모"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名前"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이름"
           }
         }
       }
@@ -279,6 +372,12 @@
     "Others" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Others"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -289,6 +388,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "기타"
+          }
+        }
+      }
+    },
+    "Remind" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインド"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알림"
           }
         }
       }
@@ -335,6 +457,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "시간"
+          }
+        }
+      }
+    },
+    "Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タイトル"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "제목"
           }
         }
       }

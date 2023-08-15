@@ -7,24 +7,6 @@ import SwiftUI
 import AppUI
 import CoreKit
 
-
-/*
- TODO:
- 
- add proper date to Today Label..
-
- kind
- name
- anniversary date
- remind date [RemindDate]
- memo
-
-
-RemindDate
- date(timer)
- isRepeat
- */
-
 public struct RemindSchedulerView: View {
     public init(store: StoreOf<RemindScheduler>) {
         self.store = store
