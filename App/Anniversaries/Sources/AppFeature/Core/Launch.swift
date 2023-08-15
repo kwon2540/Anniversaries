@@ -76,6 +76,5 @@ public struct Launch: Reducer {
         Scope(state: \.themeState, action: /Action.themeAction) {
             Theme()
         }
-
     }
 }
