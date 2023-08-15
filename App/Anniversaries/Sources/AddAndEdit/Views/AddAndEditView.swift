@@ -27,9 +27,23 @@ private extension AddAndEdit.State.Mode {
     }
 }
 
+private extension AddAndEdit.State.Kind {
+    var title: String {
+        switch self {
+        case .birth:
+            return #localized("Birthday")
+        case .marriage:
+            return #localized("Marriage Anniversary")
+        case .death:
+            return #localized("Death Anniversary")
+        case .others:
+            return #localized("Others")
+        }
+    }
+}
+
 public struct AddAndEditView: View {
 /*
- pass anniversary date to remind and set that as default date for remind
  localize kind and other refactoring
  Swift Data(separate branch)
  Separate AnniversaryKind to different file
@@ -47,17 +61,16 @@ public struct AddAndEditView: View {
                 Form {
                     Section {
                         Picker("Kind", selection: viewStore.$selectedKind) {
-                            Text("birth").tag(AnniversaryKind.birth)
-                            Text("marriage").tag(AnniversaryKind.marriage)
-                            Text("death").tag(AnniversaryKind.death)
-                            Text("other").tag(AnniversaryKind.other)
+                            ForEach(AddAndEdit.State.Kind.allCases, id: \.self) { kind in
+                                Text(kind.title).tag(kind)
+                            }
                         }
-                        if case .other = viewStore.selectedKind {
-                            TextField("Title", text: .constant(""))
+                        if case .others = viewStore.selectedKind {
+                            TextField("Title", text: viewStore.$othersTitle)
                         }
                     }
                     Section {
-                        TextField("Name", text: .constant(""))
+                        TextField("Name", text: viewStore.$name)
                         DatePicker(
                             "Date",
                             selection: viewStore.$date,
@@ -88,7 +101,7 @@ public struct AddAndEditView: View {
                         }
                     }
                     Section {
-                        TextField("Memo", text: .constant(""))
+                        TextField("Memo", text: viewStore.$memo)
                             .frame(height: 100, alignment: .top)
                     }
                 }
