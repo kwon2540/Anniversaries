@@ -45,8 +45,9 @@ private extension AddAndEdit.State.Kind {
 public struct AddAndEditView: View {
 /*
  TODO
- 
+
  Swift Data(separate branch)
+ Move Kind to Core Module
  */
 
     public init(store: StoreOf<AddAndEdit>) {
