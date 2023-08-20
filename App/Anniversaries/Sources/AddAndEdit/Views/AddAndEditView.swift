@@ -6,6 +6,7 @@ import AppUI
 import ComposableArchitecture
 import SwiftUI
 import RemindScheduler
+import CoreKit
 
 private extension AddAndEdit.State.Mode {
     var title: String {
@@ -27,7 +28,7 @@ private extension AddAndEdit.State.Mode {
     }
 }
 
-private extension AddAndEdit.State.Kind {
+private extension AnniversaryKind {
     var title: String {
         switch self {
         case .birth:
@@ -45,9 +46,7 @@ private extension AddAndEdit.State.Kind {
 public struct AddAndEditView: View {
 /*
  TODO
-
  Swift Data(separate branch)
- Move Kind to Core Module
  */
 
     public init(store: StoreOf<AddAndEdit>) {
@@ -62,7 +61,7 @@ public struct AddAndEditView: View {
                 Form {
                     Section {
                         Picker(#localized("Kind"), selection: viewStore.$selectedKind) {
-                            ForEach(AddAndEdit.State.Kind.allCases, id: \.self) { kind in
+                            ForEach(AnniversaryKind.allCases, id: \.self) { kind in
                                 Text(kind.title).tag(kind)
                             }
                         }

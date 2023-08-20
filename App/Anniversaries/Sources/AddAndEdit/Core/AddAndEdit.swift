@@ -13,19 +13,12 @@ public struct AddAndEdit: Reducer {
             case edit
         }
 
-        public enum Kind: CaseIterable {
-            case birth
-            case marriage
-            case death
-            case others
-        }
-
         public init(mode: Mode) {
             self.mode = mode
         }
 
         @PresentationState var destination: Destination.State?
-        @BindingState var selectedKind: Kind = .birth
+        @BindingState var selectedKind: AnniversaryKind = .birth
         @BindingState var othersTitle = ""
         @BindingState var name = ""
         @BindingState var date: Date = .now
