@@ -47,6 +47,7 @@ public struct AddAndEditView: View {
 /*
  TODO
  Swift Data(separate branch)
+ Make Name Compulsary
  */
 
     public init(store: StoreOf<AddAndEdit>) {
@@ -124,6 +125,11 @@ public struct AddAndEditView: View {
                     state: /Destination.State.remind,
                     action: Destination.Action.remind,
                     content: RemindSchedulerView.init(store:)
+                )
+                .alert(
+                    store: store.scope(state: \.$destination, action: AddAndEdit.Action.destination),
+                    state: /Destination.State.alert,
+                    action: Destination.Action.alert
                 )
             }
         }

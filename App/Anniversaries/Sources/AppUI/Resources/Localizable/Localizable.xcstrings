@@ -231,6 +231,23 @@
         }
       }
     },
+    "Failed to save data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "データの追加に失敗しました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데이터를 추가하지 못했습니다"
+          }
+        }
+      }
+    },
     "If you have enabled the repeat feature, we will send you a reminder on the date you specify each year." : {
       "extractionState" : "manual",
       "localizations" : {
