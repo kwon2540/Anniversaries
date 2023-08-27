@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum AnniversaryKind: CaseIterable {
+public enum AnniversaryKind: CaseIterable, Codable {
     case birth
     case marriage
     case death

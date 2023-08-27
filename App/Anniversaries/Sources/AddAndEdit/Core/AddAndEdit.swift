@@ -5,6 +5,8 @@
 import ComposableArchitecture
 import Foundation
 import CoreKit
+import SwiftData
+import AppUI
 
 public struct AddAndEdit: Reducer {
     public struct State: Equatable {
@@ -35,11 +37,20 @@ public struct AddAndEdit: Reducer {
         case completeButtonTapped
         case addRemindButtonTapped
         case deleteRemind(IndexSet)
+        case anniversarySaveSuccess
+        case anniversarySaveFailed(AnniversaryError)
     }
 
-    public init() {}
+    public init() {
+        guard let container = try? ModelContainer(for: Anniversary.self) else {
+            fatalError("Failed to create ModelContainer For Anniversary.")
+        }
+
+        self.context = ModelContext(container)
+    }
 
     @Dependency(\.dismiss) private var dismiss
+    private let context: ModelContext
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -51,12 +62,39 @@ public struct AddAndEdit: Reducer {
                     await dismiss()
                 }
             case .completeButtonTapped:
+                let anniversary = Anniversary(
+//                    kind: state.selectedKind,
+                    othersTitle: state.othersTitle,
+                    name: state.name,
+//                    date: state.date,
+//                    reminds: state.reminds,
+                    memo: state.memo
+                )
+//
+//                return .run { send in
+//                    do {
+//                        context.insert(anniversary)
+//                        try context.save()
+//
+//                        await send(.anniversarySaveSuccess)
+//                    } catch {
+//                        await send(.anniversarySaveFailed(.saveFailed))
+//                    }
+//                }
+                break
+
+            case .addRemindButtonTapped:
+                state.destination = .remind(.init())
+
+            case .anniversarySaveSuccess:
                 return .run { _ in
                     await dismiss()
                 }
 
-            case .addRemindButtonTapped:
-                state.destination = .remind(.init())
+            case .anniversarySaveFailed:
+                state.destination = .alert(
+                    AlertState(title: TextState(#localized("Failed to save data")))
+                )
 
             case .destination(.presented(.remind(.remindApplied(let remind)))):
                 state.reminds.append(remind)
