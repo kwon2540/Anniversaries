@@ -63,25 +63,24 @@ public struct AddAndEdit: Reducer {
                 }
             case .completeButtonTapped:
                 let anniversary = Anniversary(
-//                    kind: state.selectedKind,
+                    kind: state.selectedKind,
                     othersTitle: state.othersTitle,
                     name: state.name,
-//                    date: state.date,
-//                    reminds: state.reminds,
+                    date: state.date,
+                    reminds: state.reminds,
                     memo: state.memo
                 )
-//
-//                return .run { send in
-//                    do {
-//                        context.insert(anniversary)
-//                        try context.save()
-//
-//                        await send(.anniversarySaveSuccess)
-//                    } catch {
-//                        await send(.anniversarySaveFailed(.saveFailed))
-//                    }
-//                }
-                break
+                
+                return .run { send in
+                    do {
+                        context.insert(anniversary)
+                        try context.save()
+
+                        await send(.anniversarySaveSuccess)
+                    } catch {
+                        await send(.anniversarySaveFailed(.saveFailed))
+                    }
+                }
 
             case .addRemindButtonTapped:
                 state.destination = .remind(.init())
