@@ -25,6 +25,15 @@ public struct AddAndEdit: Reducer {
         @BindingState var name = ""
         @BindingState var date: Date = .now
         @BindingState var memo = ""
+        var isCompleteButtonDisabled: Bool {
+            switch selectedKind {
+            case .birth, .marriage, .death:
+                return name.isEmpty
+
+            case .others:
+                return name.isEmpty || othersTitle.isEmpty
+            }
+        }
 
         var mode: Mode
         var reminds: [Remind] = []

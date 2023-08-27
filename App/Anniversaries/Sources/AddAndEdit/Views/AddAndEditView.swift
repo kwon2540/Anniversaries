@@ -118,6 +118,7 @@ public struct AddAndEditView: View {
                         Button(viewStore.mode.completeTitle) {
                             viewStore.send(.completeButtonTapped)
                         }
+                        .disabled(viewStore.isCompleteButtonDisabled)
                     }
                 }
                 .sheet(
