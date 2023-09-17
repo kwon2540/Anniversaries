@@ -50,16 +50,10 @@ public struct AddAndEdit: Reducer {
         case anniversarySaveFailed(AnniversaryError)
     }
 
-    public init() {
-        guard let container = try? ModelContainer(for: Anniversary.self) else {
-            fatalError("Failed to create ModelContainer For Anniversary.")
-        }
-
-        self.context = ModelContext(container)
-    }
+    public init() {}
 
     @Dependency(\.dismiss) private var dismiss
-    private let context: ModelContext
+    @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -82,8 +76,8 @@ public struct AddAndEdit: Reducer {
                 
                 return .run { send in
                     do {
-                        context.insert(anniversary)
-                        try context.save()
+                        anniversaryDataClient.insert(anniversary)
+                        try anniversaryDataClient.save()
 
                         await send(.anniversarySaveSuccess)
                     } catch {

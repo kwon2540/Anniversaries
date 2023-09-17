@@ -40,6 +40,7 @@ public struct Home: Reducer {
     public init() {}
 
     @Dependency(\.userDefaultsClient) private var userDefaultClient
+    @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
 
     public var body: some ReducerOf<Self> {
         Scope(state: \.themeState, action: /Action.themeAction) {
