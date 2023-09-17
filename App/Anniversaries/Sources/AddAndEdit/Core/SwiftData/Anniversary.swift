@@ -7,7 +7,7 @@ import SwiftData
 import CoreKit
 
 /*
- FIXME: Move to Core Module. 
+ TODO: Move to Core Module.
  SwiftData Module emits error when accessed from different Module in Xcode 15 beta 7.
  */
 @Model

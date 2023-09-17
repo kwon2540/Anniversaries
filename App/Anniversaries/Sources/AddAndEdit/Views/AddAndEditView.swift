@@ -44,11 +44,6 @@ private extension AnniversaryKind {
 }
 
 public struct AddAndEditView: View {
-/*
- TODO
- Make Name Compulsory(disable add button)
- Fix error on save Anniversary to Container
- */
 
     public init(store: StoreOf<AddAndEdit>) {
         self.store = store
