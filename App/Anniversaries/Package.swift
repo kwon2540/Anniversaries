@@ -76,13 +76,16 @@ let package = Package(
         ),
         .target(
             name: "CoreKit",
-            dependencies: []
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
         ),
         .target(
             name: "AddAndEdit",
             dependencies: [
                 "AppUI",
                 "RemindScheduler",
+                "CoreKit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

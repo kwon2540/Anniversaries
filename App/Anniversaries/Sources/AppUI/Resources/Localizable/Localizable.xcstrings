@@ -231,6 +231,23 @@
         }
       }
     },
+    "Failed to load data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "データの取得に失敗しました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데이터를 불러오지 못했습니다"
+          }
+        }
+      }
+    },
     "Failed to save data" : {
       "extractionState" : "manual",
       "localizations" : {

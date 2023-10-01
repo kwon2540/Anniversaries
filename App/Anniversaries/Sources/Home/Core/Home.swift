@@ -3,6 +3,7 @@
 //
 
 import AddAndEdit
+import AppUI
 import ComposableArchitecture
 import Foundation
 import Theme
@@ -27,6 +28,8 @@ public struct Home: Reducer {
 
         case destination(PresentationAction<Destination.Action>)
         case onAppear
+        case fetchAnniversaries
+        case anniversariesResponse(TaskResult<[Anniversary]>)
         case editButtonTapped
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
@@ -52,6 +55,26 @@ public struct Home: Reducer {
                 state.currentSort = userDefaultClient.currentAnniversariesSort()
                 state.currentSortOrder = userDefaultClient.currentAnniversariesSortOrder()
 
+            case .fetchAnniversaries:
+                return .run { send in
+                    await send(
+                        .anniversariesResponse(
+                            TaskResult {
+                                try anniversaryDataClient.fetch()
+                            }
+                        )
+                    )
+                }
+
+            case .anniversariesResponse(.success(let anniversaries)):
+                state.anniversaries = anniversaries
+
+            case .anniversariesResponse(.failure(let error)):
+                assertionFailure(error.localizedDescription)
+                state.destination = .alert(
+                    AlertState(title: TextState(#localized("Failed to load data")))
+                )
+
             case .editButtonTapped:
                 break
 
@@ -70,14 +93,17 @@ public struct Home: Reducer {
 
             case .addButtonTapped:
                 state.destination = .anniversary(.init(mode: .new))
-                
+
+            case .destination(.presented(.anniversary(.saveAnniversaries(.success)))):
+                return .send(.fetchAnniversaries)
+
             case .themeAction, .destination:
                 break
             }
             return .none
         }
         .ifLet(\.$destination, action: /Action.destination) {
-          Destination()
+            Destination()
         }
     }
 }
@@ -87,10 +113,14 @@ extension Home {
     public struct Destination: Reducer {
         public enum State: Equatable {
             case anniversary(AddAndEdit.State)
+            case alert(AlertState<Action.Alert>)
         }
 
         public enum Action: Equatable {
+            public enum Alert: Equatable {
+            }
             case anniversary(AddAndEdit.Action)
+            case alert(Alert)
         }
 
         public var body: some ReducerOf<Self> {

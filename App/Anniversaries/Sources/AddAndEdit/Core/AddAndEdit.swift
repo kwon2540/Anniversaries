@@ -46,8 +46,7 @@ public struct AddAndEdit: Reducer {
         case completeButtonTapped
         case addRemindButtonTapped
         case deleteRemind(IndexSet)
-        case anniversarySaveSuccess
-        case anniversarySaveFailed(AnniversaryError)
+        case saveAnniversaries(TaskResult<VoidSuccess>)
     }
 
     public init() {}
@@ -75,25 +74,26 @@ public struct AddAndEdit: Reducer {
                 )
                 
                 return .run { send in
-                    do {
-                        anniversaryDataClient.insert(anniversary)
-                        try anniversaryDataClient.save()
-
-                        await send(.anniversarySaveSuccess)
-                    } catch {
-                        await send(.anniversarySaveFailed(.saveFailed))
-                    }
+                    await send(
+                        .saveAnniversaries(
+                            TaskResult {
+                                anniversaryDataClient.insert(anniversary)
+                                return try anniversaryDataClient.save()
+                            }
+                        )
+                    )
                 }
 
             case .addRemindButtonTapped:
                 state.destination = .remind(.init())
 
-            case .anniversarySaveSuccess:
+            case .saveAnniversaries(.success):
                 return .run { _ in
                     await dismiss()
                 }
 
-            case .anniversarySaveFailed:
+            case .saveAnniversaries(.failure(let error)):
+                assertionFailure(error.localizedDescription)
                 state.destination = .alert(
                     AlertState(title: TextState(#localized("Failed to save data")))
                 )
