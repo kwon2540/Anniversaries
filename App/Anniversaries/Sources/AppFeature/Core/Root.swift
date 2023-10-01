@@ -34,7 +34,7 @@ public struct Root: Reducer {
                 }
 
             case .launchAction(.delegate(.onComplete(let anniversaries))):
-                state.homeState = .init(anniversaries: anniversaries, themeState: state.themeState)
+                state.homeState = .init(themeState: state.themeState)
                 state.launchState = nil
 
             case .launchAction, .homeAction:

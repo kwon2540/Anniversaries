@@ -18,10 +18,11 @@ let package = Package(
         .library(name: "CoreKit", targets: ["CoreKit"]),
         .library(name: "AddAndEdit", targets: ["AddAndEdit"]),
         .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
+        .library(name: "SwiftDataClient", targets: ["SwiftDataClient"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
     ],
     targets: [
         .target(
@@ -56,6 +57,7 @@ let package = Package(
                 "AppUI",
                 "Theme",
                 "AddAndEdit",
+                "SwiftDataClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -76,13 +78,17 @@ let package = Package(
         ),
         .target(
             name: "CoreKit",
-            dependencies: []
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
         ),
         .target(
             name: "AddAndEdit",
             dependencies: [
                 "AppUI",
                 "RemindScheduler",
+                "CoreKit",
+                "SwiftDataClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -112,6 +118,13 @@ let package = Package(
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
+        .target(
+            name: "SwiftDataClient",
+            dependencies: [
+                "CoreKit",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
     ]

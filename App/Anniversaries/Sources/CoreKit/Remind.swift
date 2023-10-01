@@ -1,16 +1,10 @@
 //
-//  Created by Maharjan Binish on 2023/08/14.
+//  Created by Maharjan Binish on 2023/08/27.
 //
 
 import Foundation
-import SwiftData
 
-//@Model
-//public class Anniversary {
-//    public var reminds: [Remind]
-//}
-
-public struct Remind: Hashable { 
+public struct Remind: Hashable, Codable {
     public init(date: Date, isRepeat: Bool) {
         self.date = date
         self.isRepeat = isRepeat

@@ -9,9 +9,13 @@ import RemindScheduler
 public struct Destination: Reducer {
     public enum State: Equatable {
         case remind(RemindScheduler.State)
+        case alert(AlertState<Action.Alert>)
     }
 
     public enum Action: Equatable {
+        public enum Alert: Equatable {
+        }
+        case alert(Alert)
         case remind(RemindScheduler.Action)
     }
 

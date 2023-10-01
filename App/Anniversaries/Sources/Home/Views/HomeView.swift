@@ -6,6 +6,8 @@ import AddAndEdit
 import AppUI
 import ComposableArchitecture
 import CoreKit
+import SwiftData
+import SwiftDataClient
 import SwiftUI
 
 public struct HomeView: View {
@@ -18,8 +20,10 @@ public struct HomeView: View {
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
-                ScrollView{
-                    Text(#localized("Anniversaries"))
+                List {
+                    ForEach(viewStore.anniversaries) { anniversary in
+                        Text(anniversary.name)
+                    }
                 }
                 .navigationTitle(#localized("Anniversaries"))
                 .toolbar {
@@ -39,6 +43,7 @@ public struct HomeView: View {
                     action: Home.Destination.Action.anniversary,
                     content: AddAndEditView.init(store:)
                 )
+                .modelContainer(anniversaryContainer)
             }
         }
     }
@@ -154,7 +159,6 @@ struct HomeView_Previews: PreviewProvider {
         HomeView(
             store: .init(
                 initialState: .init(
-                    anniversaries: "Anniversaries",
                     themeState: .init()
                 ),
                 reducer: Home.init
