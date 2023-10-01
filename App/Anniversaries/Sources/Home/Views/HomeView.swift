@@ -20,8 +20,10 @@ public struct HomeView: View {
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
-                ScrollView{
-                    Text(#localized("Anniversaries"))
+                List {
+                    ForEach(viewStore.anniversaries) { anniversary in
+                        Text(anniversary.name)
+                    }
                 }
                 .navigationTitle(#localized("Anniversaries"))
                 .toolbar {
