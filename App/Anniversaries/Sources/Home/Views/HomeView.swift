@@ -7,6 +7,7 @@ import AppUI
 import ComposableArchitecture
 import CoreKit
 import SwiftUI
+import SwiftData
 
 public struct HomeView: View {
     public init(store: StoreOf<Home>) {
@@ -39,6 +40,7 @@ public struct HomeView: View {
                     action: Home.Destination.Action.anniversary,
                     content: AddAndEditView.init(store:)
                 )
+                .modelContainer(anniversaryContainer)
             }
         }
     }
