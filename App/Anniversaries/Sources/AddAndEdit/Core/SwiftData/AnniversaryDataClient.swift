@@ -51,13 +51,8 @@ extension AnniversaryDataClient: DependencyKey {
 }
 
 extension AnniversaryDataClient {
-
     private static func live() -> AnniversaryDataClient {
-        guard let container = try? ModelContainer(for: Anniversary.self) else {
-            fatalError("Failed to create ModelContainer For Anniversary.")
-        }
-
-        let context = ModelContext(container)
+        let context = ModelContext(anniversaryContainer)
 
         return AnniversaryDataClient(
             insert: { anniversary in
