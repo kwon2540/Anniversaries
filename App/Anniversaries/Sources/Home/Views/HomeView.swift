@@ -6,8 +6,9 @@ import AddAndEdit
 import AppUI
 import ComposableArchitecture
 import CoreKit
-import SwiftUI
 import SwiftData
+import SwiftDataClient
+import SwiftUI
 
 public struct HomeView: View {
     public init(store: StoreOf<Home>) {

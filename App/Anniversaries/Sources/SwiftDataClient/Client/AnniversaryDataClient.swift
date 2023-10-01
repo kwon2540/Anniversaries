@@ -3,9 +3,17 @@
 //
 
 import SwiftData
+import CoreKit
 import Dependencies
 
-// TODO: Move this to Separate Module
+/// ModelContainer for Anniversary
+public var anniversaryContainer = {
+    guard let container = try? ModelContainer(for: Anniversary.self) else {
+        fatalError("Failed to create ModelContainer For Anniversary.")
+    }
+    return container
+}()
+
 public struct AnniversaryDataClient {
     public var insert: (Anniversary) -> Void
     public var save: () throws -> Void

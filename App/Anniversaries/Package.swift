@@ -18,6 +18,7 @@ let package = Package(
         .library(name: "CoreKit", targets: ["CoreKit"]),
         .library(name: "AddAndEdit", targets: ["AddAndEdit"]),
         .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
+        .library(name: "SwiftDataClient", targets: ["SwiftDataClient"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.0.0"),
@@ -56,6 +57,7 @@ let package = Package(
                 "AppUI",
                 "Theme",
                 "AddAndEdit",
+                "SwiftDataClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -86,6 +88,7 @@ let package = Package(
                 "AppUI",
                 "RemindScheduler",
                 "CoreKit",
+                "SwiftDataClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -115,6 +118,13 @@ let package = Package(
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
+        .target(
+            name: "SwiftDataClient",
+            dependencies: [
+                "CoreKit",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
     ]

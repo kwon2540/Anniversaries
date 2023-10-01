@@ -2,21 +2,10 @@
 //  Created by Maharjan Binish on 2023/08/14.
 //
 
+import CoreKit
 import Foundation
 import SwiftData
-import CoreKit
 
-public var anniversaryContainer = {
-    guard let container = try? ModelContainer(for: Anniversary.self) else {
-        fatalError("Failed to create ModelContainer For Anniversary.")
-    }
-    return container
-}()
-
-/*
- TODO: Move to Core Module.
- SwiftData Module emits error when accessed from different Module in Xcode 15 beta 7.
- */
 @Model
 public class Anniversary {
     public init(

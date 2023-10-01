@@ -5,9 +5,10 @@
 import AddAndEdit
 import AppUI
 import ComposableArchitecture
-import Foundation
-import Theme
 import CoreKit
+import Foundation
+import SwiftDataClient
+import Theme
 
 public struct Home: Reducer {
     public struct State: Equatable {
@@ -54,6 +55,8 @@ public struct Home: Reducer {
             case .onAppear:
                 state.currentSort = userDefaultClient.currentAnniversariesSort()
                 state.currentSortOrder = userDefaultClient.currentAnniversariesSortOrder()
+
+                return .send(.fetchAnniversaries)
 
             case .fetchAnniversaries:
                 return .run { send in
