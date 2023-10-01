@@ -10,13 +10,12 @@ import CoreKit
 
 public struct Home: Reducer {
     public struct State: Equatable {
-        public init(anniversaries: String, themeState: Theme.State) {
-            self.anniversaries = anniversaries
+        public init(themeState: Theme.State) {
             self.themeState = themeState
         }
 
         @PresentationState var destination: Destination.State?
-        var anniversaries: String
+        var anniversaries: [Anniversary] = []
         var themeState: Theme.State
         var currentSort: Sort.Kind = .defaultDate
         var currentSortOrder: Sort.Order = .newest
