@@ -15,12 +15,8 @@ private extension Sort.Kind {
         switch self {
         case .defaultCategory:
             return #localized("Default(Category)")
-        case .category:
-            return #localized("Category")
         case .date:
             return #localized("Date")
-        case .created:
-            return #localized("Created")
         case .name:
             return #localized("Name")
         }

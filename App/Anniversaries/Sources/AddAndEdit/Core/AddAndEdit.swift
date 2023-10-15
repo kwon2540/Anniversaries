@@ -28,7 +28,7 @@ public struct AddAndEdit: Reducer {
         @BindingState var memo = ""
         var isCompleteButtonDisabled: Bool {
             switch selectedKind {
-            case .birth, .marriage, .death:
+            case .birth, .death:
                 return name.isEmpty
 
             case .others:

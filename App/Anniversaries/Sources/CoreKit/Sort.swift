@@ -9,9 +9,7 @@ public enum Sort {
     /// Sorting factor for Anniversaries
     public enum Kind: CaseIterable, Codable {
         case defaultCategory
-        case category
         case date
-        case created
         case name
     }
 

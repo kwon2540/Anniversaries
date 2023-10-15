@@ -33,8 +33,6 @@ private extension AnniversaryKind {
         switch self {
         case .birth:
             return #localized("Birthday")
-        case .marriage:
-            return #localized("Marriage Anniversary")
         case .death:
             return #localized("Death Anniversary")
         case .others:
