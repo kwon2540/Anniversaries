@@ -19,8 +19,8 @@ public struct Home: Reducer {
         @PresentationState var destination: Destination.State?
         var anniversaries: [Anniversary] = []
         var themeState: Theme.State
-        var currentSort: Sort.Kind = .defaultDate
-        var currentSortOrder: Sort.Order = .newest
+        var currentSort: Sort.Kind = .defaultCategory
+        var currentSortOrder: Sort.Order = .ascending
     }
 
     public enum Action: Equatable {

@@ -10,6 +10,34 @@ import SwiftData
 import SwiftDataClient
 import SwiftUI
 
+private extension Sort.Kind {
+    var title: String {
+        switch self {
+        case .defaultCategory:
+            return #localized("Default(Category)")
+        case .category:
+            return #localized("Category")
+        case .date:
+            return #localized("Date")
+        case .created:
+            return #localized("Created")
+        case .name:
+            return #localized("Name")
+        }
+    }
+}
+
+private extension Sort.Order {
+    var title: String {
+        switch self {
+        case .ascending:
+            return #localized("Ascending")
+        case .descending:
+            return #localized("Descending")
+        }
+    }
+}
+
 public struct HomeView: View {
     public init(store: StoreOf<Home>) {
         self.store = store
@@ -53,13 +81,13 @@ public struct HomeView: View {
             Button {
                 viewStore.send(.editButtonTapped)
             } label: {
-                Label("Edit", systemImage: "pencil")
+                Label(#localized("Edit"), systemImage: "pencil")
             }
 
             Menu {
                 ForEach(Sort.Kind.allCases, id: \.self) { sort in
                     Toggle(
-                        sort.rawValue,
+                        sort.title,
                         isOn: viewStore.binding(
                             get: { $0.currentSort == sort },
                             send: .sortByButtonTapped(sort)
@@ -71,7 +99,7 @@ public struct HomeView: View {
 
                 ForEach(Sort.Order.allCases, id: \.self) { sortOrder in
                     Toggle(
-                        sortOrder.rawValue,
+                        sortOrder.title,
                         isOn: viewStore.binding(
                             get: { $0.currentSortOrder == sortOrder },
                             send: .sortOrderButtonTapped(sortOrder)
@@ -79,7 +107,7 @@ public struct HomeView: View {
                     )
                 }
             } label: {
-                Label("Sort By", systemImage: "arrow.up.arrow.down")
+                Label(#localized("Sort By"), systemImage: "arrow.up.arrow.down")
             }
 
             Menu {

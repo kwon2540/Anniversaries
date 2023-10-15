@@ -38,7 +38,7 @@ extension UserDefaultsClient: TestDependencyKey {
         setCurrentTheme: { _ in },
         currentAnniversariesSort: { .date },
         setCurrentAnniversariesSort: { _ in },
-        currentAnniversariesSortOrder: { .newest },
+        currentAnniversariesSortOrder: { .ascending },
         setCurrentAnniversariesSortOrder: { _ in }
     )
 }
