@@ -17,7 +17,7 @@ public struct Home: Reducer {
         }
 
         @PresentationState var destination: Destination.State?
-        var anniversaries: [Anniversary] = []
+        var anniversaries: [[Anniversary]] = []
         var themeState: Theme.State
         var currentSort: Sort.Kind = .defaultCategory
         var currentSortOrder: Sort.Order = .ascending
@@ -31,6 +31,7 @@ public struct Home: Reducer {
         case onAppear
         case fetchAnniversaries
         case anniversariesResponse(TaskResult<[Anniversary]>)
+        case sortAnniversaries([Anniversary])
         case editButtonTapped
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
@@ -70,13 +71,32 @@ public struct Home: Reducer {
                 }
 
             case .anniversariesResponse(.success(let anniversaries)):
-                state.anniversaries = anniversaries
+                return .send(.sortAnniversaries(anniversaries))
 
             case .anniversariesResponse(.failure(let error)):
                 assertionFailure(error.localizedDescription)
                 state.destination = .alert(
                     AlertState(title: TextState(#localized("Failed to load data")))
                 )
+
+            case .sortAnniversaries(let anniversaries):
+                let result: [[Anniversary]]
+                switch state.currentSort {
+                case .defaultCategory:
+                    var groupedAnniversaries: [[Anniversary]] = []
+                    AnniversaryKind.allCases.forEach { kind in
+                        groupedAnniversaries.append(anniversaries.filter { $0.kind == kind })
+                    }
+                    result = groupedAnniversaries
+                case .date:
+                    var groupedAnniversaries: [[Anniversary]] = []
+                    // TODO: 12月分のグループに分けてResultに返す
+                    result = groupedAnniversaries
+                case .name:
+                    var sortedAnniversaries = anniversaries.sorted(using: KeyPathComparator(\.name, order: state.currentSortOrder == .ascending ? .forward : .reverse))
+                    result = [sortedAnniversaries]
+                }
+                state.anniversaries = result
 
             case .editButtonTapped:
                 break

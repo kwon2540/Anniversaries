@@ -45,9 +45,9 @@ public struct HomeView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
                 List {
-                    ForEach(viewStore.anniversaries) { anniversary in
-                        Text(anniversary.name)
-                    }
+//                    ForEach(viewStore.anniversaries) { anniversary in
+//                        Text(anniversary.name)
+//                    }
                 }
                 .navigationTitle(#localized("Anniversaries"))
                 .toolbar {
