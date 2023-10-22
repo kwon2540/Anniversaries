@@ -11,7 +11,9 @@ public struct Root: Reducer {
         var launchState: Launch.State?
         var homeState: Home.State?
         
-        public init() {}
+        public init() {
+            self.launchState = .init()
+        }
     }
     
     public enum Action: Equatable {
