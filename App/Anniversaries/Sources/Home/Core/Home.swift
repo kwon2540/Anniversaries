@@ -17,7 +17,9 @@ public struct Home: Reducer {
         }
 
         @PresentationState var destination: Destination.State?
-        var anniversaries: [[Anniversary]] = []
+
+        var anniversaries: [Anniversary] = []
+        var groupedAnniversariesList: [GroupedAnniversaries] = []
         var themeState: Theme.State
         var currentSort: Sort.Kind = .defaultCategory
         var currentSortOrder: Sort.Order = .ascending
@@ -31,7 +33,7 @@ public struct Home: Reducer {
         case onAppear
         case fetchAnniversaries
         case anniversariesResponse(TaskResult<[Anniversary]>)
-        case sortAnniversaries([Anniversary])
+        case sortAnniversaries
         case editButtonTapped
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
@@ -71,7 +73,8 @@ public struct Home: Reducer {
                 }
 
             case .anniversariesResponse(.success(let anniversaries)):
-                return .send(.sortAnniversaries(anniversaries))
+                state.anniversaries = anniversaries
+                return .send(.sortAnniversaries)
 
             case .anniversariesResponse(.failure(let error)):
                 assertionFailure(error.localizedDescription)
@@ -79,37 +82,55 @@ public struct Home: Reducer {
                     AlertState(title: TextState(#localized("Failed to load data")))
                 )
 
-            case .sortAnniversaries(let anniversaries):
-                let result: [[Anniversary]]
+            case .sortAnniversaries:
+                let anniversaries = state.anniversaries
+                let result: [GroupedAnniversaries]
                 switch state.currentSort {
                 case .defaultCategory:
-                    var groupedAnniversaries: [[Anniversary]] = []
-                    AnniversaryKind.allCases.forEach { kind in
-                        groupedAnniversaries.append(anniversaries.filter { $0.kind == kind })
-                    }
-                    result = groupedAnniversaries
+                    // AnniversaryKindをKeyでGroupしている
+                    let anniversariesDictionary: [AnniversaryKind: [Anniversary]] = Dictionary(
+                        grouping: anniversaries,
+                        by: { $0.kind }
+                    )
+                    // AnniversaryKindのIntのRawValueでソートを行なっている
+                    let sortedGroupedAnniversaries = anniversariesDictionary
+                        .sorted {
+                            $0.key.rawValue < $1.key.rawValue
+                        }
+                        .map(GroupedAnniversaries.init(element:))
+                    result = state.currentSortOrder == .ascending ? sortedGroupedAnniversaries : sortedGroupedAnniversaries.reversed()
                 case .date:
-                    var groupedAnniversaries: [[Anniversary]] = []
-                    // TODO: 12月分のグループに分けてResultに返す
-                    result = groupedAnniversaries
+                    // Date.FormatStyle.FormatOutput(String)をKeyでGroupしている
+                    let anniversariesDictionary: [Date.FormatStyle.FormatOutput: [Anniversary]] = Dictionary(
+                        grouping: anniversaries,
+                        by: { $0.month }
+                    )
+                    // Date.FormatStyle.FormatOutput(String)ではソートがうまくできないため、digitsMonthを利用するソートを行なっている
+                    let sortedGroupedAnniversaries = anniversariesDictionary
+                        .sorted {
+                            $0.value.first?.digitsMonth ?? 0 < $1.value.first?.digitsMonth ?? 0
+                        }
+                        .map(GroupedAnniversaries.init(element:))
+                    result = state.currentSortOrder == .ascending ? sortedGroupedAnniversaries : sortedGroupedAnniversaries.reversed()
                 case .name:
-                    var sortedAnniversaries = anniversaries.sorted(using: KeyPathComparator(\.name, order: state.currentSortOrder == .ascending ? .forward : .reverse))
-                    result = [sortedAnniversaries]
+                    let sortedAnniversaries = anniversaries
+                        .sorted(using: KeyPathComparator(\.name, order: state.currentSortOrder == .ascending ? .forward : .reverse))
+                    result = [GroupedAnniversaries(key: #localized("Name"), anniversaries: sortedAnniversaries)]
                 }
-                state.anniversaries = result
+                state.groupedAnniversariesList = result
 
             case .editButtonTapped:
                 break
 
             case .sortByButtonTapped(let sort):
-                // TODO: Perform Sort Logic
                 state.currentSort = sort
                 userDefaultClient.setCurrentAnniversariesSort(sort)
+                return .send(.sortAnniversaries)
 
             case .sortOrderButtonTapped(let sortOrder):
-                // TODO: Perform Sort Logic
                 state.currentSortOrder = sortOrder
                 userDefaultClient.setCurrentAnniversariesSortOrder(sortOrder)
+                return .send(.sortAnniversaries)
 
             case .themeButtonTapped(let theme):
                 return .send(.themeAction(.presetChanged(theme)))
