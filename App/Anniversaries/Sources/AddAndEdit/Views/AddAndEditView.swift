@@ -28,19 +28,6 @@ private extension AddAndEdit.State.Mode {
     }
 }
 
-private extension AnniversaryKind {
-    var title: String {
-        switch self {
-        case .birth:
-            return #localized("Birthday")
-        case .death:
-            return #localized("Death Anniversary")
-        case .others:
-            return #localized("Others")
-        }
-    }
-}
-
 public struct AddAndEditView: View {
 
     public init(store: StoreOf<AddAndEdit>) {
