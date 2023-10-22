@@ -8,17 +8,14 @@ import ComposableArchitecture
 import CoreKit
 import Foundation
 import SwiftDataClient
-import Theme
+import UserDefaultsClient
 
 public struct Home: Reducer {
     public struct State: Equatable {
-        public init(themeState: Theme.State) {
-            self.themeState = themeState
-        }
+        public init() {}
 
         @PresentationState var destination: Destination.State?
         var anniversaries: [Anniversary] = []
-        var themeState: Theme.State
         var currentSort: Sort.Kind = .defaultDate
         var currentSortOrder: Sort.Order = .newest
     }
@@ -34,10 +31,8 @@ public struct Home: Reducer {
         case editButtonTapped
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
-        case themeButtonTapped(Theme.Preset)
         case addButtonTapped
         case delegate(Delegate)
-        case themeAction(Theme.Action)
     }
 
     public init() {}
@@ -46,10 +41,6 @@ public struct Home: Reducer {
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
 
     public var body: some ReducerOf<Self> {
-        Scope(state: \.themeState, action: /Action.themeAction) {
-            Theme()
-        }
-
         Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
@@ -91,16 +82,13 @@ public struct Home: Reducer {
                 state.currentSortOrder = sortOrder
                 userDefaultClient.setCurrentAnniversariesSortOrder(sortOrder)
 
-            case .themeButtonTapped(let theme):
-                return .send(.themeAction(.presetChanged(theme)))
-
             case .addButtonTapped:
                 state.destination = .anniversary(.init(mode: .new))
 
             case .destination(.presented(.anniversary(.saveAnniversaries(.success)))):
                 return .send(.fetchAnniversaries)
 
-            case .themeAction, .destination:
+            case .destination:
                 break
             }
             return .none

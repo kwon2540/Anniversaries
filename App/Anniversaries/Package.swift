@@ -13,7 +13,6 @@ let package = Package(
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AppUI", targets: ["AppUI"]),
         .library(name: "Home", targets: ["Home"]),
-        .library(name: "Theme", targets: ["Theme"]),
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
         .library(name: "CoreKit", targets: ["CoreKit"]),
         .library(name: "AddAndEdit", targets: ["AddAndEdit"]),
@@ -37,7 +36,6 @@ let package = Package(
             dependencies: [
                 "AppUI",
                 "Home",
-                "Theme",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -55,16 +53,8 @@ let package = Package(
             dependencies: [
                 "CoreKit",
                 "AppUI",
-                "Theme",
                 "AddAndEdit",
                 "SwiftDataClient",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-            ]
-        ),
-        .target(
-            name: "Theme",
-            dependencies: [
-                "AppUI",
                 "UserDefaultsClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
@@ -96,13 +86,6 @@ let package = Package(
             name: "RemindScheduler",
             dependencies: [
                 "AppUI",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-            ]
-        ),
-        .testTarget(
-            name: "ThemeTests",
-            dependencies: [
-                "Theme",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

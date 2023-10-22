@@ -4,11 +4,9 @@
 
 import ComposableArchitecture
 import Foundation
-import Theme
 
 public struct Launch: Reducer {
     public struct State: Equatable {
-        var themeState: Theme.State
         @PresentationState var alert: AlertState<Action.Alert>?
     }
 
@@ -27,7 +25,6 @@ public struct Launch: Reducer {
 
         case alert(PresentationAction<Alert>)
         case delegate(Delegate)
-        case themeAction(Theme.Action)
     }
 
     @Dependency(\.continuousClock) var clock // TODO: delete
@@ -36,7 +33,7 @@ public struct Launch: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
-                return .send(.themeAction(.onLaunch))
+                return .send(.fetchAnniversaries)
                 
             case .fetchAnniversaries:
                 return .run { send in
@@ -62,19 +59,12 @@ public struct Launch: Reducer {
                 state.alert = nil
                 return .send(.fetchAnniversaries)
 
-            case .themeAction(.onLoaded):
-                return .send(.fetchAnniversaries)
-
-            case .delegate, .themeAction, .alert:
+            case .delegate, .alert:
                 break
             }
 
             return .none
         }
         .ifLet(\.$alert, action: /Action.alert)
-
-        Scope(state: \.themeState, action: /Action.themeAction) {
-            Theme()
-        }
     }
 }

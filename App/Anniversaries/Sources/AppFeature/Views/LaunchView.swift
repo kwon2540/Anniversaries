@@ -24,7 +24,7 @@ struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
         LaunchView(
             store: Store(
-                initialState: .init(themeState: .init()),
+                initialState: .init(),
                 reducer: Launch.init
             )
         )

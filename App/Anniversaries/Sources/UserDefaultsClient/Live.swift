@@ -7,7 +7,6 @@ import Foundation
 import Dependencies
 
 private enum Keys {
-    static let currentTheme = "currentTheme"
     static let currentAnniversariesSort = "currentAnniversariesSort"
     static let currentAnniversariesSortOrder = "currentAnniversariesSortOrder"
 }
@@ -25,12 +24,6 @@ extension UserDefaultsClient {
         jsonEncoder: JSONEncoder = JSONEncoder()
     ) -> Self {
         Self(
-            currentTheme: {
-                userDefaults.integer(forKey: Keys.currentTheme)
-            },
-            setCurrentTheme: {
-                userDefaults.set($0, forKey: Keys.currentTheme)
-            },
             currentAnniversariesSort: {
                 guard let data = userDefaults.data(forKey: Keys.currentAnniversariesSort),
                       let sort = try? jsonDecoder.decode(Sort.Kind.self, from: data) else {

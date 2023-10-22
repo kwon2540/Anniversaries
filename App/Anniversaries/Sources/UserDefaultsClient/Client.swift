@@ -7,8 +7,6 @@ import Foundation
 import Dependencies
 
 public struct UserDefaultsClient {
-    public var currentTheme: () -> Int
-    public var setCurrentTheme: (Int) -> Void
     public var currentAnniversariesSort: () -> Sort.Kind
     public var setCurrentAnniversariesSort: (Sort.Kind) -> Void
     public var currentAnniversariesSortOrder: () -> Sort.Order
@@ -25,8 +23,6 @@ extension DependencyValues {
 // MARK: Dependency (testValue, previewValue)
 extension UserDefaultsClient: TestDependencyKey {
     public static let testValue = Self(
-        currentTheme: unimplemented(),
-        setCurrentTheme: unimplemented(),
         currentAnniversariesSort: unimplemented(),
         setCurrentAnniversariesSort: unimplemented(),
         currentAnniversariesSortOrder: unimplemented(),
@@ -34,8 +30,6 @@ extension UserDefaultsClient: TestDependencyKey {
     )
 
     public static let previewValue = Self(
-        currentTheme: { 0 },
-        setCurrentTheme: { _ in },
         currentAnniversariesSort: { .date },
         setCurrentAnniversariesSort: { _ in },
         currentAnniversariesSortOrder: { .newest },
