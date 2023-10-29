@@ -10,8 +10,8 @@ public extension AnniversaryKind {
         switch self {
         case .birth:
             return #localized("Birthday")
-        case .death:
-            return #localized("Death Anniversary")
+        case .remembrance:
+            return #localized("Remembrance Day")
         case .others:
             return #localized("Others")
         }

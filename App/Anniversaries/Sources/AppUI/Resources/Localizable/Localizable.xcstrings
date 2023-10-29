@@ -185,29 +185,6 @@
         }
       }
     },
-    "Death Anniversary" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Death Anniversary"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "命日"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "기일"
-          }
-        }
-      }
-    },
     "Default(Category)" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -480,6 +457,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "기타"
+          }
+        }
+      }
+    },
+    "Remembrance Day" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remembrance Day"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "命日"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "기일"
           }
         }
       }
