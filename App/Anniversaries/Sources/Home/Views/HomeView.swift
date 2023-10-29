@@ -45,9 +45,19 @@ public struct HomeView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
                 List {
-//                    ForEach(viewStore.anniversaries) { anniversary in
-//                        Text(anniversary.name)
-//                    }
+                    ForEach(viewStore.groupedAnniversariesList, id: \.self) { groupedAnniversaries in
+                        Section {
+                            ForEach(groupedAnniversaries.anniversaries, id: \.self) { anniversary in
+                                item(anniversary)
+                            }
+                        } header: {
+                            Text(groupedAnniversaries.key)
+                                .font(.title2)
+                                .foregroundStyle(Color.black)
+                                .padding(.leading, -16)
+                        }
+                        .textCase(nil)
+                    }
                 }
                 .navigationTitle(#localized("Anniversaries"))
                 .toolbar {
@@ -72,6 +82,7 @@ public struct HomeView: View {
         }
     }
 
+    // MARK: Tools
     private func menu(viewStore: ViewStoreOf<Home>) -> some View {
         Menu {
             Button {
@@ -174,6 +185,49 @@ public struct HomeView: View {
                     .foregroundColor(viewStore.themeState.backgroundColor)
             }
             .buttonStyle(.plain)
+        }
+    }
+
+    // MARK: Item
+    private func item(_ anniversary: Anniversary) -> some View {
+        VStack {
+            HStack(alignment: .firstTextBaseline){
+                Text(anniversary.name)
+                    .font(.title3)
+                    .bold()
+                Spacer()
+                Text(anniversary.date.formatted(date: .numeric, time: .omitted))
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.gray)
+            }
+
+            Text("リマインド:")
+                .font(.caption)
+                .bold()
+                .foregroundStyle(Color.gray)
+                .padding(.top, 2)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Text("\(Date.distantFuture.formatted(.remindDate))")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.subheadline)
+            Text("\(Date.distantPast.formatted(.remindDate))")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.subheadline)
+            Text("\(Date.now.formatted(.remindDate))")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.subheadline)
+            if !anniversary.memo.isEmpty {
+                Text("メモ:")
+                    .font(.caption)
+                    .bold()
+                    .padding(.top, 2)
+                    .foregroundStyle(Color.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(anniversary.memo)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.subheadline)
+            }
         }
     }
 }
