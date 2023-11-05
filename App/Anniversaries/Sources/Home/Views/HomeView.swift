@@ -48,7 +48,11 @@ public struct HomeView: View {
                     ForEach(viewStore.groupedAnniversariesList, id: \.self) { groupedAnniversaries in
                         Section {
                             ForEach(groupedAnniversaries.anniversaries, id: \.self) { anniversary in
-                                item(anniversary)
+                                Button {
+
+                                } label: {
+                                    Item(anniversary: anniversary)
+                                }
                             }
                         } header: {
                             Text(groupedAnniversaries.key)
@@ -187,48 +191,79 @@ public struct HomeView: View {
             .buttonStyle(.plain)
         }
     }
+}
 
-    // MARK: Item
-    private func item(_ anniversary: Anniversary) -> some View {
-        VStack {
-            HStack(alignment: .firstTextBaseline){
-                Text(anniversary.name)
-                    .font(.title3)
-                    .bold()
-                Spacer()
-                Text(anniversary.date.formatted(date: .numeric, time: .omitted))
+private struct Item: View {
+    var anniversary: Anniversary
+
+    var body: some View {
+        LabeledContent {
+            chevron
+        } label: {
+            VStack(spacing: 8) {
+                HStack(alignment: .firstTextBaseline) {
+                    name
+                    Spacer()
+                    date
+                }
+                // reminds, memoどっちもいない場合にspacingだけ取られているため
+                if !anniversary.reminds.isEmpty || !anniversary.memo.isEmpty {
+                    VStack {
+                        if !anniversary.reminds.isEmpty {
+                            reminds
+                        }
+                        if !anniversary.memo.isEmpty {
+                            memo
+                        }
+                    }
                     .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.gray)
+                }
             }
+            .foregroundStyle(Color.black)
+            .lineLimit(1)
+        }
+    }
 
-            Text("リマインド:")
-                .font(.caption)
+    private var name: some View {
+        Text(anniversary.name)
+            .font(.title3)
+            .bold()
+    }
+
+    private var date: some View {
+        Text(anniversary.date.formatted(date: .numeric, time: .omitted))
+            .font(.subheadline)
+            .fontWeight(.semibold)
+            .foregroundStyle(Color.gray)
+    }
+
+    private var reminds: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text("\(#localized("Remind")): ")
                 .bold()
                 .foregroundStyle(Color.gray)
-                .padding(.top, 2)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            Text("\(Date.distantFuture.formatted(.remindDate))")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.subheadline)
-            Text("\(Date.distantPast.formatted(.remindDate))")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.subheadline)
-            Text("\(Date.now.formatted(.remindDate))")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.subheadline)
-            if !anniversary.memo.isEmpty {
-                Text("メモ:")
-                    .font(.caption)
-                    .bold()
-                    .padding(.top, 2)
-                    .foregroundStyle(Color.gray)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(anniversary.memo)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.subheadline)
-            }
+            +
+            Text(anniversary.remindDate)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var memo: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text("\(#localized("Memo")): ")
+                .bold()
+                .foregroundStyle(Color.gray)
+            +
+            Text(anniversary.memo)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var chevron: some View {
+        Image(systemName: "chevron.right")
+            .resizable()
+            .scaledToFit()
+            .frame(height: 12)
     }
 }
 
