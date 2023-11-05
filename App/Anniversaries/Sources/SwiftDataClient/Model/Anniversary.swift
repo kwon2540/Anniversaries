@@ -31,13 +31,3 @@ public class Anniversary {
     public var reminds: [Remind]
     public var memo: String
 }
-
-extension Anniversary {
-    public var month: Date.FormatStyle.FormatOutput {
-        date.formatted(.dateTime.month())
-    }
-
-    public var digitsMonth: Int {
-        Int(date.formatted(.dateTime.month(.defaultDigits))) ?? 0
-    }
-}
