@@ -39,6 +39,7 @@ public struct Home: Reducer {
         case sortOrderButtonTapped(Sort.Order)
         case themeButtonTapped(Theme.Preset)
         case addButtonTapped
+        case ItemTapped(Anniversary)
         case delegate(Delegate)
         case themeAction(Theme.Action)
     }
@@ -136,9 +137,12 @@ public struct Home: Reducer {
                 return .send(.themeAction(.presetChanged(theme)))
 
             case .addButtonTapped:
-                state.destination = .anniversary(.init(mode: .new))
+                state.destination = .new(.init(mode: .new))
 
-            case .destination(.presented(.anniversary(.saveAnniversaries(.success)))):
+            case .ItemTapped(let anniversary):
+                state.destination = .edit(.init(mode: .edit(anniversary)))
+
+            case .destination(.presented(.new(.saveAnniversaries(.success)))):
                 return .send(.fetchAnniversaries)
 
             case .themeAction, .destination:
@@ -156,19 +160,22 @@ public struct Home: Reducer {
 extension Home {
     public struct Destination: Reducer {
         public enum State: Equatable {
-            case anniversary(AddAndEdit.State)
+            case new(AddAndEdit.State)
+            case edit(AddAndEdit.State)
             case alert(AlertState<Action.Alert>)
         }
 
         public enum Action: Equatable {
             public enum Alert: Equatable {
             }
-            case anniversary(AddAndEdit.Action)
+            case new(AddAndEdit.Action)
+            case edit(AddAndEdit.Action)
             case alert(Alert)
         }
 
         public var body: some ReducerOf<Self> {
-            Scope(state: /State.anniversary, action: /Action.anniversary, child: AddAndEdit.init)
+            Scope(state: /State.new, action: /Action.new, child: AddAndEdit.init)
+            Scope(state: /State.edit, action: /Action.edit, child: AddAndEdit.init)
         }
     }
 }

@@ -49,7 +49,7 @@ public struct HomeView: View {
                         Section {
                             ForEach(groupedAnniversaries.anniversaries, id: \.self) { anniversary in
                                 Button {
-
+                                    viewStore.send(.ItemTapped(anniversary))
                                 } label: {
                                     Item(anniversary: anniversary)
                                 }
@@ -77,9 +77,15 @@ public struct HomeView: View {
                 }
                 .sheet(
                     store: store.scope(state: \.$destination, action: Home.Action.destination),
-                    state: /Home.Destination.State.anniversary,
-                    action: Home.Destination.Action.anniversary,
+                    state: /Home.Destination.State.new,
+                    action: Home.Destination.Action.new,
                     content: AddAndEditView.init(store:)
+                )
+                .navigationDestination(
+                    store: store.scope(state: \.$destination, action: Home.Action.destination),
+                    state: /Home.Destination.State.edit,
+                    action: Home.Destination.Action.edit,
+                    destination: AddAndEditView.init(store:)
                 )
                 .modelContainer(anniversaryContainer)
             }

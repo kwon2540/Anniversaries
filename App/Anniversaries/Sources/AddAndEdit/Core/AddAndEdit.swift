@@ -11,9 +11,9 @@ import SwiftDataClient
 
 public struct AddAndEdit: Reducer {
     public struct State: Equatable {
-        public enum Mode {
+        public enum Mode: Equatable {
             case new
-            case edit
+            case edit(Anniversary)
         }
 
         public init(mode: Mode) {
