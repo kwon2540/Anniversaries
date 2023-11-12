@@ -12,7 +12,7 @@ import SwiftDataClient
 public struct AddAndEdit: Reducer {
     public struct State: Equatable {
         public enum Mode: Equatable {
-            case new
+            case add
             case edit(Anniversary)
         }
 

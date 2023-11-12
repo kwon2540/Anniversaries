@@ -137,12 +137,12 @@ public struct Home: Reducer {
                 return .send(.themeAction(.presetChanged(theme)))
 
             case .addButtonTapped:
-                state.destination = .new(.init(mode: .new))
+                state.destination = .add(.init(mode: .add))
 
             case .ItemTapped(let anniversary):
                 state.destination = .edit(.init(mode: .edit(anniversary)))
 
-            case .destination(.presented(.new(.saveAnniversaries(.success)))):
+            case .destination(.presented(.add(.saveAnniversaries(.success)))):
                 return .send(.fetchAnniversaries)
 
             case .themeAction, .destination:
@@ -160,7 +160,7 @@ public struct Home: Reducer {
 extension Home {
     public struct Destination: Reducer {
         public enum State: Equatable {
-            case new(AddAndEdit.State)
+            case add(AddAndEdit.State)
             case edit(AddAndEdit.State)
             case alert(AlertState<Action.Alert>)
         }
@@ -168,13 +168,13 @@ extension Home {
         public enum Action: Equatable {
             public enum Alert: Equatable {
             }
-            case new(AddAndEdit.Action)
+            case add(AddAndEdit.Action)
             case edit(AddAndEdit.Action)
             case alert(Alert)
         }
 
         public var body: some ReducerOf<Self> {
-            Scope(state: /State.new, action: /Action.new, child: AddAndEdit.init)
+            Scope(state: /State.add, action: /Action.add, child: AddAndEdit.init)
             Scope(state: /State.edit, action: /Action.edit, child: AddAndEdit.init)
         }
     }

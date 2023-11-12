@@ -77,9 +77,9 @@ public struct HomeView: View {
                 }
                 .sheet(
                     store: store.scope(state: \.$destination, action: Home.Action.destination),
-                    state: /Home.Destination.State.new,
-                    action: Home.Destination.Action.new,
                     content: AddAndEditView.init(store:)
+                    state: /Home.Destination.State.add,
+                    action: Home.Destination.Action.add,
                 )
                 .navigationDestination(
                     store: store.scope(state: \.$destination, action: Home.Action.destination),
