@@ -18,6 +18,15 @@ public struct AddAndEdit: Reducer {
 
         public init(mode: Mode) {
             self.mode = mode
+            if case let .edit(anniversary) = mode {
+                self.originalAnniversary = anniversary
+                self.selectedKind = anniversary.kind
+                self.othersTitle = anniversary.othersTitle ?? ""
+                self.name = anniversary.name
+                self.date = anniversary.date
+                self.reminds = anniversary.reminds
+                self.memo = anniversary.memo
+            }
         }
 
         @PresentationState var destination: Destination.State?
@@ -27,6 +36,7 @@ public struct AddAndEdit: Reducer {
         @BindingState var date: Date = .now
         @BindingState var memo = ""
         var isCompleteButtonDisabled: Bool {
+        var originalAnniversary: Anniversary? = nil
             switch selectedKind {
             case .birth, .remembrance:
                 return name.isEmpty
