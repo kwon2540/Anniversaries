@@ -65,7 +65,8 @@ public struct AddAndEdit: Reducer {
         case binding(BindingAction<State>)
         case destination(PresentationAction<Destination.Action>)
         case cancelButtonTapped
-        case completeButtonTapped
+        case addButtonTapped
+        case doneButtonTapped
         case addRemindButtonTapped
         case deleteRemind(IndexSet)
         case saveAnniversaries(TaskResult<VoidSuccess>)
@@ -97,6 +98,9 @@ public struct AddAndEdit: Reducer {
                         )
                     )
                 }
+
+            case .doneButtonTapped:
+                break
 
             case .addRemindButtonTapped:
                 state.destination = .remind(.init())

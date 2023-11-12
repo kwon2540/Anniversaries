@@ -29,7 +29,7 @@ public struct AddView: View {
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(#localized("Add")) {
-                                viewStore.send(.completeButtonTapped)
+                                viewStore.send(.addButtonTapped)
                             }
                             .disabled(viewStore.isCompleteButtonDisabled)
                         }

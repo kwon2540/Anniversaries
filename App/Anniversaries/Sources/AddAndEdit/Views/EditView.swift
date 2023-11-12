@@ -23,7 +23,7 @@ public struct EditView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(#localized("Done")) {
-                            viewStore.send(.completeButtonTapped)
+                            viewStore.send(.doneButtonTapped)
                         }
                         .disabled(viewStore.isCompleteButtonDisabled)
                     }
