@@ -31,7 +31,7 @@ public struct AddView: View {
                             Button(#localized("Add")) {
                                 viewStore.send(.addButtonTapped)
                             }
-                            .disabled(viewStore.isCompleteButtonDisabled)
+                            .disabled(viewStore.isAddButtonDisabled)
                         }
                     }
                     .sheet(

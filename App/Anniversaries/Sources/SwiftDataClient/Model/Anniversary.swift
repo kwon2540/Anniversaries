@@ -7,7 +7,17 @@ import Foundation
 import SwiftData
 
 @Model
-public class Anniversary: Identifiable {
+public class Anniversary: Identifiable, Equatable {
+    public static func == (lhs: Anniversary, rhs: Anniversary) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.kind == rhs.kind &&
+        lhs.othersTitle == rhs.othersTitle &&
+        lhs.name == rhs.name &&
+        lhs.date == rhs.date &&
+        lhs.reminds == rhs.reminds &&
+        lhs.memo == rhs.memo
+    }
+
     public init(
         id: UUID,
         kind: AnniversaryKind,

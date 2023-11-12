@@ -25,7 +25,7 @@ public struct EditView: View {
                         Button(#localized("Done")) {
                             viewStore.send(.doneButtonTapped)
                         }
-                        .disabled(viewStore.isCompleteButtonDisabled)
+                        .disabled(viewStore.isDoneButtonDisabled)
                     }
                 }
                 .sheet(

@@ -35,8 +35,11 @@ public struct AddAndEdit: Reducer {
         @BindingState var name = ""
         @BindingState var date: Date = .now
         @BindingState var memo = ""
-        var isCompleteButtonDisabled: Bool {
+
+        var mode: Mode
+        var reminds: [Remind] = []
         var originalAnniversary: Anniversary? = nil
+
         var resultAnniversary: Anniversary {
             Anniversary(
                 id: originalAnniversary?.id ?? UUID(),
@@ -48,6 +51,7 @@ public struct AddAndEdit: Reducer {
                 memo: memo
             )
         }
+        var isAddButtonDisabled: Bool {
             switch selectedKind {
             case .birth, .remembrance:
                 return name.isEmpty
@@ -56,9 +60,10 @@ public struct AddAndEdit: Reducer {
                 return name.isEmpty || othersTitle.isEmpty
             }
         }
-
-        var mode: Mode
-        var reminds: [Remind] = []
+        var isDoneButtonDisabled: Bool {
+            guard let originalAnniversary else { return true }
+            return originalAnniversary == resultAnniversary
+        }
     }
 
     public enum Action: BindableAction, Equatable {
