@@ -58,5 +58,6 @@ struct AddAndEditContentView: View {
                     .frame(height: 100, alignment: .top)
             }
         }
+        .padding(.top, -24)
     }
 }
