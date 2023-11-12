@@ -37,6 +37,17 @@ public struct AddAndEdit: Reducer {
         @BindingState var memo = ""
         var isCompleteButtonDisabled: Bool {
         var originalAnniversary: Anniversary? = nil
+        var resultAnniversary: Anniversary {
+            Anniversary(
+                id: originalAnniversary?.id ?? UUID(),
+                kind: selectedKind,
+                othersTitle: othersTitle,
+                name: name,
+                date: date,
+                reminds: reminds,
+                memo: memo
+            )
+        }
             switch selectedKind {
             case .birth, .remembrance:
                 return name.isEmpty
@@ -75,18 +86,8 @@ public struct AddAndEdit: Reducer {
                 return .run { _ in
                     await dismiss()
                 }
-            case .completeButtonTapped:
-                let anniversary = Anniversary(
-                    id: uuid(),
-                    kind: state.selectedKind,
-                    othersTitle: state.othersTitle,
-                    name: state.name,
-                    date: state.date,
-                    reminds: state.reminds,
-                    memo: state.memo
-                )
-                
-                return .run { send in
+            case .addButtonTapped:
+                return .run { [anniversary = state.resultAnniversary] send in
                     await send(
                         .saveAnniversaries(
                             TaskResult {
