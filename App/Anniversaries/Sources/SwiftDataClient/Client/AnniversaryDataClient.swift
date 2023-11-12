@@ -5,6 +5,7 @@
 import SwiftData
 import CoreKit
 import Dependencies
+import Foundation
 
 /// ModelContainer for Anniversary
 public var anniversaryContainer = {
@@ -42,6 +43,7 @@ extension AnniversaryDataClient: TestDependencyKey {
         fetch: {
             [
                 Anniversary(
+                    id: UUID(),
                     kind: .birth,
                     othersTitle: nil,
                     name: "Test Data",

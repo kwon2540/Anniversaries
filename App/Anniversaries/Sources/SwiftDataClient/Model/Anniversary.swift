@@ -7,8 +7,9 @@ import Foundation
 import SwiftData
 
 @Model
-public class Anniversary {
+public class Anniversary: Identifiable {
     public init(
+        id: UUID,
         kind: AnniversaryKind,
         othersTitle: String?,
         name: String,
@@ -16,6 +17,7 @@ public class Anniversary {
         reminds: [Remind],
         memo: String
     ) {
+        self.id = id
         self.kind = kind
         self.othersTitle = othersTitle
         self.name = name
@@ -23,7 +25,7 @@ public class Anniversary {
         self.reminds = reminds
         self.memo = memo
     }
-
+    public var id: UUID
     public var kind: AnniversaryKind
     public var othersTitle: String?
     public var name: String

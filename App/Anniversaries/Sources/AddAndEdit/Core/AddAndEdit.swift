@@ -54,6 +54,7 @@ public struct AddAndEdit: Reducer {
 
     @Dependency(\.dismiss) private var dismiss
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
+    @Dependency(\.uuid) private var uuid
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -66,6 +67,7 @@ public struct AddAndEdit: Reducer {
                 }
             case .completeButtonTapped:
                 let anniversary = Anniversary(
+                    id: uuid(),
                     kind: state.selectedKind,
                     othersTitle: state.othersTitle,
                     name: state.name,
