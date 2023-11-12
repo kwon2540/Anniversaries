@@ -77,15 +77,15 @@ public struct HomeView: View {
                 }
                 .sheet(
                     store: store.scope(state: \.$destination, action: Home.Action.destination),
-                    content: AddAndEditView.init(store:)
                     state: /Home.Destination.State.add,
                     action: Home.Destination.Action.add,
+                    content: AddView.init(store:)
                 )
                 .navigationDestination(
                     store: store.scope(state: \.$destination, action: Home.Action.destination),
                     state: /Home.Destination.State.edit,
                     action: Home.Destination.Action.edit,
-                    destination: AddAndEditView.init(store:)
+                    destination: EditView.init(store:)
                 )
                 .modelContainer(anniversaryContainer)
             }
