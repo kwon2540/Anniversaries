@@ -92,6 +92,7 @@ public struct AddAndEdit: Reducer {
                 return .run { _ in
                     await dismiss()
                 }
+
             case .addButtonTapped:
                 return .run { [anniversary = state.resultAnniversary] send in
                     await send(
