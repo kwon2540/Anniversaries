@@ -14,8 +14,7 @@ public struct RootView: View {
     private let store: StoreOf<Root>
 
     public var body: some View {
-        IfLetStore(store.scope(state: \.launchState, action: Root.Action.launchAction), then: LaunchView.init(store:))
-        IfLetStore(store.scope(state: \.homeState, action: Root.Action.homeAction), then: HomeView.init(store:))
+        HomeView(store: store.scope(state: \.homeState, action: Root.Action.homeAction))
     }
 }
 
