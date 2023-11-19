@@ -15,12 +15,6 @@
             "state" : "translated",
             "value" : "追加"
           }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "새로운 항목"
-          }
         }
       }
     },
@@ -66,6 +60,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "적용"
+          }
+        }
+      }
+    },
+    "Ascending" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ascending"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昇順"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오름차순"
           }
         }
       }
@@ -162,25 +179,48 @@
         }
       }
     },
-    "Death Anniversary" : {
+    "Default(Category)" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Death Anniversary"
+            "value" : "Default(Category)"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "命日"
+            "value" : "デフォルト（カテゴリ）"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "기일"
+            "value" : "기본값(카테고리)"
+          }
+        }
+      }
+    },
+    "Descending" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descending"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "降順"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내림차순"
           }
         }
       }
@@ -234,6 +274,12 @@
     "Failed to load data" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load data"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -251,6 +297,12 @@
     "Failed to save data" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to save data"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -307,29 +359,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "종류"
-          }
-        }
-      }
-    },
-    "Marriage Anniversary" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marriage Anniversary"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "結構記念日"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "결혼기념일"
           }
         }
       }
@@ -398,7 +427,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "추가"
+            "value" : "새로운 항목"
           }
         }
       }
@@ -422,6 +451,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "기타"
+          }
+        }
+      }
+    },
+    "Remembrance Day" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remembrance Day"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "命日"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "기일"
           }
         }
       }
@@ -468,6 +520,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "반복"
+          }
+        }
+      }
+    },
+    "Sort By" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort By"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表示順序"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음으로 정렬"
           }
         }
       }
