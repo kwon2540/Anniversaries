@@ -84,45 +84,7 @@ public struct Home: Reducer {
                 )
 
             case .sortAnniversaries:
-                let anniversaries = state.anniversaries
-                let result: [GroupedAnniversaries]
-                switch state.currentSort {
-                case .defaultCategory:
-                    // AnniversaryKindをKeyでGroupしている
-                    var anniversariesDictionary: [AnniversaryKind: [Anniversary]] = Dictionary(
-                        grouping: anniversaries,
-                        by: { $0.kind }
-                    )
-                    // anniversariesDictionaryのValueを名前順にソートする
-                    anniversariesDictionary.forEach {
-                        anniversariesDictionary[$0] = $1.sorted(using: KeyPathComparator(\.name))
-                    }
-                    // AnniversaryKindのIntのRawValueでソートを行なっている
-                    let sortedGroupedAnniversaries = anniversariesDictionary
-                        .sorted {
-                            $0.key.rawValue < $1.key.rawValue
-                        }
-                        .map(GroupedAnniversaries.init(element:))
-                    result = state.currentSortOrder == .ascending ? sortedGroupedAnniversaries : sortedGroupedAnniversaries.reversed()
-                case .date:
-                    // Date.FormatStyle.FormatOutput(String)をKeyでGroupしている
-                    let anniversariesDictionary: [Date.FormatStyle.FormatOutput: [Anniversary]] = Dictionary(
-                        grouping: anniversaries,
-                        by: { $0.month }
-                    )
-                    // Date.FormatStyle.FormatOutput(String)ではソートがうまくできないため、digitsMonthを利用するソートを行なっている
-                    let sortedGroupedAnniversaries = anniversariesDictionary
-                        .sorted {
-                            $0.value.first?.digitsMonth ?? 0 < $1.value.first?.digitsMonth ?? 0
-                        }
-                        .map(GroupedAnniversaries.init(element:))
-                    result = state.currentSortOrder == .ascending ? sortedGroupedAnniversaries : sortedGroupedAnniversaries.reversed()
-                case .name:
-                    let sortedAnniversaries = anniversaries
-                        .sorted(using: KeyPathComparator(\.name, order: state.currentSortOrder == .ascending ? .forward : .reverse))
-                    result = [GroupedAnniversaries(key: #localized("Name"), anniversaries: sortedAnniversaries)]
-                }
-                state.groupedAnniversariesList = result
+                state.groupedAnniversariesList = state.anniversaries.sorted(by: state.currentSort, order: state.currentSortOrder)
 
             case .editButtonTapped:
                 break
