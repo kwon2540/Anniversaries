@@ -8,16 +8,13 @@ import Home
 
 public struct Root: Reducer {
     public struct State: Equatable {
-        var launchState: Launch.State?
-        var homeState: Home.State?
-        
+        var homeState = Home.State()
+
         public init() {
-            self.launchState = .init()
         }
     }
     
     public enum Action: Equatable {
-        case launchAction(Launch.Action)
         case homeAction(Home.Action)
     }
     
@@ -26,20 +23,11 @@ public struct Root: Reducer {
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .launchAction(.delegate(.onComplete)):
-                state.homeState = .init()
-                state.launchState = nil
-
-            case .launchAction, .homeAction:
+            case .homeAction:
                 break
             }
             return .none
         }
-        .ifLet(\.launchState, action: /Action.launchAction) {
-            Launch()
-        }
-        .ifLet(\.homeState, action: /Action.homeAction) {
-            Home()
-        }
+        Scope(state: \.homeState, action: /Root.Action.homeAction, child: Home.init)
     }
 }
