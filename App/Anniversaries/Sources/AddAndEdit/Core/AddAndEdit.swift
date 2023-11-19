@@ -11,13 +11,22 @@ import SwiftDataClient
 
 public struct AddAndEdit: Reducer {
     public struct State: Equatable {
-        public enum Mode {
-            case new
-            case edit
+        public enum Mode: Equatable {
+            case add
+            case edit(Anniversary)
         }
 
         public init(mode: Mode) {
             self.mode = mode
+            if case let .edit(anniversary) = mode {
+                self.originalAnniversary = anniversary
+                self.selectedKind = anniversary.kind
+                self.othersTitle = anniversary.othersTitle ?? ""
+                self.name = anniversary.name
+                self.date = anniversary.date
+                self.reminds = anniversary.reminds
+                self.memo = anniversary.memo
+            }
         }
 
         @PresentationState var destination: Destination.State?
@@ -26,25 +35,43 @@ public struct AddAndEdit: Reducer {
         @BindingState var name = ""
         @BindingState var date: Date = .now
         @BindingState var memo = ""
-        var isCompleteButtonDisabled: Bool {
+
+        var mode: Mode
+        var reminds: [Remind] = []
+        var originalAnniversary: Anniversary? = nil
+
+        var resultAnniversary: Anniversary {
+            Anniversary(
+                id: originalAnniversary?.id ?? UUID(),
+                kind: selectedKind,
+                othersTitle: othersTitle,
+                name: name,
+                date: date,
+                reminds: reminds,
+                memo: memo
+            )
+        }
+        var isAddButtonDisabled: Bool {
             switch selectedKind {
-            case .birth, .marriage, .death:
+            case .birth, .remembrance:
                 return name.isEmpty
 
             case .others:
                 return name.isEmpty || othersTitle.isEmpty
             }
         }
-
-        var mode: Mode
-        var reminds: [Remind] = []
+        var isDoneButtonDisabled: Bool {
+            guard let originalAnniversary else { return true }
+            return originalAnniversary == resultAnniversary
+        }
     }
 
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case destination(PresentationAction<Destination.Action>)
         case cancelButtonTapped
-        case completeButtonTapped
+        case addButtonTapped
+        case doneButtonTapped
         case addRemindButtonTapped
         case deleteRemind(IndexSet)
         case saveAnniversaries(TaskResult<VoidSuccess>)
@@ -54,6 +81,7 @@ public struct AddAndEdit: Reducer {
 
     @Dependency(\.dismiss) private var dismiss
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
+    @Dependency(\.uuid) private var uuid
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -64,20 +92,27 @@ public struct AddAndEdit: Reducer {
                 return .run { _ in
                     await dismiss()
                 }
-            case .completeButtonTapped:
-                let anniversary = Anniversary(
-                    kind: state.selectedKind,
-                    othersTitle: state.othersTitle,
-                    name: state.name,
-                    date: state.date,
-                    reminds: state.reminds,
-                    memo: state.memo
-                )
-                
-                return .run { send in
+
+            case .addButtonTapped:
+                return .run { [anniversary = state.resultAnniversary] send in
                     await send(
                         .saveAnniversaries(
                             TaskResult {
+                                anniversaryDataClient.insert(anniversary)
+                                return try anniversaryDataClient.save()
+                            }
+                        )
+                    )
+                }
+
+            case .doneButtonTapped:
+                guard let originalAnniversary = state.originalAnniversary else { break }
+                return .run { [anniversary = state.resultAnniversary] send in
+                    await send(
+                        .saveAnniversaries(
+                            TaskResult {
+                                // FIXME: SwiftDataのUpdateがTCAで利用できるようになったら対応する
+                                anniversaryDataClient.delete(originalAnniversary)
                                 anniversaryDataClient.insert(anniversary)
                                 return try anniversaryDataClient.save()
                             }

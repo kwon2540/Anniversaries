@@ -32,7 +32,7 @@ extension UserDefaultsClient: TestDependencyKey {
     public static let previewValue = Self(
         currentAnniversariesSort: { .date },
         setCurrentAnniversariesSort: { _ in },
-        currentAnniversariesSortOrder: { .newest },
+        currentAnniversariesSortOrder: { .ascending },
         setCurrentAnniversariesSortOrder: { _ in }
     )
 }

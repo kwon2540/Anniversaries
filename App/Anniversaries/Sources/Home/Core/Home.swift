@@ -15,9 +15,11 @@ public struct Home: Reducer {
         public init() {}
 
         @PresentationState var destination: Destination.State?
+
         var anniversaries: [Anniversary] = []
-        var currentSort: Sort.Kind = .defaultDate
-        var currentSortOrder: Sort.Order = .newest
+        var groupedAnniversariesList: [GroupedAnniversaries] = []
+        var currentSort: Sort.Kind = .defaultCategory
+        var currentSortOrder: Sort.Order = .ascending
     }
 
     public enum Action: Equatable {
@@ -28,10 +30,12 @@ public struct Home: Reducer {
         case onAppear
         case fetchAnniversaries
         case anniversariesResponse(TaskResult<[Anniversary]>)
+        case sortAnniversaries
         case editButtonTapped
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
         case addButtonTapped
+        case ItemTapped(Anniversary)
         case delegate(Delegate)
     }
 
@@ -62,6 +66,7 @@ public struct Home: Reducer {
 
             case .anniversariesResponse(.success(let anniversaries)):
                 state.anniversaries = anniversaries
+                return .send(.sortAnniversaries)
 
             case .anniversariesResponse(.failure(let error)):
                 assertionFailure(error.localizedDescription)
@@ -69,23 +74,29 @@ public struct Home: Reducer {
                     AlertState(title: TextState(#localized("Failed to load data")))
                 )
 
+            case .sortAnniversaries:
+                state.groupedAnniversariesList = state.anniversaries.sorted(by: state.currentSort, order: state.currentSortOrder)
+
             case .editButtonTapped:
                 break
 
             case .sortByButtonTapped(let sort):
-                // TODO: Perform Sort Logic
                 state.currentSort = sort
                 userDefaultClient.setCurrentAnniversariesSort(sort)
+                return .send(.sortAnniversaries)
 
             case .sortOrderButtonTapped(let sortOrder):
-                // TODO: Perform Sort Logic
                 state.currentSortOrder = sortOrder
                 userDefaultClient.setCurrentAnniversariesSortOrder(sortOrder)
+                return .send(.sortAnniversaries)
 
             case .addButtonTapped:
-                state.destination = .anniversary(.init(mode: .new))
+                state.destination = .add(.init(mode: .add))
 
-            case .destination(.presented(.anniversary(.saveAnniversaries(.success)))):
+            case .ItemTapped(let anniversary):
+                state.destination = .edit(.init(mode: .edit(anniversary)))
+
+            case .destination(.presented(.add(.saveAnniversaries(.success)))):
                 return .send(.fetchAnniversaries)
 
             case .destination:
@@ -103,19 +114,22 @@ public struct Home: Reducer {
 extension Home {
     public struct Destination: Reducer {
         public enum State: Equatable {
-            case anniversary(AddAndEdit.State)
+            case add(AddAndEdit.State)
+            case edit(AddAndEdit.State)
             case alert(AlertState<Action.Alert>)
         }
 
         public enum Action: Equatable {
             public enum Alert: Equatable {
             }
-            case anniversary(AddAndEdit.Action)
+            case add(AddAndEdit.Action)
+            case edit(AddAndEdit.Action)
             case alert(Alert)
         }
 
         public var body: some ReducerOf<Self> {
-            Scope(state: /State.anniversary, action: /Action.anniversary, child: AddAndEdit.init)
+            Scope(state: /State.add, action: /Action.add, child: AddAndEdit.init)
+            Scope(state: /State.edit, action: /Action.edit, child: AddAndEdit.init)
         }
     }
 }

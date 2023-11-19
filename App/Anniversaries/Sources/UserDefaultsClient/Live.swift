@@ -27,7 +27,7 @@ extension UserDefaultsClient {
             currentAnniversariesSort: {
                 guard let data = userDefaults.data(forKey: Keys.currentAnniversariesSort),
                       let sort = try? jsonDecoder.decode(Sort.Kind.self, from: data) else {
-                    return .defaultDate
+                    return .defaultCategory
                 }
 
                 return sort
@@ -43,7 +43,7 @@ extension UserDefaultsClient {
             currentAnniversariesSortOrder: {
                 guard let data = userDefaults.data(forKey: Keys.currentAnniversariesSortOrder),
                       let sortOrder = try? jsonDecoder.decode(Sort.Order.self, from: data)  else {
-                    return .newest
+                    return .ascending
                 }
 
                 return sortOrder

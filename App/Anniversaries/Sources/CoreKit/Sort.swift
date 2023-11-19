@@ -7,16 +7,15 @@ import Foundation
 
 public enum Sort {
     /// Sorting factor for Anniversaries
-    public enum Kind: String, CaseIterable, Codable {
-        case defaultDate = "Default(Date)"
-        case date = "Date"
-        case created = "Created"
-        case name = "Name"
+    public enum Kind: CaseIterable, Codable {
+        case defaultCategory
+        case date
+        case name
     }
 
     /// Sorting order for Anniversaries
-    public enum Order: String, CaseIterable, Codable {
-        case newest = "Newest First"
-        case oldest = "Oldest First"
+    public enum Order: CaseIterable, Codable {
+        case ascending
+        case descending
     }
 }

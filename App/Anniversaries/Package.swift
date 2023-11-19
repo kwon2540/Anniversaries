@@ -43,6 +43,7 @@ let package = Package(
             name: "AppUI",
             dependencies: [
                 "AppMacros",
+                "CoreKit",
             ],
             resources: [
                 .process("Resources"),

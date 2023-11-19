@@ -5,6 +5,7 @@
 import SwiftData
 import CoreKit
 import Dependencies
+import Foundation
 
 /// ModelContainer for Anniversary
 public var anniversaryContainer = {
@@ -18,6 +19,7 @@ public struct AnniversaryDataClient {
     public var insert: (Anniversary) -> Void
     public var save: () throws -> Void
     public var fetch: () throws -> [Anniversary]
+    public var delete: (Anniversary) -> Void
 }
 
 // MARK: - Register as a DependencyValue
@@ -33,7 +35,8 @@ extension AnniversaryDataClient: TestDependencyKey {
     public static var testValue = AnniversaryDataClient(
         insert: unimplemented(),
         save: unimplemented(),
-        fetch: unimplemented()
+        fetch: unimplemented(),
+        delete: unimplemented()
     )
 
     public static var previewValue = AnniversaryDataClient(
@@ -42,6 +45,7 @@ extension AnniversaryDataClient: TestDependencyKey {
         fetch: {
             [
                 Anniversary(
+                    id: UUID(),
                     kind: .birth,
                     othersTitle: nil,
                     name: "Test Data",
@@ -50,7 +54,8 @@ extension AnniversaryDataClient: TestDependencyKey {
                     memo: "Test Memo"
                 )
             ]
-        }
+        },
+        delete: unimplemented()
     )
 }
 
@@ -71,6 +76,9 @@ extension AnniversaryDataClient {
             },
             fetch: {
                 try context.fetch(FetchDescriptor<Anniversary>())
+            }, 
+            delete: { anniversary in
+                context.delete(anniversary)
             }
         )
     }
