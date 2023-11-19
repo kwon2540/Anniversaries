@@ -126,61 +126,10 @@ public struct HomeView: View {
             } label: {
                 Label(#localized("Sort By"), systemImage: "arrow.up.arrow.down")
             }
-
-            Menu {
-                Toggle(
-                    "Default(Midnight Sky)",
-                    isOn: viewStore.binding(
-                        get: { $0.themeState.currentPreset == .default },
-                        send: .themeButtonTapped(.default)
-                    )
-                )
-
-                Toggle(
-                    "Midnight Sky",
-                    isOn: viewStore.binding(
-                        get: { $0.themeState.currentPreset == .midnightSky },
-                        send: .themeButtonTapped(.midnightSky)
-                    )
-                )
-
-                Toggle(
-                    "Sunrise Glow",
-                    isOn: viewStore.binding(
-                        get: { $0.themeState.currentPreset == .sunriseGlow },
-                        send: .themeButtonTapped(.sunriseGlow)
-                    )
-                )
-
-                Toggle(
-                    "Forest Walk",
-                    isOn: viewStore.binding(
-                        get: { $0.themeState.currentPreset == .forestWalk },
-                        send: .themeButtonTapped(.forestWalk)
-                    )
-                )
-
-                Toggle(
-                    "Cherry Blossom",
-                    isOn: viewStore.binding(
-                        get: { $0.themeState.currentPreset == .cherryBlossom },
-                        send: .themeButtonTapped(.cherryBlossom)
-                    )
-                )
-
-                Toggle(
-                    "Ocean Breeze",
-                    isOn: viewStore.binding(
-                        get: { $0.themeState.currentPreset == .oceanBreeze },
-                        send: .themeButtonTapped(.oceanBreeze)
-                    )
-                )
-            } label: {
-                Label("Theme", systemImage: "paintpalette")
-            }
+            
         } label: {
             Image(systemName: "ellipsis.circle")
-                .foregroundColor(viewStore.themeState.backgroundColor)
+                .foregroundColor(#color("black"))
         }
     }
 
@@ -192,7 +141,7 @@ public struct HomeView: View {
                 viewStore.send(.addButtonTapped)
             } label: {
                 Image(systemName: "square.and.pencil")
-                    .foregroundColor(viewStore.themeState.backgroundColor)
+                    .foregroundColor(#color("black"))
             }
             .buttonStyle(.plain)
         }
@@ -277,9 +226,7 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(
             store: .init(
-                initialState: .init(
-                    themeState: .init()
-                ),
+                initialState: .init(),
                 reducer: Home.init
             )
         )

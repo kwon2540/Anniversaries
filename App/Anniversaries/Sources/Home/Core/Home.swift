@@ -8,19 +8,16 @@ import ComposableArchitecture
 import CoreKit
 import Foundation
 import SwiftDataClient
-import Theme
+import UserDefaultsClient
 
 public struct Home: Reducer {
     public struct State: Equatable {
-        public init(themeState: Theme.State) {
-            self.themeState = themeState
-        }
+        public init() {}
 
         @PresentationState var destination: Destination.State?
 
         var anniversaries: [Anniversary] = []
         var groupedAnniversariesList: [GroupedAnniversaries] = []
-        var themeState: Theme.State
         var currentSort: Sort.Kind = .defaultCategory
         var currentSortOrder: Sort.Order = .ascending
     }
@@ -37,11 +34,9 @@ public struct Home: Reducer {
         case editButtonTapped
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
-        case themeButtonTapped(Theme.Preset)
         case addButtonTapped
         case ItemTapped(Anniversary)
         case delegate(Delegate)
-        case themeAction(Theme.Action)
     }
 
     public init() {}
@@ -50,10 +45,6 @@ public struct Home: Reducer {
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
 
     public var body: some ReducerOf<Self> {
-        Scope(state: \.themeState, action: /Action.themeAction) {
-            Theme()
-        }
-
         Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
@@ -99,9 +90,6 @@ public struct Home: Reducer {
                 userDefaultClient.setCurrentAnniversariesSortOrder(sortOrder)
                 return .send(.sortAnniversaries)
 
-            case .themeButtonTapped(let theme):
-                return .send(.themeAction(.presetChanged(theme)))
-
             case .addButtonTapped:
                 state.destination = .add(.init(mode: .add))
 
@@ -111,7 +99,7 @@ public struct Home: Reducer {
             case .destination(.presented(.add(.saveAnniversaries(.success)))):
                 return .send(.fetchAnniversaries)
 
-            case .themeAction, .destination:
+            case .destination:
                 break
             }
             return .none
