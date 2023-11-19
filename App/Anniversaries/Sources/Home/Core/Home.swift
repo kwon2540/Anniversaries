@@ -89,10 +89,14 @@ public struct Home: Reducer {
                 switch state.currentSort {
                 case .defaultCategory:
                     // AnniversaryKindをKeyでGroupしている
-                    let anniversariesDictionary: [AnniversaryKind: [Anniversary]] = Dictionary(
+                    var anniversariesDictionary: [AnniversaryKind: [Anniversary]] = Dictionary(
                         grouping: anniversaries,
                         by: { $0.kind }
                     )
+                    // anniversariesDictionaryのValueを名前順にソートする
+                    anniversariesDictionary.forEach {
+                        anniversariesDictionary[$0] = $1.sorted(using: KeyPathComparator(\.name))
+                    }
                     // AnniversaryKindのIntのRawValueでソートを行なっている
                     let sortedGroupedAnniversaries = anniversariesDictionary
                         .sorted {
