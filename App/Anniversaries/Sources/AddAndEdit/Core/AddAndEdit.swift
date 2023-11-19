@@ -105,7 +105,19 @@ public struct AddAndEdit: Reducer {
                 }
 
             case .doneButtonTapped:
-                break
+                guard let originalAnniversary = state.originalAnniversary else { break }
+                return .run { [anniversary = state.resultAnniversary] send in
+                    await send(
+                        .saveAnniversaries(
+                            TaskResult {
+                                // FIXME: SwiftDataのUpdateがTCAで利用できるようになったら対応する
+                                anniversaryDataClient.delete(originalAnniversary)
+                                anniversaryDataClient.insert(anniversary)
+                                return try anniversaryDataClient.save()
+                            }
+                        )
+                    )
+                }
 
             case .addRemindButtonTapped:
                 state.destination = .remind(.init())
