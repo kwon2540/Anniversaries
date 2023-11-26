@@ -67,7 +67,7 @@ public struct Home: Reducer {
             case .anniversariesResponse(.failure(let error)):
                 assertionFailure(error.localizedDescription)
                 state.destination = .alert(
-                    AlertState(title: TextState(#localized("Failed to load data")))
+                    AlertState(title: TextState(#localized("Failed to load anniversary")))
                 )
 
             case .sortAnniversaries:
