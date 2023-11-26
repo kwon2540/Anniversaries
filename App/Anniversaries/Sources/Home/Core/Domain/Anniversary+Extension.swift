@@ -61,6 +61,10 @@ extension Array where Element == Anniversary {
                 .map(GroupedAnniversaries.init(element:))
             return order == .ascending ? sortedGroupedAnniversaries : sortedGroupedAnniversaries.reversed()
         case .name:
+            guard !self.isEmpty else {
+                return []
+            }
+            
             let sortedAnniversaries = self
                 .sorted(using: KeyPathComparator(\.name, order: order == .ascending ? .forward : .reverse))
             return [GroupedAnniversaries(key: #localized("Name"), anniversaries: sortedAnniversaries)]
