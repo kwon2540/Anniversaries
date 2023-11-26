@@ -96,7 +96,7 @@ public struct Home: Reducer {
             case .ItemTapped(let anniversary):
                 state.destination = .edit(.init(mode: .edit(anniversary)))
 
-            case .destination(.presented(.add(.saveAnniversaries(.success)))):
+            case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))):
                 return .send(.fetchAnniversaries)
 
             case .destination:
