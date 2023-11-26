@@ -67,6 +67,9 @@ public struct AddAndEdit: Reducer {
     }
 
     public enum Action: BindableAction, Equatable {
+        public enum Delegate: Equatable {
+            case saveAnniversarySuccessful
+        }
         case binding(BindingAction<State>)
         case destination(PresentationAction<Destination.Action>)
         case cancelButtonTapped
@@ -75,6 +78,7 @@ public struct AddAndEdit: Reducer {
         case addRemindButtonTapped
         case deleteRemind(IndexSet)
         case saveAnniversaries(TaskResult<VoidSuccess>)
+        case delegate(Delegate)
     }
 
     public init() {}
@@ -124,7 +128,8 @@ public struct AddAndEdit: Reducer {
                 state.destination = .remind(.init())
 
             case .saveAnniversaries(.success):
-                return .run { _ in
+                return .run { send in
+                    await send(.delegate(.saveAnniversarySuccessful))
                     await dismiss()
                 }
 
@@ -140,7 +145,7 @@ public struct AddAndEdit: Reducer {
             case .deleteRemind(let indexSet):
                 state.reminds.remove(atOffsets: indexSet)
 
-            case .destination, .binding:
+            case .destination, .binding, .delegate:
                 break
             }
             return .none
