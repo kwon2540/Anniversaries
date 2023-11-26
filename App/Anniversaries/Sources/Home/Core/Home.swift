@@ -32,7 +32,9 @@ public struct Home: Reducer {
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
         case addButtonTapped
-        case ItemTapped(Anniversary)
+        case anniversaryTapped(Anniversary)
+        case onDeleteAnniversary(Anniversary)
+        case deleteAnniversary(TaskResult<VoidSuccess>)
     }
 
     public init() {}
@@ -89,8 +91,29 @@ public struct Home: Reducer {
             case .addButtonTapped:
                 state.destination = .add(.init(mode: .add))
 
-            case .ItemTapped(let anniversary):
+            case .anniversaryTapped(let anniversary):
                 state.destination = .edit(.init(mode: .edit(anniversary)))
+                
+            case .onDeleteAnniversary(let anniversary):
+                return .run { send in
+                    await send(
+                        .deleteAnniversary(
+                            TaskResult {
+                                anniversaryDataClient.delete(anniversary)
+                                return try anniversaryDataClient.save()
+                            }
+                        )
+                    )
+                }
+                
+            case .deleteAnniversary(.success):
+                return .send(.fetchAnniversaries)
+                
+            case .deleteAnniversary(.failure):
+                state.destination = .alert(
+                    AlertState(title: TextState(#localized("Failed to delete anniversary")))
+                )      
+                return .send(.fetchAnniversaries)
 
             case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))):
                 return .send(.fetchAnniversaries)

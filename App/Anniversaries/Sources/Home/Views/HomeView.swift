@@ -49,11 +49,19 @@ public struct HomeView: View {
                         Section {
                             ForEach(groupedAnniversaries.anniversaries, id: \.self) { anniversary in
                                 Button {
-                                    viewStore.send(.ItemTapped(anniversary))
+                                    viewStore.send(.anniversaryTapped(anniversary))
                                 } label: {
                                     Item(anniversary: anniversary)
                                 }
                             }
+                            .onDelete { indexSet in
+                                guard let index = indexSet.first else {
+                                    return
+                                }
+                                let anniversary = groupedAnniversaries.anniversaries[index]
+                                viewStore.send(.onDeleteAnniversary(anniversary))
+                            }
+                            
                         } header: {
                             Text(groupedAnniversaries.key)
                                 .font(.title2)
