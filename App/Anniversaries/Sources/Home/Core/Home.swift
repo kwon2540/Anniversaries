@@ -23,9 +23,6 @@ public struct Home: Reducer {
     }
 
     public enum Action: Equatable {
-        public enum Delegate: Equatable {
-        }
-
         case destination(PresentationAction<Destination.Action>)
         case onAppear
         case fetchAnniversaries
@@ -36,7 +33,6 @@ public struct Home: Reducer {
         case sortOrderButtonTapped(Sort.Order)
         case addButtonTapped
         case ItemTapped(Anniversary)
-        case delegate(Delegate)
     }
 
     public init() {}
