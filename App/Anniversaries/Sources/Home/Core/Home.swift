@@ -9,12 +9,14 @@ import CoreKit
 import Foundation
 import SwiftDataClient
 import UserDefaultsClient
+import SwiftUI
 
 public struct Home: Reducer {
     public struct State: Equatable {
         public init() {}
 
         @PresentationState var destination: Destination.State?
+        @BindingState var editMode: EditMode = .inactive
 
         var anniversaries: [Anniversary] = []
         var groupedAnniversariesList: [GroupedAnniversaries] = []
@@ -22,7 +24,9 @@ public struct Home: Reducer {
         var currentSortOrder: Sort.Order = .ascending
     }
 
-    public enum Action: Equatable {
+    public enum Action: Equatable, BindableAction {
+        case binding(BindingAction<State>)
+        
         case destination(PresentationAction<Destination.Action>)
         case onAppear
         case fetchAnniversaries
@@ -43,6 +47,7 @@ public struct Home: Reducer {
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
 
     public var body: some ReducerOf<Self> {
+        BindingReducer()
         Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
@@ -118,7 +123,7 @@ public struct Home: Reducer {
             case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))):
                 return .send(.fetchAnniversaries)
 
-            case .destination:
+            case .binding, .destination:
                 break
             }
             return .none

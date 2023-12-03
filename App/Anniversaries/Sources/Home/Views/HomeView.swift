@@ -38,11 +38,25 @@ public struct HomeView: View {
     public init(store: StoreOf<Home>) {
         self.store = store
     }
+    
+    struct ViewState: Equatable {
+        @BindingViewState var editMode: EditMode
+        var groupedAnniversariesList: [GroupedAnniversaries]
+        var currentSort: Sort.Kind
+        var currentSortOrder: Sort.Order
+        
+        init(store: BindingViewStore<Home.State>) {
+            self._editMode = store.$editMode
+            self.groupedAnniversariesList = store.groupedAnniversariesList
+            self.currentSort = store.currentSort
+            self.currentSortOrder = store.currentSortOrder
+        }
+    }
 
     private var store: StoreOf<Home>
 
     public var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: ViewState.init) { viewStore in
             NavigationStack {
                 List {
                     ForEach(viewStore.groupedAnniversariesList, id: \.self) { groupedAnniversaries in
@@ -101,7 +115,7 @@ public struct HomeView: View {
     }
 
     // MARK: Tools
-    private func menu(viewStore: ViewStoreOf<Home>) -> some View {
+    private func menu(viewStore: ViewStore<ViewState, Home.Action>) -> some View {
         Menu {
             Button {
                 viewStore.send(.editButtonTapped)
@@ -141,7 +155,7 @@ public struct HomeView: View {
         }
     }
 
-    private func addButton(viewStore: ViewStoreOf<Home>) -> some View {
+    private func addButton(viewStore:  ViewStore<ViewState, Home.Action>) -> some View {
         Group {
             Spacer()
 
