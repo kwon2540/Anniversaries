@@ -11,7 +11,8 @@ import SwiftDataClient
 import UserDefaultsClient
 import SwiftUI
 
-public struct Home: Reducer {
+@Reducer
+public struct Home {
     public struct State: Equatable {
         public init() {}
 
@@ -140,7 +141,8 @@ public struct Home: Reducer {
 
 // MARK: Destination
 extension Home {
-    public struct Destination: Reducer {
+    @Reducer
+    public struct Destination {
         public enum State: Equatable {
             case add(AddAndEdit.State)
             case edit(AddAndEdit.State)

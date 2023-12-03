@@ -9,7 +9,8 @@ import Foundation
 import SwiftData
 import SwiftDataClient
 
-public struct AddAndEdit: Reducer {
+@Reducer
+public struct AddAndEdit {
     public struct State: Equatable {
         public enum Mode: Equatable {
             case add

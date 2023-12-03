@@ -6,7 +6,8 @@ import ComposableArchitecture
 import Foundation
 import Home
 
-public struct Root: Reducer {
+@Reducer
+public struct Root {
     public struct State: Equatable {
         var homeState = Home.State()
 

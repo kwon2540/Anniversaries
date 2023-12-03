@@ -6,7 +6,8 @@ import ComposableArchitecture
 import Foundation
 import CoreKit
 
-public struct RemindScheduler: Reducer {
+@Reducer
+public struct RemindScheduler {
     public struct State: Equatable {
         @BindingState var selectedDate: Date
         @BindingState var isRepeat = true
