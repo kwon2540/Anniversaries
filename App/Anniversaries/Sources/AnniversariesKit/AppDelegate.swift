@@ -25,7 +25,8 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
-struct AppDelegateReducer: Reducer {
+@Reducer
+struct AppDelegateReducer {
     struct State: Equatable {
         var rootState = Root.State()
     }
@@ -46,7 +47,7 @@ struct AppDelegateReducer: Reducer {
             return .none
         }
 
-        Scope(state: \.rootState, action: /Action.rootAction) {
+        Scope(state: \.rootState, action: \.rootAction) {
             Root()
         }
     }

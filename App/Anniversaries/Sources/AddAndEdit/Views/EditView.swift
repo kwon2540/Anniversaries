@@ -29,15 +29,11 @@ public struct EditView: View {
                     }
                 }
                 .sheet(
-                    store: store.scope(state: \.$destination, action: AddAndEdit.Action.destination),
-                    state: /Destination.State.remind,
-                    action: Destination.Action.remind,
+                    store: store.scope(state: \.$destination.remind, action: \.destination.remind),
                     content: RemindSchedulerView.init(store:)
                 )
                 .alert(
-                    store: store.scope(state: \.$destination, action: AddAndEdit.Action.destination),
-                    state: /Destination.State.alert,
-                    action: Destination.Action.alert
+                    store: store.scope(state: \.$destination.alert, action: \.destination.alert)
                 )
         }
     }

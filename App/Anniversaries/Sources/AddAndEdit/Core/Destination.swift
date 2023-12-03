@@ -6,7 +6,8 @@ import Foundation
 import ComposableArchitecture
 import RemindScheduler
 
-public struct Destination: Reducer {
+@Reducer
+public struct Destination {
     public enum State: Equatable {
         case remind(RemindScheduler.State)
         case alert(AlertState<Action.Alert>)
@@ -20,7 +21,7 @@ public struct Destination: Reducer {
     }
 
     public var body: some ReducerOf<Destination> {
-        Scope(state: /State.remind, action: /Action.remind) {
+        Scope(state: \.remind, action: \.remind) {
             RemindScheduler()
         }
     }

@@ -6,7 +6,8 @@ import ComposableArchitecture
 import Foundation
 import Home
 
-public struct Root: Reducer {
+@Reducer
+public struct Root {
     public struct State: Equatable {
         var homeState = Home.State()
 
@@ -28,6 +29,6 @@ public struct Root: Reducer {
             }
             return .none
         }
-        Scope(state: \.homeState, action: /Root.Action.homeAction, child: Home.init)
+        Scope(state: \.homeState, action: \.homeAction, child: Home.init)
     }
 }
