@@ -15,7 +15,7 @@ extension App {
             RootView(
                 store: appDelegate.store.scope(
                     state: \.rootState,
-                    action: AppDelegateReducer.Action.rootAction
+                    action: \.rootAction
                 )
             )
         }

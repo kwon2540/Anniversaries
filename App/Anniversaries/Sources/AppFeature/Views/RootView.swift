@@ -14,7 +14,7 @@ public struct RootView: View {
     private let store: StoreOf<Root>
 
     public var body: some View {
-        HomeView(store: store.scope(state: \.homeState, action: Root.Action.homeAction))
+        HomeView(store: store.scope(state: \.homeState, action: \.homeAction))
     }
 }
 
