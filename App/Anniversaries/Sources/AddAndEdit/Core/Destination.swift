@@ -21,7 +21,7 @@ public struct Destination {
     }
 
     public var body: some ReducerOf<Destination> {
-        Scope(state: /State.remind, action: /Action.remind) {
+        Scope(state: \.remind, action: \.remind) {
             RemindScheduler()
         }
     }

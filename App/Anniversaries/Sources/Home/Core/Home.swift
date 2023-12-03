@@ -133,7 +133,7 @@ public struct Home {
             }
             return .none
         }
-        .ifLet(\.$destination, action: /Action.destination) {
+        .ifLet(\.$destination, action: \.destination) {
             Destination()
         }
     }
@@ -158,8 +158,8 @@ extension Home {
         }
 
         public var body: some ReducerOf<Self> {
-            Scope(state: /State.add, action: /Action.add, child: AddAndEdit.init)
-            Scope(state: /State.edit, action: /Action.edit, child: AddAndEdit.init)
+            Scope(state: \.add, action: \.add, child: AddAndEdit.init)
+            Scope(state: \.edit, action: \.edit, child: AddAndEdit.init)
         }
     }
 }

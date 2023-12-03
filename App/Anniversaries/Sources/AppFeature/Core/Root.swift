@@ -29,6 +29,6 @@ public struct Root {
             }
             return .none
         }
-        Scope(state: \.homeState, action: /Root.Action.homeAction, child: Home.init)
+        Scope(state: \.homeState, action: \.homeAction, child: Home.init)
     }
 }

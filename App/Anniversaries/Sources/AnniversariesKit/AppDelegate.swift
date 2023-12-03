@@ -47,7 +47,7 @@ struct AppDelegateReducer {
             return .none
         }
 
-        Scope(state: \.rootState, action: /Action.rootAction) {
+        Scope(state: \.rootState, action: \.rootAction) {
             Root()
         }
     }
