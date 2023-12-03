@@ -9,12 +9,14 @@ import CoreKit
 import Foundation
 import SwiftDataClient
 import UserDefaultsClient
+import SwiftUI
 
 public struct Home: Reducer {
     public struct State: Equatable {
         public init() {}
 
         @PresentationState var destination: Destination.State?
+        @BindingState var editMode: EditMode = .inactive
 
         var anniversaries: [Anniversary] = []
         var groupedAnniversariesList: [GroupedAnniversaries] = []
@@ -22,17 +24,22 @@ public struct Home: Reducer {
         var currentSortOrder: Sort.Order = .ascending
     }
 
-    public enum Action: Equatable {
+    public enum Action: Equatable, BindableAction {
+        case binding(BindingAction<State>)
+        
         case destination(PresentationAction<Destination.Action>)
         case onAppear
         case fetchAnniversaries
         case anniversariesResponse(TaskResult<[Anniversary]>)
         case sortAnniversaries
         case editButtonTapped
+        case editDoneButtonTapped
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
         case addButtonTapped
-        case ItemTapped(Anniversary)
+        case anniversaryTapped(Anniversary)
+        case onDeleteAnniversary(Anniversary)
+        case deleteAnniversary(TaskResult<VoidSuccess>)
     }
 
     public init() {}
@@ -41,6 +48,7 @@ public struct Home: Reducer {
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
 
     public var body: some ReducerOf<Self> {
+        BindingReducer()
         Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
@@ -67,14 +75,17 @@ public struct Home: Reducer {
             case .anniversariesResponse(.failure(let error)):
                 assertionFailure(error.localizedDescription)
                 state.destination = .alert(
-                    AlertState(title: TextState(#localized("Failed to load data")))
+                    AlertState(title: TextState(#localized("Failed to load anniversary")))
                 )
 
             case .sortAnniversaries:
                 state.groupedAnniversariesList = state.anniversaries.sorted(by: state.currentSort, order: state.currentSortOrder)
 
             case .editButtonTapped:
-                break
+                state.editMode = .active
+                
+            case .editDoneButtonTapped:
+                state.editMode = .inactive
 
             case .sortByButtonTapped(let sort):
                 state.currentSort = sort
@@ -89,13 +100,34 @@ public struct Home: Reducer {
             case .addButtonTapped:
                 state.destination = .add(.init(mode: .add))
 
-            case .ItemTapped(let anniversary):
+            case .anniversaryTapped(let anniversary):
                 state.destination = .edit(.init(mode: .edit(anniversary)))
+                
+            case .onDeleteAnniversary(let anniversary):
+                return .run { send in
+                    await send(
+                        .deleteAnniversary(
+                            TaskResult {
+                                anniversaryDataClient.delete(anniversary)
+                                return try anniversaryDataClient.save()
+                            }
+                        )
+                    )
+                }
+                
+            case .deleteAnniversary(.success):
+                return .send(.fetchAnniversaries)
+                
+            case .deleteAnniversary(.failure):
+                state.destination = .alert(
+                    AlertState(title: TextState(#localized("Failed to delete anniversary")))
+                )      
+                return .send(.fetchAnniversaries)
 
             case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))):
                 return .send(.fetchAnniversaries)
 
-            case .destination:
+            case .binding, .destination:
                 break
             }
             return .none

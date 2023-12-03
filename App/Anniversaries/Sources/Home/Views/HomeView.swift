@@ -38,22 +38,44 @@ public struct HomeView: View {
     public init(store: StoreOf<Home>) {
         self.store = store
     }
+    
+    struct ViewState: Equatable {
+        @BindingViewState var editMode: EditMode
+        var groupedAnniversariesList: [GroupedAnniversaries]
+        var currentSort: Sort.Kind
+        var currentSortOrder: Sort.Order
+        
+        init(store: BindingViewStore<Home.State>) {
+            self._editMode = store.$editMode
+            self.groupedAnniversariesList = store.groupedAnniversariesList
+            self.currentSort = store.currentSort
+            self.currentSortOrder = store.currentSortOrder
+        }
+    }
 
     private var store: StoreOf<Home>
 
     public var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: ViewState.init) { viewStore in
             NavigationStack {
                 List {
                     ForEach(viewStore.groupedAnniversariesList, id: \.self) { groupedAnniversaries in
                         Section {
                             ForEach(groupedAnniversaries.anniversaries, id: \.self) { anniversary in
                                 Button {
-                                    viewStore.send(.ItemTapped(anniversary))
+                                    viewStore.send(.anniversaryTapped(anniversary))
                                 } label: {
                                     Item(anniversary: anniversary)
                                 }
                             }
+                            .onDelete { indexSet in
+                                guard let index = indexSet.first else {
+                                    return
+                                }
+                                let anniversary = groupedAnniversaries.anniversaries[index]
+                                viewStore.send(.onDeleteAnniversary(anniversary))
+                            }
+                            
                         } header: {
                             Text(groupedAnniversaries.key)
                                 .font(.title2)
@@ -66,7 +88,11 @@ public struct HomeView: View {
                 .navigationTitle(#localized("Anniversaries"))
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        menu(viewStore: viewStore)
+                        if viewStore.editMode == .inactive {
+                            menu(viewStore: viewStore)
+                        } else {
+                            editDoneButton(viewStore: viewStore)
+                        }
                     }
                     ToolbarItemGroup(placement: .bottomBar) {
                         addButton(viewStore: viewStore)
@@ -75,6 +101,7 @@ public struct HomeView: View {
                 .onAppear {
                     viewStore.send(.onAppear)
                 }
+                .environment(\.editMode, viewStore.$editMode)
                 .sheet(
                     store: store.scope(state: \.$destination, action: Home.Action.destination),
                     state: /Home.Destination.State.add,
@@ -93,10 +120,10 @@ public struct HomeView: View {
     }
 
     // MARK: Tools
-    private func menu(viewStore: ViewStoreOf<Home>) -> some View {
+    private func menu(viewStore: ViewStore<ViewState, Home.Action>) -> some View {
         Menu {
             Button {
-                viewStore.send(.editButtonTapped)
+                viewStore.send(.editButtonTapped, animation: .default)
             } label: {
                 Label(#localized("Edit"), systemImage: "pencil")
             }
@@ -132,8 +159,16 @@ public struct HomeView: View {
                 .foregroundColor(#color("black"))
         }
     }
+    
+    private func editDoneButton(viewStore: ViewStore<ViewState, Home.Action>) -> some View {
+        Button {
+            viewStore.send(.editDoneButtonTapped, animation: .default)
+        } label: {
+            Text(#localized("Done"))
+        }
+    }
 
-    private func addButton(viewStore: ViewStoreOf<Home>) -> some View {
+    private func addButton(viewStore:  ViewStore<ViewState, Home.Action>) -> some View {
         Group {
             Spacer()
 

@@ -15,6 +15,12 @@
             "state" : "translated",
             "value" : "追加"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "추가"
+          }
         }
       }
     },
@@ -271,48 +277,71 @@
         }
       }
     },
-    "Failed to load data" : {
+    "Failed to delete anniversary" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to load data"
+            "value" : "Failed to delete anniversary"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "データの取得に失敗しました"
+            "value" : "アニバーサリの削除に失敗しました"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "데이터를 불러오지 못했습니다"
+            "value" : "기념일을 삭제하지 못했습니다"
           }
         }
       }
     },
-    "Failed to save data" : {
+    "Failed to load anniversaries" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to save data"
+            "value" : "Failed to load anniversaries"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "データの追加に失敗しました"
+            "value" : "アニバーサリーズの取得に失敗しました"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "데이터를 추가하지 못했습니다"
+            "value" : "기념일을 불러오지 못했습니다"
+          }
+        }
+      }
+    },
+    "Failed to save anniversary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to save anniversary"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アニバーサリの保存に失敗しました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기념일을 저장하지 못했습니다"
           }
         }
       }
@@ -466,13 +495,13 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "命日"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "기일"
           }
         }
