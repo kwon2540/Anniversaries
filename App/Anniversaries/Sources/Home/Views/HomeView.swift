@@ -103,15 +103,11 @@ public struct HomeView: View {
                 }
                 .environment(\.editMode, viewStore.$editMode)
                 .sheet(
-                    store: store.scope(state: \.$destination, action: \.destination),
-                    state: /Home.Destination.State.add,
-                    action: Home.Destination.Action.add,
+                    store: store.scope(state: \.$destination.add, action: \.destination.add),
                     content: AddView.init(store:)
                 )
                 .navigationDestination(
-                    store: store.scope(state: \.$destination, action: \.destination),
-                    state: /Home.Destination.State.edit,
-                    action: Home.Destination.Action.edit,
+                    store: store.scope(state: \.$destination.edit, action: \.destination.edit),
                     destination: EditView.init(store:)
                 )
                 .modelContainer(anniversaryContainer)
