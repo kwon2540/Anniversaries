@@ -33,6 +33,7 @@ public struct Home: Reducer {
         case anniversariesResponse(TaskResult<[Anniversary]>)
         case sortAnniversaries
         case editButtonTapped
+        case editDoneButtonTapped
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
         case addButtonTapped
@@ -81,7 +82,10 @@ public struct Home: Reducer {
                 state.groupedAnniversariesList = state.anniversaries.sorted(by: state.currentSort, order: state.currentSortOrder)
 
             case .editButtonTapped:
-                break
+                state.editMode = .active
+                
+            case .editDoneButtonTapped:
+                state.editMode = .inactive
 
             case .sortByButtonTapped(let sort):
                 state.currentSort = sort

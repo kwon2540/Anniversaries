@@ -88,7 +88,11 @@ public struct HomeView: View {
                 .navigationTitle(#localized("Anniversaries"))
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        menu(viewStore: viewStore)
+                        if viewStore.editMode == .inactive {
+                            menu(viewStore: viewStore)
+                        } else {
+                            editDoneButton(viewStore: viewStore)
+                        }
                     }
                     ToolbarItemGroup(placement: .bottomBar) {
                         addButton(viewStore: viewStore)
@@ -97,6 +101,7 @@ public struct HomeView: View {
                 .onAppear {
                     viewStore.send(.onAppear)
                 }
+                .environment(\.editMode, viewStore.$editMode)
                 .sheet(
                     store: store.scope(state: \.$destination, action: Home.Action.destination),
                     state: /Home.Destination.State.add,
@@ -118,7 +123,7 @@ public struct HomeView: View {
     private func menu(viewStore: ViewStore<ViewState, Home.Action>) -> some View {
         Menu {
             Button {
-                viewStore.send(.editButtonTapped)
+                viewStore.send(.editButtonTapped, animation: .default)
             } label: {
                 Label(#localized("Edit"), systemImage: "pencil")
             }
@@ -152,6 +157,14 @@ public struct HomeView: View {
         } label: {
             Image(systemName: "ellipsis.circle")
                 .foregroundColor(#color("black"))
+        }
+    }
+    
+    private func editDoneButton(viewStore: ViewStore<ViewState, Home.Action>) -> some View {
+        Button {
+            viewStore.send(.editDoneButtonTapped, animation: .default)
+        } label: {
+            Text(#localized("Done"))
         }
     }
 
