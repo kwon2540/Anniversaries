@@ -23,6 +23,7 @@ public struct Home {
         var groupedAnniversariesList: [GroupedAnniversaries] = []
         var currentSort: Sort.Kind = .defaultCategory
         var currentSortOrder: Sort.Order = .ascending
+        var isUpdateGroupedAnniversaries = true
     }
 
     public enum Action: Equatable, BindableAction {
@@ -52,7 +53,7 @@ public struct Home {
         BindingReducer()
         Reduce<State, Action> { state, action in
             switch action {
-            case .onAppear:
+            case .onAppear where state.anniversaries.isEmpty:
                 state.currentSort = userDefaultClient.currentAnniversariesSort()
                 state.currentSortOrder = userDefaultClient.currentAnniversariesSortOrder()
 
@@ -71,7 +72,10 @@ public struct Home {
 
             case .anniversariesResponse(.success(let anniversaries)):
                 state.anniversaries = anniversaries
-                return .send(.sortAnniversaries)
+                
+                if state.isUpdateGroupedAnniversaries {
+                    return .send(.sortAnniversaries)
+                }
 
             case .anniversariesResponse(.failure(let error)):
                 assertionFailure(error.localizedDescription)
@@ -117,6 +121,8 @@ public struct Home {
                 }
                 
             case .deleteAnniversary(.success):
+                // While deleting, if groupedAnniversaries is updated then delete animation is not shown
+                state.isUpdateGroupedAnniversaries = false
                 return .send(.fetchAnniversaries)
                 
             case .deleteAnniversary(.failure):
@@ -125,10 +131,12 @@ public struct Home {
                 )      
                 return .send(.fetchAnniversaries)
 
-            case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))):
+            case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))),
+                    .destination(.presented(.edit(.delegate(.saveAnniversarySuccessful)))):
+                state.isUpdateGroupedAnniversaries = true
                 return .send(.fetchAnniversaries)
 
-            case .binding, .destination:
+            case .binding, .destination, .onAppear:
                 break
             }
             return .none
