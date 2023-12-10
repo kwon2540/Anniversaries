@@ -21,7 +21,7 @@ public class Anniversary: Identifiable, Equatable {
     public init(
         id: UUID,
         kind: AnniversaryKind,
-        othersTitle: String?,
+        othersTitle: String,
         name: String,
         date: Date,
         reminds: [Remind],
@@ -37,7 +37,7 @@ public class Anniversary: Identifiable, Equatable {
     }
     public var id: UUID
     public var kind: AnniversaryKind
-    public var othersTitle: String?
+    public var othersTitle: String
     public var name: String
     public var date: Date
     public var reminds: [Remind]
