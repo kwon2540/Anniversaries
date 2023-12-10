@@ -187,10 +187,20 @@ private struct Item: View {
             chevron
         } label: {
             VStack(spacing: 8) {
+                if !anniversary.othersTitle.isEmpty {
+                    HStack {
+                        othersTitle(anniversary.othersTitle)
+                        Spacer()
+                        date
+                    }
+                }
+                
                 HStack(alignment: .firstTextBaseline) {
                     name
                     Spacer()
-                    date
+                    if anniversary.othersTitle.isEmpty {
+                        date
+                    }
                 }
                 // reminds, memoどっちもいない場合にspacingだけ取られているため
                 if !anniversary.reminds.isEmpty || !anniversary.memo.isEmpty {
@@ -250,6 +260,14 @@ private struct Item: View {
             .resizable()
             .scaledToFit()
             .frame(height: 12)
+    }
+    
+    private func othersTitle(_ title: String) -> some View {
+        Text(title)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .font(.caption)
+            .bold()
+            .foregroundStyle(Color.gray)
     }
 }
 
