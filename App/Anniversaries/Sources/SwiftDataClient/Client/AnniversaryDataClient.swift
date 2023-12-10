@@ -47,7 +47,7 @@ extension AnniversaryDataClient: TestDependencyKey {
                 Anniversary(
                     id: UUID(),
                     kind: .birth,
-                    othersTitle: nil,
+                    othersTitle: "",
                     name: "Test Data",
                     date: .now,
                     reminds: [],

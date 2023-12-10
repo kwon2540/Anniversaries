@@ -27,7 +27,7 @@ public struct AddAndEdit {
             if case let .edit(anniversary) = mode {
                 self.originalAnniversary = anniversary
                 self.selectedKind = anniversary.kind
-                self.othersTitle = anniversary.othersTitle ?? ""
+                self.othersTitle = anniversary.othersTitle
                 self.name = anniversary.name
                 self.date = anniversary.date
                 self.reminds = anniversary.reminds
