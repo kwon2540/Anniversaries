@@ -8,6 +8,8 @@ import CoreKit
 import AppUI
 
 struct AddAndEditContentView: View {
+    @FocusState var focusedField: AddAndEdit.State.Field?
+    
     var viewStore: ViewStoreOf<AddAndEdit>
 
     var body: some View {
@@ -20,10 +22,13 @@ struct AddAndEditContentView: View {
                 }
                 if case .others = viewStore.selectedKind {
                     TextField(#localized("Title"), text: viewStore.$othersTitle)
+                        .focused($focusedField, equals: .title)
                 }
             }
             Section {
                 TextField(#localized("Name"), text: viewStore.$name)
+                    .focused($focusedField, equals: .name)
+                    
                 DatePicker(
                     #localized("Date"),
                     selection: viewStore.$date,
@@ -59,5 +64,6 @@ struct AddAndEditContentView: View {
             }
         }
         .padding(.top, -24)
+        .bind(viewStore.$focusedField, to: self.$focusedField)
     }
 }

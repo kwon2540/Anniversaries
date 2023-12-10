@@ -16,6 +16,11 @@ public struct AddAndEdit {
             case add
             case edit(Anniversary)
         }
+        
+        public enum Field: String {
+            case title
+            case name
+        }
 
         public init(mode: Mode) {
             self.mode = mode
@@ -36,6 +41,7 @@ public struct AddAndEdit {
         @BindingState var name = ""
         @BindingState var date: Date = .now
         @BindingState var memo = ""
+        @BindingState var focusedField: Field? = .name
 
         var mode: Mode
         var reminds: [Remind] = []
@@ -93,6 +99,9 @@ public struct AddAndEdit {
 
         Reduce<State, Action> { state, action in
             switch action {
+            case .binding(\.$selectedKind) where state.selectedKind == .others:
+                state.focusedField = .title
+                
             case .cancelButtonTapped:
                 return .run { _ in
                     await dismiss()
