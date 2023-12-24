@@ -135,7 +135,7 @@ public struct AddAndEdit {
                 }
 
             case .addRemindButtonTapped:
-                state.destination = .remind(.init())
+                state.destination = .remind(.init(anniversaryDate: state.date))
 
             case .saveAnniversaries(.success):
                 return .run { send in

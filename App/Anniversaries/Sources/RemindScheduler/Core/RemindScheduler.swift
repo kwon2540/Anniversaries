@@ -17,10 +17,9 @@ public struct RemindScheduler {
         var isDateExpanded = true
         var isTimeExpanded = false
 
-        public init() {
-            let date = Calendar.current.startOfDay(for: .now)
-            self.selectedDate = date
-            self.startDate = date
+        public init(anniversaryDate: Date) {
+            self.selectedDate = anniversaryDate.nearestFutureDate
+            self.startDate = Calendar.current.startOfDay(for: .now)
         }
     }
 
