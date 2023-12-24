@@ -145,7 +145,7 @@ public struct RemindSchedulerView: View {
 #Preview {
     RemindSchedulerView(
         store: Store(
-            initialState: RemindScheduler.State(),
+            initialState: RemindScheduler.State(anniversaryDate: .now),
             reducer: RemindScheduler.init
         )
     )
