@@ -18,6 +18,7 @@ let package = Package(
         .library(name: "AddAndEdit", targets: ["AddAndEdit"]),
         .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
         .library(name: "SwiftDataClient", targets: ["SwiftDataClient"]),
+        .library(name: "UserNotificationClient", targets: ["UserNotificationClient"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.5.0"),
@@ -28,6 +29,7 @@ let package = Package(
             name: "AnniversariesKit",
             dependencies: [
                 "AppFeature",
+                "UserNotificationClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -108,6 +110,12 @@ let package = Package(
             name: "SwiftDataClient",
             dependencies: [
                 "CoreKit",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "UserNotificationClient",
+            dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
