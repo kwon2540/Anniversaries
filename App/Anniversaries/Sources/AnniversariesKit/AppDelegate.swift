@@ -65,7 +65,7 @@ struct AppDelegateReducer {
                 return .run { _ in completionHandler(.banner) }
                 
             case .userNotifications(.didReceiveResponse(_, let completionHandler)):
-                return .run { _ in completionHandler() }
+                return .run { @MainActor _ in completionHandler() }
                 
             case .rootAction, .userNotifications:
                 break

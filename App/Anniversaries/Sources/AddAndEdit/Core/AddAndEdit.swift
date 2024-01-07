@@ -8,6 +8,8 @@ import CoreKit
 import Foundation
 import SwiftData
 import SwiftDataClient
+import UserNotificationClient
+import UserNotifications
 
 @Reducer
 public struct AddAndEdit {
@@ -93,6 +95,8 @@ public struct AddAndEdit {
     @Dependency(\.dismiss) private var dismiss
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
     @Dependency(\.uuid) private var uuid
+    @Dependency(\.userNotificationsClient) private var userNotificationsClient
+    
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -112,6 +116,10 @@ public struct AddAndEdit {
                     await send(
                         .saveAnniversaries(
                             TaskResult {
+                                let notificationRequest = createNotificationRequests(for: anniversary)
+                                for request in notificationRequest {
+                                    try await userNotificationsClient.add(request)
+                                }
                                 anniversaryDataClient.insert(anniversary)
                                 return try anniversaryDataClient.save()
                             }
@@ -125,6 +133,14 @@ public struct AddAndEdit {
                     await send(
                         .saveAnniversaries(
                             TaskResult {
+                                let originalRemindIDs = originalAnniversary.reminds.map(\.id.uuidString)
+                                await userNotificationsClient.removePendingNotificationRequestsWithIdentifiers(originalRemindIDs)
+                                
+                                let notificationRequest = createNotificationRequests(for: anniversary)
+                                for request in notificationRequest {
+                                    try await userNotificationsClient.add(request)
+                                }
+                                
                                 // FIXME: SwiftDataのUpdateがTCAで利用できるようになったら対応する
                                 anniversaryDataClient.delete(originalAnniversary)
                                 anniversaryDataClient.insert(anniversary)
@@ -162,6 +178,32 @@ public struct AddAndEdit {
         }
         .ifLet(\.$destination, action: \.destination) {
             Destination()
+        }
+    }
+}
+
+// MARK: UserNotifications
+extension AddAndEdit {
+    private func createNotificationRequests(for anniversary: Anniversary) -> [UNNotificationRequest] {
+        let notificationContent = UNMutableNotificationContent()
+        notificationContent.title = anniversary.kind.title
+        notificationContent.body = anniversary.name
+        
+        // Multiple Remind
+        return anniversary.reminds.map { remind -> UNNotificationRequest in
+            let components = Calendar.current.dateComponents(
+                [.calendar, .year, .month, .day, .hour, .minute],
+                from: remind.date
+            )
+            let trigger = UNCalendarNotificationTrigger(
+                dateMatching: components,
+                repeats: remind.isRepeat
+            )
+            return .init(
+                identifier: remind.id.uuidString,
+                content: notificationContent,
+                trigger: trigger
+            )
         }
     }
 }

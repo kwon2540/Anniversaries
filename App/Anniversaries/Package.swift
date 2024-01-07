@@ -82,6 +82,7 @@ let package = Package(
                 "RemindScheduler",
                 "CoreKit",
                 "SwiftDataClient",
+                "UserNotificationClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
