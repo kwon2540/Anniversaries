@@ -10,6 +10,7 @@ import SwiftData
 import SwiftDataClient
 import UserNotificationClient
 import UserNotifications
+import RemindScheduler
 
 @Reducer
 public struct AddAndEdit {
@@ -186,11 +187,22 @@ public struct AddAndEdit {
 extension AddAndEdit {
     private func createNotificationRequests(for anniversary: Anniversary) -> [UNNotificationRequest] {
         let notificationContent = UNMutableNotificationContent()
-        notificationContent.title = anniversary.kind.title
-        notificationContent.body = anniversary.name
+        notificationContent.title = #localized("\(anniversary.name)`s \(anniversary.kind.title)")
         
         // Multiple Remind
         return anniversary.reminds.map { remind -> UNNotificationRequest in
+            let targetDate = anniversary.date.nearestFutureDate
+            let timeRemaining = targetDate.timeIntervalSince(remind.date)
+            
+            let dateFormatter = DateComponentsFormatter()
+            dateFormatter.unitsStyle = .short
+            dateFormatter.allowedUnits = [.day, .hour, .minute]
+            dateFormatter.includesTimeRemainingPhrase = true
+            
+            let daysRemaining = dateFormatter.string(from: timeRemaining) ?? ""
+            
+            notificationContent.body = #localized("\(anniversary.date.formatted(date: .abbreviated, time: .omitted)) (\(daysRemaining))")
+            
             let components = Calendar.current.dateComponents(
                 [.calendar, .year, .month, .day, .hour, .minute],
                 from: remind.date

@@ -1,48 +1,48 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%lld (%lldDays Remaining)" : {
+    "%lld (%lld)" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld (%lldDays Remaining)"
+            "value" : "%lld (%lld)"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld（%lld日後）"
+            "value" : "%lld (%lld)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld (%lld일후)"
+            "value" : "%lld (%lld)"
           }
         }
       }
     },
-    "%lld`s %lld is approaching soon" : {
+    "%lld`s %lld" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld`s %lld is approaching soon"
+            "value" : "%lld`s %lld"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lldの%lldが近づいています"
+            "value" : "%lldの%lld"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld 의  %lld이 다가오고 있습니다"
+            "value" : "%lld 의  %lld"
           }
         }
       }
