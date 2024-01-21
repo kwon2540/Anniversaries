@@ -24,7 +24,7 @@ public struct AddAndEdit {
             case title
             case name
         }
-
+        
         public init(mode: Mode) {
             self.mode = mode
             if case let .edit(anniversary) = mode {
@@ -37,7 +37,7 @@ public struct AddAndEdit {
                 self.memo = anniversary.memo
             }
         }
-
+        
         @PresentationState var destination: Destination.State?
         @BindingState var selectedKind: AnniversaryKind = .birth
         @BindingState var othersTitle = ""
@@ -45,11 +45,11 @@ public struct AddAndEdit {
         @BindingState var date: Date = .now
         @BindingState var memo = ""
         @BindingState var focusedField: Field? = .name
-
+        
         var mode: Mode
         var reminds: [Remind] = []
         var originalAnniversary: Anniversary? = nil
-
+        
         var resultAnniversary: Anniversary {
             Anniversary(
                 id: originalAnniversary?.id ?? UUID(),
@@ -65,7 +65,7 @@ public struct AddAndEdit {
             switch selectedKind {
             case .birth, .remembrance:
                 return name.isEmpty
-
+                
             case .others:
                 return name.isEmpty || othersTitle.isEmpty
             }
@@ -75,7 +75,7 @@ public struct AddAndEdit {
             return originalAnniversary == resultAnniversary
         }
     }
-
+    
     public enum Action: BindableAction, Equatable {
         public enum Delegate: Equatable {
             case saveAnniversarySuccessful
@@ -90,18 +90,17 @@ public struct AddAndEdit {
         case saveAnniversaries(TaskResult<VoidSuccess>)
         case delegate(Delegate)
     }
-
+    
     public init() {}
-
+    
     @Dependency(\.dismiss) private var dismiss
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
     @Dependency(\.uuid) private var uuid
     @Dependency(\.userNotificationsClient) private var userNotificationsClient
     
-
     public var body: some ReducerOf<Self> {
         BindingReducer()
-
+        
         Reduce<State, Action> { state, action in
             switch action {
             case .binding(\.$selectedKind) where state.selectedKind == .others:
@@ -111,7 +110,7 @@ public struct AddAndEdit {
                 return .run { _ in
                     await dismiss()
                 }
-
+                
             case .addButtonTapped:
                 return .run { [anniversary = state.resultAnniversary] send in
                     await send(
@@ -127,7 +126,7 @@ public struct AddAndEdit {
                         )
                     )
                 }
-
+                
             case .doneButtonTapped:
                 guard let originalAnniversary = state.originalAnniversary else { break }
                 return .run { [anniversary = state.resultAnniversary] send in
@@ -150,28 +149,28 @@ public struct AddAndEdit {
                         )
                     )
                 }
-
+                
             case .addRemindButtonTapped:
                 state.destination = .remind(.init(anniversaryDate: state.date))
-
+                
             case .saveAnniversaries(.success):
                 return .run { send in
                     await send(.delegate(.saveAnniversarySuccessful))
                     await dismiss()
                 }
-
+                
             case .saveAnniversaries(.failure(let error)):
                 assertionFailure(error.localizedDescription)
                 state.destination = .alert(
                     AlertState(title: TextState(#localized("Failed to save data")))
                 )
-
+                
             case .destination(.presented(.remind(.remindApplied(let remind)))):
                 state.reminds.append(remind)
-
+                
             case .deleteRemind(let indexSet):
                 state.reminds.remove(atOffsets: indexSet)
-
+                
             case .destination, .binding, .delegate:
                 break
             }
@@ -193,7 +192,7 @@ extension AddAndEdit {
         return anniversary.reminds.map { remind -> UNNotificationRequest in
             let targetDate = anniversary.date.nearestFutureDate
             let timeRemaining = targetDate.timeIntervalSince(remind.date)
-            
+            // Converting timeInterval to Days/Hour/Minute Remaining.
             let dateFormatter = DateComponentsFormatter()
             dateFormatter.unitsStyle = .short
             dateFormatter.allowedUnits = [.day, .hour, .minute]
@@ -202,7 +201,7 @@ extension AddAndEdit {
             let daysRemaining = dateFormatter.string(from: timeRemaining) ?? ""
             
             notificationContent.body = #localized("\(anniversary.date.formatted(date: .abbreviated, time: .omitted)) (\(daysRemaining))")
-            
+            // Specifying the units for notification trigger
             let components = Calendar.current.dateComponents(
                 [.calendar, .year, .month, .day, .hour, .minute],
                 from: remind.date
