@@ -3,7 +3,7 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 public enum Sort {
     /// Sorting factor for Anniversaries
@@ -17,5 +17,31 @@ public enum Sort {
     public enum Order: CaseIterable, Codable {
         case ascending
         case descending
+    }
+}
+
+extension Binding where Value == Sort.Kind {
+    public func isOn(sort: Sort.Kind) -> Binding<Bool> {
+        .init(
+            get: { wrappedValue == sort },
+            set: { isOn, transaction in
+                if isOn {
+                    self.transaction(transaction).wrappedValue = sort
+                }
+            }
+        )
+    }
+}
+
+extension Binding where Value == Sort.Order {
+    public func isOn(sortOrder: Sort.Order) -> Binding<Bool> {
+        .init(
+            get: { wrappedValue == sortOrder },
+            set: { isOn, transaction in
+                if isOn {
+                    self.transaction(transaction).wrappedValue = sortOrder
+                }
+            }
+        )
     }
 }
