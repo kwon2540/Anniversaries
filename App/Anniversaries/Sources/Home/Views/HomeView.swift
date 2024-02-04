@@ -110,6 +110,9 @@ public struct HomeView: View {
                     store: store.scope(state: \.$destination.edit, action: \.destination.edit),
                     destination: EditView.init(store:)
                 )
+                .alert(
+                    store: store.scope(state: \.$destination.alert, action: \.destination.alert)
+                )
                 .modelContainer(anniversaryContainer)
             }
         }
