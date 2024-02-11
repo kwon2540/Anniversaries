@@ -50,7 +50,7 @@ public struct HomeView: View {
                             Button {
                                 store.send(.anniversaryTapped(anniversary))
                             } label: {
-                                Item(anniversary: anniversary)
+                                Item(anniversary: anniversary, editMode: store.editMode)
                             }
                         }
                         .onDelete { indexSet in
@@ -70,6 +70,7 @@ public struct HomeView: View {
                     .textCase(nil)
                 }
             }
+            .disabled(store.editMode == .active)
             .navigationTitle(#localized("Anniversaries"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -162,10 +163,11 @@ public struct HomeView: View {
 
 private struct Item: View {
     var anniversary: Anniversary
+    var editMode: EditMode
     
     var body: some View {
         LabeledContent {
-            chevron
+            if editMode == .inactive { chevron }
         } label: {
             VStack(spacing: 8) {
                 if !anniversary.othersTitle.isEmpty {
