@@ -39,24 +39,9 @@ public struct HomeView: View {
         self.store = store
     }
     
-    //    struct ViewState: Equatable {
-    //        @BindingViewState var editMode: EditMode
-    //        var groupedAnniversariesList: [GroupedAnniversaries]
-    //        var currentSort: Sort.Kind
-    //        var currentSortOrder: Sort.Order
-    //
-    //        init(store: BindingViewStore<Home.State>) {
-    //            self._editMode = store.$editMode
-    //            self.groupedAnniversariesList = store.groupedAnniversariesList
-    //            self.currentSort = store.currentSort
-    //            self.currentSortOrder = store.currentSortOrder
-    //        }
-    //    }
-    
     @Bindable private var store: StoreOf<Home>
     
     public var body: some View {
-        //        WithViewStore(store, observe: ViewState.init) { viewStore in
         NavigationStack {
             List {
                 ForEach(store.groupedAnniversariesList, id: \.self) { groupedAnniversaries in
@@ -103,15 +88,15 @@ public struct HomeView: View {
             }
             .environment(\.editMode, $store.editMode)
             .sheet(
-                store: store.scope(state: \.$destination.add, action: \.destination.add),
+                item: $store.scope(state: \.destination?.add, action: \.destination.add),
                 content: AddView.init(store:)
             )
             .navigationDestination(
-                store: store.scope(state: \.$destination.edit, action: \.destination.edit),
+                item: $store.scope(state: \.destination?.edit, action: \.destination.edit),
                 destination: EditView.init(store:)
             )
             .alert(
-                store: store.scope(state: \.$destination.alert, action: \.destination.alert)
+                $store.scope(state: \.destination?.alert, action: \.destination.alert)
             )
             .modelContainer(anniversaryContainer)
         }
