@@ -12,30 +12,28 @@ public struct EditView: View {
     public init(store: StoreOf<AddAndEdit>) {
         self.store = store
     }
-
-    private var store: StoreOf<AddAndEdit>
-
+    
+    @Bindable private var store: StoreOf<AddAndEdit>
+    
     public var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            AddAndEditContentView(viewStore: viewStore)
-                .navigationTitle(#localized("Edit"))
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(#localized("Done")) {
-                            viewStore.send(.doneButtonTapped)
-                        }
-                        .disabled(viewStore.isDoneButtonDisabled)
+        AddAndEditContentView(store: store)
+            .navigationTitle(#localized("Edit"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(#localized("Done")) {
+                        store.send(.doneButtonTapped)
                     }
+                    .disabled(store.isDoneButtonDisabled)
                 }
-                .sheet(
-                    store: store.scope(state: \.$destination.remind, action: \.destination.remind),
-                    content: RemindSchedulerView.init(store:)
-                )
-                .alert(
-                    store: store.scope(state: \.$destination.alert, action: \.destination.alert)
-                )
-        }
+            }
+            .sheet(
+                item: $store.scope(state: \.destination?.remind, action: \.destination.remind),
+                content: RemindSchedulerView.init(store:)
+            )
+            .alert(
+                $store.scope(state: \.destination?.alert, action: \.destination.alert)
+            )
     }
 }
 
