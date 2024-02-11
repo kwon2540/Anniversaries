@@ -14,6 +14,7 @@ import RemindScheduler
 
 @Reducer
 public struct AddAndEdit {
+    @ObservableState
     public struct State: Equatable {
         public enum Mode: Equatable {
             case add
@@ -38,13 +39,13 @@ public struct AddAndEdit {
             }
         }
         
-        @PresentationState var destination: Destination.State?
-        @BindingState var selectedKind: AnniversaryKind = .birth
-        @BindingState var othersTitle = ""
-        @BindingState var name = ""
-        @BindingState var date: Date = .now
-        @BindingState var memo = ""
-        @BindingState var focusedField: Field? = .name
+        @Presents var destination: Destination.State?
+        var selectedKind: AnniversaryKind = .birth
+        var othersTitle = ""
+        var name = ""
+        var date: Date = .now
+        var memo = ""
+        var focusedField: Field? = .name
         
         var mode: Mode
         var reminds: [Remind] = []
@@ -103,7 +104,7 @@ public struct AddAndEdit {
         
         Reduce<State, Action> { state, action in
             switch action {
-            case .binding(\.$selectedKind) where state.selectedKind == .others:
+            case .binding(\.selectedKind) where state.selectedKind == .others:
                 state.focusedField = .title
                 
             case .cancelButtonTapped:
@@ -215,6 +216,30 @@ extension AddAndEdit {
                 content: notificationContent,
                 trigger: trigger
             )
+        }
+    }
+}
+
+// MARK: - Destination
+extension AddAndEdit {
+    @Reducer
+    public struct Destination {
+        public enum State: Equatable {
+            case remind(RemindScheduler.State)
+            case alert(AlertState<Action.Alert>)
+        }
+
+        public enum Action: Equatable {
+            public enum Alert: Equatable {
+            }
+            case alert(Alert)
+            case remind(RemindScheduler.Action)
+        }
+
+        public var body: some ReducerOf<Destination> {
+            Scope(state: \.remind, action: \.remind) {
+                RemindScheduler()
+            }
         }
     }
 }

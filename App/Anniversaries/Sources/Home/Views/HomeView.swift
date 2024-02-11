@@ -39,90 +39,74 @@ public struct HomeView: View {
         self.store = store
     }
     
-    struct ViewState: Equatable {
-        @BindingViewState var editMode: EditMode
-        var groupedAnniversariesList: [GroupedAnniversaries]
-        var currentSort: Sort.Kind
-        var currentSortOrder: Sort.Order
-        
-        init(store: BindingViewStore<Home.State>) {
-            self._editMode = store.$editMode
-            self.groupedAnniversariesList = store.groupedAnniversariesList
-            self.currentSort = store.currentSort
-            self.currentSortOrder = store.currentSortOrder
-        }
-    }
-
-    private var store: StoreOf<Home>
-
+    @Bindable private var store: StoreOf<Home>
+    
     public var body: some View {
-        WithViewStore(store, observe: ViewState.init) { viewStore in
-            NavigationStack {
-                List {
-                    ForEach(viewStore.groupedAnniversariesList, id: \.self) { groupedAnniversaries in
-                        Section {
-                            ForEach(groupedAnniversaries.anniversaries, id: \.self) { anniversary in
-                                Button {
-                                    viewStore.send(.anniversaryTapped(anniversary))
-                                } label: {
-                                    Item(anniversary: anniversary)
-                                }
+        NavigationStack {
+            List {
+                ForEach(store.groupedAnniversariesList, id: \.self) { groupedAnniversaries in
+                    Section {
+                        ForEach(groupedAnniversaries.anniversaries, id: \.self) { anniversary in
+                            Button {
+                                store.send(.anniversaryTapped(anniversary))
+                            } label: {
+                                Item(anniversary: anniversary)
                             }
-                            .onDelete { indexSet in
-                                guard let index = indexSet.first else {
-                                    return
-                                }
-                                let anniversary = groupedAnniversaries.anniversaries[index]
-                                viewStore.send(.onDeleteAnniversary(anniversary))
+                        }
+                        .onDelete { indexSet in
+                            guard let index = indexSet.first else {
+                                return
                             }
-                            
-                        } header: {
-                            Text(groupedAnniversaries.key)
-                                .font(.title2)
-                                .foregroundStyle(Color.black)
-                                .padding(.leading, -16)
+                            let anniversary = groupedAnniversaries.anniversaries[index]
+                            store.send(.onDeleteAnniversary(anniversary))
                         }
-                        .textCase(nil)
+                        
+                    } header: {
+                        Text(groupedAnniversaries.key)
+                            .font(.title2)
+                            .foregroundStyle(Color.black)
+                            .padding(.leading, -16)
                     }
+                    .textCase(nil)
                 }
-                .navigationTitle(#localized("Anniversaries"))
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        if viewStore.editMode == .inactive {
-                            menu(viewStore: viewStore)
-                        } else {
-                            editDoneButton(viewStore: viewStore)
-                        }
-                    }
-                    ToolbarItemGroup(placement: .bottomBar) {
-                        addButton(viewStore: viewStore)
-                    }
-                }
-                .onAppear {
-                    viewStore.send(.onAppear)
-                }
-                .environment(\.editMode, viewStore.$editMode)
-                .sheet(
-                    store: store.scope(state: \.$destination.add, action: \.destination.add),
-                    content: AddView.init(store:)
-                )
-                .navigationDestination(
-                    store: store.scope(state: \.$destination.edit, action: \.destination.edit),
-                    destination: EditView.init(store:)
-                )
-                .alert(
-                    store: store.scope(state: \.$destination.alert, action: \.destination.alert)
-                )
-                .modelContainer(anniversaryContainer)
             }
+            .navigationTitle(#localized("Anniversaries"))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if store.editMode == .inactive {
+                        menu
+                    } else {
+                        editDoneButton
+                    }
+                }
+                ToolbarItemGroup(placement: .bottomBar) {
+                    addButton
+                }
+            }
+            .onAppear {
+                store.send(.onAppear)
+            }
+            .environment(\.editMode, $store.editMode)
+            .sheet(
+                item: $store.scope(state: \.destination?.add, action: \.destination.add),
+                content: AddView.init(store:)
+            )
+            .navigationDestination(
+                item: $store.scope(state: \.destination?.edit, action: \.destination.edit),
+                destination: EditView.init(store:)
+            )
+            .alert(
+                $store.scope(state: \.destination?.alert, action: \.destination.alert)
+            )
+            .modelContainer(anniversaryContainer)
         }
     }
 
     // MARK: Tools
-    private func menu(viewStore: ViewStore<ViewState, Home.Action>) -> some View {
+    private var menu: some View {
         Menu {
             Button {
-                viewStore.send(.editButtonTapped, animation: .default)
+                store.send(.editButtonTapped, animation: .default)
             } label: {
                 Label(#localized("Edit"), systemImage: "pencil")
             }
@@ -131,10 +115,7 @@ public struct HomeView: View {
                 ForEach(Sort.Kind.allCases, id: \.self) { sort in
                     Toggle(
                         sort.title,
-                        isOn: viewStore.binding(
-                            get: { $0.currentSort == sort },
-                            send: .sortByButtonTapped(sort)
-                        )
+                        isOn: $store.currentSort.sending(\.sortByButtonTapped).isOn(sort: sort)
                     )
                 }
 
@@ -143,10 +124,7 @@ public struct HomeView: View {
                 ForEach(Sort.Order.allCases, id: \.self) { sortOrder in
                     Toggle(
                         sortOrder.title,
-                        isOn: viewStore.binding(
-                            get: { $0.currentSortOrder == sortOrder },
-                            send: .sortOrderButtonTapped(sortOrder)
-                        )
+                        isOn: $store.currentSortOrder.sending(\.sortOrderButtonTapped).isOn(sortOrder: sortOrder)
                     )
                 }
             } label: {
@@ -159,20 +137,20 @@ public struct HomeView: View {
         }
     }
     
-    private func editDoneButton(viewStore: ViewStore<ViewState, Home.Action>) -> some View {
+    private var editDoneButton: some View {
         Button {
-            viewStore.send(.editDoneButtonTapped, animation: .default)
+            store.send(.editDoneButtonTapped, animation: .default)
         } label: {
             Text(#localized("Done"))
         }
     }
-
-    private func addButton(viewStore:  ViewStore<ViewState, Home.Action>) -> some View {
+    
+    private var addButton: some View {
         Group {
             Spacer()
-
+            
             Button {
-                viewStore.send(.addButtonTapped)
+                store.send(.addButtonTapped)
             } label: {
                 Image(systemName: "square.and.pencil")
                     .foregroundColor(#color("black"))
@@ -184,7 +162,7 @@ public struct HomeView: View {
 
 private struct Item: View {
     var anniversary: Anniversary
-
+    
     var body: some View {
         LabeledContent {
             chevron
@@ -222,20 +200,20 @@ private struct Item: View {
             .lineLimit(1)
         }
     }
-
+    
     private var name: some View {
         Text(anniversary.name)
             .font(.title3)
             .bold()
     }
-
+    
     private var date: some View {
         Text(anniversary.date.formatted(date: .numeric, time: .omitted))
             .font(.subheadline)
             .fontWeight(.semibold)
             .foregroundStyle(Color.gray)
     }
-
+    
     private var reminds: some View {
         HStack(alignment: .firstTextBaseline) {
             Text("\(#localized("Remind")): ")
@@ -246,7 +224,7 @@ private struct Item: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-
+    
     private var memo: some View {
         HStack(alignment: .firstTextBaseline) {
             Text("\(#localized("Memo")): ")
@@ -257,7 +235,7 @@ private struct Item: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-
+    
     private var chevron: some View {
         Image(systemName: "chevron.right")
             .resizable()

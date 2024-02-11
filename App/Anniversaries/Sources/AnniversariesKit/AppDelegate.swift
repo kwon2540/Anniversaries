@@ -29,6 +29,7 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
 
 @Reducer
 struct AppDelegateReducer {
+    @ObservableState
     struct State: Equatable {
         var rootState = Root.State()
     }

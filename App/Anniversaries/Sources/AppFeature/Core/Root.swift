@@ -8,6 +8,7 @@ import Home
 
 @Reducer
 public struct Root {
+    @ObservableState
     public struct State: Equatable {
         var homeState = Home.State()
 

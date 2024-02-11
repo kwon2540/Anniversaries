@@ -13,11 +13,12 @@ import SwiftUI
 
 @Reducer
 public struct Home {
+    @ObservableState
     public struct State: Equatable {
         public init() {}
         
-        @PresentationState var destination: Destination.State?
-        @BindingState var editMode: EditMode = .inactive
+        @Presents var destination: Destination.State?
+        var editMode: EditMode = .inactive
         
         var anniversaries: [Anniversary] = []
         var groupedAnniversariesList: [GroupedAnniversaries] = []

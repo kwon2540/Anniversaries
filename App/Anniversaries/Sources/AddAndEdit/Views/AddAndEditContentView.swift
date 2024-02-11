@@ -10,28 +10,28 @@ import AppUI
 struct AddAndEditContentView: View {
     @FocusState var focusedField: AddAndEdit.State.Field?
     
-    var viewStore: ViewStoreOf<AddAndEdit>
+    @Bindable var store: StoreOf<AddAndEdit>
 
     var body: some View {
         Form {
             Section {
-                Picker(#localized("Kind"), selection: viewStore.$selectedKind) {
+                Picker(#localized("Kind"), selection: $store.selectedKind) {
                     ForEach(AnniversaryKind.allCases, id: \.self) { kind in
                         Text(kind.title).tag(kind)
                     }
                 }
-                if case .others = viewStore.selectedKind {
-                    TextField(#localized("Title"), text: viewStore.$othersTitle)
+                if case .others = store.selectedKind {
+                    TextField(#localized("Title"), text: $store.othersTitle)
                         .focused($focusedField, equals: .title)
                 }
             }
             Section {
-                TextField(#localized("Name"), text: viewStore.$name)
+                TextField(#localized("Name"), text: $store.name)
                     .focused($focusedField, equals: .name)
                     
                 DatePicker(
                     #localized("Date"),
-                    selection: viewStore.$date,
+                    selection: $store.date,
                     displayedComponents: [.date]
                 )
                 .datePickerStyle(.compact)
@@ -39,7 +39,7 @@ struct AddAndEditContentView: View {
             Section {
                 LabeledContent(#localized("Remind")) {
                     Button {
-                        viewStore.send(.addRemindButtonTapped)
+                        store.send(.addRemindButtonTapped)
                         // +タップしたらモーダルでDateとTimeとRepeatを決める画面を表示する
                         // 全てToggleでOn/OffできるようにしてDefaultはDateはOn、TimeはOff
                         // RepeatはDefaultはOnで下に毎年リマインドすることを案内し
@@ -50,20 +50,20 @@ struct AddAndEditContentView: View {
                     }
                 }
 
-                ForEach(viewStore.reminds, id: \.self) { remind in
+                ForEach(store.reminds, id: \.self) { remind in
                     Text(remind.date.formatted())
                         .padding(.leading, 8)
                 }
                 .onDelete { indexSet in
-                    viewStore.send(.deleteRemind(indexSet))
+                    store.send(.deleteRemind(indexSet))
                 }
             }
             Section {
-                TextField(#localized("Memo"), text: viewStore.$memo)
+                TextField(#localized("Memo"), text: $store.memo)
                     .frame(height: 100, alignment: .top)
             }
         }
         .padding(.top, -24)
-        .bind(viewStore.$focusedField, to: self.$focusedField)
+        .bind($store.focusedField, to: self.$focusedField)
     }
 }
