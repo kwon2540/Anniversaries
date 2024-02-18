@@ -51,7 +51,7 @@ struct AddAndEditContentView: View {
                 }
 
                 ForEach(store.reminds, id: \.self) { remind in
-                    Text(remind.date.formatted())
+                    Text(remind.date.formatted(.remindDate))
                         .padding(.leading, 8)
                 }
                 .onDelete { indexSet in
