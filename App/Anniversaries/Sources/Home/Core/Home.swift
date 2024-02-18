@@ -134,8 +134,8 @@ public struct Home {
                     }
                 )
                 
-            case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))):
-            // TODO: Fetch when anniversary is edited from detail mode
+            case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))),
+                    .destination(.presented(.detail(.destination(.presented(.edit(.delegate(.saveAnniversarySuccessful))))))):
                 return .send(.fetchAnniversaries)
                 
             case .destination(.presented(.alert(.onDismissed))):

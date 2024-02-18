@@ -39,6 +39,9 @@ public struct Detail {
             case .editButtonTapped:
                 state.destination = .edit(.init(mode: .edit(state.anniversary)))
 
+            case .destination(.presented(.edit(.delegate(.saveAnniversarySuccessful(let anniversary))))):
+                state.anniversary = anniversary
+                
             case .destination:
                 break
             }
