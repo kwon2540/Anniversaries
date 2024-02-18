@@ -16,6 +16,7 @@ let package = Package(
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
         .library(name: "CoreKit", targets: ["CoreKit"]),
         .library(name: "AddAndEdit", targets: ["AddAndEdit"]),
+        .library(name: "Detail", targets: ["Detail"]),
         .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
         .library(name: "SwiftDataClient", targets: ["SwiftDataClient"]),
         .library(name: "UserNotificationClient", targets: ["UserNotificationClient"]),
@@ -57,6 +58,7 @@ let package = Package(
                 "CoreKit",
                 "AppUI",
                 "AddAndEdit",
+                "Detail",
                 "SwiftDataClient",
                 "UserDefaultsClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -83,6 +85,13 @@ let package = Package(
                 "CoreKit",
                 "SwiftDataClient",
                 "UserNotificationClient",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "Detail",
+            dependencies: [
+                "AddAndEdit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

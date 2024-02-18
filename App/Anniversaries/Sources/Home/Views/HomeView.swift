@@ -3,6 +3,7 @@
 //
 
 import AddAndEdit
+import Detail
 import AppUI
 import ComposableArchitecture
 import CoreKit
@@ -93,8 +94,8 @@ public struct HomeView: View {
                 content: AddView.init(store:)
             )
             .navigationDestination(
-                item: $store.scope(state: \.destination?.edit, action: \.destination.edit),
-                destination: EditView.init(store:)
+                item: $store.scope(state: \.destination?.detail, action: \.destination.detail),
+                destination: DetailView.init(store:)
             )
             .alert(
                 $store.scope(state: \.destination?.alert, action: \.destination.alert)

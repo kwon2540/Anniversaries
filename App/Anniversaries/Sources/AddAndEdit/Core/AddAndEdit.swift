@@ -79,7 +79,7 @@ public struct AddAndEdit {
     
     public enum Action: BindableAction, Equatable {
         public enum Delegate: Equatable {
-            case saveAnniversarySuccessful
+            case saveAnniversarySuccessful(Anniversary)
         }
         case binding(BindingAction<State>)
         case destination(PresentationAction<Destination.Action>)
@@ -155,8 +155,8 @@ public struct AddAndEdit {
                 state.destination = .remind(.init(anniversaryDate: state.date))
                 
             case .saveAnniversaries(.success):
-                return .run { send in
-                    await send(.delegate(.saveAnniversarySuccessful))
+                return .run { [anniversary = state.resultAnniversary] send in
+                    await send(.delegate(.saveAnniversarySuccessful(anniversary)))
                     await dismiss()
                 }
                 

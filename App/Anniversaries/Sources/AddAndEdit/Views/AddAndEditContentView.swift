@@ -21,13 +21,19 @@ struct AddAndEditContentView: View {
                     }
                 }
                 if case .others = store.selectedKind {
-                    TextField(#localized("Title"), text: $store.othersTitle)
-                        .focused($focusedField, equals: .title)
+                    LabeledContent(#localized("Title")) {
+                        TextField("", text: $store.othersTitle)
+                            .focused($focusedField, equals: .title)
+                            .multilineTextAlignment(.trailing)
+                    }
                 }
             }
             Section {
-                TextField(#localized("Name"), text: $store.name)
-                    .focused($focusedField, equals: .name)
+                LabeledContent(#localized("Name")) {
+                    TextField("", text: $store.name)
+                        .focused($focusedField, equals: .name)
+                        .multilineTextAlignment(.trailing)
+                }
                     
                 DatePicker(
                     #localized("Date"),
@@ -51,7 +57,7 @@ struct AddAndEditContentView: View {
                 }
 
                 ForEach(store.reminds, id: \.self) { remind in
-                    Text(remind.date.formatted())
+                    Text(remind.date.formatted(.remindDate))
                         .padding(.leading, 8)
                 }
                 .onDelete { indexSet in
