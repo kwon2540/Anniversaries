@@ -3,6 +3,7 @@
 //
 
 import AddAndEdit
+import Detail
 import AppUI
 import ComposableArchitecture
 import CoreKit
@@ -105,7 +106,7 @@ public struct Home {
                 state.destination = .add(.init(mode: .add))
                 
             case .anniversaryTapped(let anniversary):
-                state.destination = .edit(.init(mode: .edit(anniversary)))
+                state.destination = .detail(.init(anniversary: anniversary))
                 
             case .onDeleteAnniversary(let anniversary):
                 return .run { send in
@@ -133,8 +134,8 @@ public struct Home {
                     }
                 )
                 
-            case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))),
-                    .destination(.presented(.edit(.delegate(.saveAnniversarySuccessful)))):
+            case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))):
+            // TODO: Fetch when anniversary is edited from detail mode
                 return .send(.fetchAnniversaries)
                 
             case .destination(.presented(.alert(.onDismissed))):
@@ -159,7 +160,7 @@ extension Home {
     public struct Destination {
         public enum State: Equatable {
             case add(AddAndEdit.State)
-            case edit(AddAndEdit.State)
+            case detail(Detail.State)
             case alert(AlertState<Action.Alert>)
         }
         
@@ -168,13 +169,13 @@ extension Home {
                 case onDismissed
             }
             case add(AddAndEdit.Action)
-            case edit(AddAndEdit.Action)
+            case detail(Detail.Action)
             case alert(Alert)
         }
         
         public var body: some ReducerOf<Self> {
             Scope(state: \.add, action: \.add, child: AddAndEdit.init)
-            Scope(state: \.edit, action: \.edit, child: AddAndEdit.init)
+            Scope(state: \.detail, action: \.detail, child: Detail.init)
         }
     }
 }
