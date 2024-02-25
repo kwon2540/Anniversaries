@@ -77,8 +77,8 @@ public struct AddAndEdit {
         }
     }
     
-    public enum Action: BindableAction, Equatable {
-        public enum Delegate: Equatable {
+    public enum Action: BindableAction {
+        public enum Delegate {
             case saveAnniversarySuccessful(Anniversary)
         }
         case binding(BindingAction<State>)
@@ -88,7 +88,7 @@ public struct AddAndEdit {
         case doneButtonTapped
         case addRemindButtonTapped
         case deleteRemind(IndexSet)
-        case saveAnniversaries(TaskResult<VoidSuccess>)
+        case saveAnniversaries(Result<Void, Error>)
         case delegate(Delegate)
     }
     
@@ -116,7 +116,7 @@ public struct AddAndEdit {
                 return .run { [anniversary = state.resultAnniversary] send in
                     await send(
                         .saveAnniversaries(
-                            TaskResult {
+                            Result {
                                 let notificationRequest = createNotificationRequests(for: anniversary)
                                 for request in notificationRequest {
                                     try await userNotificationsClient.add(request)
@@ -133,7 +133,7 @@ public struct AddAndEdit {
                 return .run { [anniversary = state.resultAnniversary] send in
                     await send(
                         .saveAnniversaries(
-                            TaskResult {
+                            Result {
                                 let originalRemindIDs = originalAnniversary.reminds.map(\.id.uuidString)
                                 await userNotificationsClient.removePendingNotificationRequestsWithIdentifiers(originalRemindIDs)
                                 
@@ -229,7 +229,7 @@ extension AddAndEdit {
             case alert(AlertState<Action.Alert>)
         }
 
-        public enum Action: Equatable {
+        public enum Action {
             public enum Alert: Equatable {
             }
             case alert(Alert)

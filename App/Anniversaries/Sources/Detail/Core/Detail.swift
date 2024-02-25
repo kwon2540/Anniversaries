@@ -25,7 +25,7 @@ public struct Detail {
         var anniversary: Anniversary
     }
     
-    public enum Action: Equatable {
+    public enum Action {
         case destination(PresentationAction<Destination.Action>)
         
         case editButtonTapped
@@ -61,7 +61,7 @@ extension Detail {
             case edit(AddAndEdit.State)
         }
         
-        public enum Action: Equatable {
+        public enum Action {
             case edit(AddAndEdit.Action)
         }
         
