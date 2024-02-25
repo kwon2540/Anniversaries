@@ -186,17 +186,15 @@ private struct Item: View {
                         date
                     }
                 }
-                // reminds, memoどっちもいない場合にspacingだけ取られているため
-                if !anniversary.reminds.isEmpty || !anniversary.memo.isEmpty {
-                    VStack {
-                        if !anniversary.reminds.isEmpty {
-                            reminds
-                        }
-                        if !anniversary.memo.isEmpty {
-                            memo
-                        }
+                
+                HStack {
+                    if !anniversary.reminds.isEmpty {
+                        TagView(type: .remind)
                     }
-                    .font(.subheadline)
+                    if !anniversary.memo.isEmpty {
+                        TagView(type: .memo)
+                    }
+                    Spacer()
                 }
             }
             .foregroundStyle(Color.black)

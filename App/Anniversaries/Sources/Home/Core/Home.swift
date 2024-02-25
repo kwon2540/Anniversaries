@@ -27,13 +27,13 @@ public struct Home {
         var currentSortOrder: Sort.Order = .ascending
     }
     
-    public enum Action: Equatable, BindableAction {
+    public enum Action: BindableAction {
         case binding(BindingAction<State>)
         
         case destination(PresentationAction<Destination.Action>)
         case onAppear
         case fetchAnniversaries
-        case anniversariesResponse(TaskResult<[Anniversary]>)
+        case anniversariesResponse(Result<[Anniversary], Error>)
         case sortAnniversaries
         case editButtonTapped
         case editDoneButtonTapped
@@ -42,7 +42,7 @@ public struct Home {
         case addButtonTapped
         case anniversaryTapped(Anniversary)
         case onDeleteAnniversary(Anniversary)
-        case deleteAnniversary(TaskResult<VoidSuccess>)
+        case deleteAnniversary(Result<Void, Error>)
     }
     
     public init() {}
@@ -65,7 +65,7 @@ public struct Home {
                 return .run { send in
                     await send(
                         .anniversariesResponse(
-                            TaskResult {
+                            Result {
                                 try anniversaryDataClient.fetch()
                             }
                         )
@@ -114,7 +114,7 @@ public struct Home {
                     try await clock.sleep(for: .seconds(0.3))
                     await send(
                         .deleteAnniversary(
-                            TaskResult {
+                            Result {
                                 anniversaryDataClient.delete(anniversary)
                                 return try anniversaryDataClient.save()
                             }
@@ -164,7 +164,7 @@ extension Home {
             case alert(AlertState<Action.Alert>)
         }
         
-        public enum Action: Equatable {
+        public enum Action {
             public enum Alert: Equatable {
                 case onDismissed
             }

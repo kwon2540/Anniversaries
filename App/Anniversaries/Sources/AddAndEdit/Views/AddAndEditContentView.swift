@@ -57,15 +57,23 @@ struct AddAndEditContentView: View {
                 }
 
                 ForEach(store.reminds, id: \.self) { remind in
-                    Text(remind.date.formatted(.remindDate))
-                        .padding(.leading, 8)
+                    HStack {
+                        Text(remind.date.formatted(.remindDate))
+                            .padding(.leading, 8)
+                        
+                        Spacer()
+                        
+                        if remind.isRepeat {
+                            TagView(type: .repeat)
+                        }
+                    }
                 }
                 .onDelete { indexSet in
                     store.send(.deleteRemind(indexSet))
                 }
             }
             Section {
-                TextField(#localized("Memo"), text: $store.memo)
+                TextField(#localized("Memo"), text: $store.memo, axis: .vertical)
                     .frame(height: 100, alignment: .top)
             }
         }

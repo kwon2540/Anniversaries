@@ -16,7 +16,7 @@ public struct Root {
         }
     }
     
-    public enum Action: Equatable {
+    public enum Action {
         case homeAction(Home.Action)
     }
     

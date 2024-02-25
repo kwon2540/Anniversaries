@@ -63,22 +63,27 @@ public struct AddAndEdit {
             )
         }
         var isAddButtonDisabled: Bool {
-            switch selectedKind {
+            return switch selectedKind {
             case .birth, .remembrance:
-                return name.isEmpty
-                
+                name.isEmpty
             case .others:
-                return name.isEmpty || othersTitle.isEmpty
+                name.isEmpty || othersTitle.isEmpty
             }
         }
         var isDoneButtonDisabled: Bool {
             guard let originalAnniversary else { return true }
-            return originalAnniversary == resultAnniversary
+            
+            return switch selectedKind {
+            case .birth, .remembrance:
+                name.isEmpty || (originalAnniversary == resultAnniversary)
+            case .others:
+                name.isEmpty || othersTitle.isEmpty || (originalAnniversary == resultAnniversary)
+            }
         }
     }
     
-    public enum Action: BindableAction, Equatable {
-        public enum Delegate: Equatable {
+    public enum Action: BindableAction {
+        public enum Delegate {
             case saveAnniversarySuccessful(Anniversary)
         }
         case binding(BindingAction<State>)
@@ -88,7 +93,7 @@ public struct AddAndEdit {
         case doneButtonTapped
         case addRemindButtonTapped
         case deleteRemind(IndexSet)
-        case saveAnniversaries(TaskResult<VoidSuccess>)
+        case saveAnniversaries(Result<Void, Error>)
         case delegate(Delegate)
     }
     
@@ -116,7 +121,7 @@ public struct AddAndEdit {
                 return .run { [anniversary = state.resultAnniversary] send in
                     await send(
                         .saveAnniversaries(
-                            TaskResult {
+                            Result {
                                 let notificationRequest = createNotificationRequests(for: anniversary)
                                 for request in notificationRequest {
                                     try await userNotificationsClient.add(request)
@@ -133,7 +138,7 @@ public struct AddAndEdit {
                 return .run { [anniversary = state.resultAnniversary] send in
                     await send(
                         .saveAnniversaries(
-                            TaskResult {
+                            Result {
                                 let originalRemindIDs = originalAnniversary.reminds.map(\.id.uuidString)
                                 await userNotificationsClient.removePendingNotificationRequestsWithIdentifiers(originalRemindIDs)
                                 
@@ -228,14 +233,14 @@ extension AddAndEdit {
             case remind(RemindScheduler.State)
             case alert(AlertState<Action.Alert>)
         }
-
-        public enum Action: Equatable {
+        
+        public enum Action {
             public enum Alert: Equatable {
             }
             case alert(Alert)
             case remind(RemindScheduler.Action)
         }
-
+        
         public var body: some ReducerOf<Destination> {
             Scope(state: \.remind, action: \.remind) {
                 RemindScheduler()
