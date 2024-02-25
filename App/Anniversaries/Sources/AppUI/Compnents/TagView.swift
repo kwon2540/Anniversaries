@@ -26,7 +26,7 @@ public struct TagView: View {
     private var type: Type
     
     public var body: some View {
-        Text("Repeat")
+        Text(type.title)
             .font(.caption2)
             .padding(.vertical, 2)
             .padding(.horizontal, 4)
