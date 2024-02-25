@@ -39,7 +39,15 @@ public struct DetailView: View {
                 Section {
                     Text("Remind")
                     ForEach(store.reminds, id: \.self) { remind in
-                        Text(remind.date.formatted(.remindDate))
+                        HStack {
+                            Text(remind.date.formatted(.remindDate))
+                            
+                            Spacer()
+                            
+                            if remind.isRepeat {
+                                TagView(type: .repeat)
+                            }
+                        }
                     }
                 }
             }
