@@ -30,8 +30,10 @@ public struct TagView: View {
             .font(.caption2)
             .padding(.vertical, 2)
             .padding(.horizontal, 4)
-            .border(.black, width: 1)
-            .clipShape(RoundedRectangle(cornerRadius: 2))
+            .overlay {
+                RoundedRectangle(cornerRadius: 4)
+                    .strokeBorder(lineWidth: 1)
+            }
     }
 }
 
