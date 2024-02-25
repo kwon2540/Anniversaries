@@ -65,7 +65,7 @@ struct AddAndEditContentView: View {
                 }
             }
             Section {
-                TextField(#localized("Memo"), text: $store.memo)
+                TextField(#localized("Memo"), text: $store.memo, axis: .vertical)
                     .frame(height: 100, alignment: .top)
             }
         }
