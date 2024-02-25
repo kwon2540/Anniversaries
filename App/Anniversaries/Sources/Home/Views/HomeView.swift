@@ -187,14 +187,16 @@ private struct Item: View {
                     }
                 }
                 
-                HStack {
-                    if !anniversary.reminds.isEmpty {
-                        TagView(type: .remind)
+                if !anniversary.reminds.isEmpty || !anniversary.memo.isEmpty {
+                    HStack {
+                        if !anniversary.reminds.isEmpty {
+                            TagView(type: .remind)
+                        }
+                        if !anniversary.memo.isEmpty {
+                            TagView(type: .memo)
+                        }
+                        Spacer()
                     }
-                    if !anniversary.memo.isEmpty {
-                        TagView(type: .memo)
-                    }
-                    Spacer()
                 }
             }
             .foregroundStyle(Color.black)
