@@ -63,17 +63,22 @@ public struct AddAndEdit {
             )
         }
         var isAddButtonDisabled: Bool {
-            switch selectedKind {
+            return switch selectedKind {
             case .birth, .remembrance:
-                return name.isEmpty
-                
+                name.isEmpty
             case .others:
-                return name.isEmpty || othersTitle.isEmpty
+                name.isEmpty || othersTitle.isEmpty
             }
         }
         var isDoneButtonDisabled: Bool {
             guard let originalAnniversary else { return true }
-            return originalAnniversary == resultAnniversary
+            
+            return switch selectedKind {
+            case .birth, .remembrance:
+                name.isEmpty || (originalAnniversary == resultAnniversary)
+            case .others:
+                name.isEmpty || othersTitle.isEmpty || (originalAnniversary == resultAnniversary)
+            }
         }
     }
     
@@ -228,14 +233,14 @@ extension AddAndEdit {
             case remind(RemindScheduler.State)
             case alert(AlertState<Action.Alert>)
         }
-
+        
         public enum Action {
             public enum Alert: Equatable {
             }
             case alert(Alert)
             case remind(RemindScheduler.Action)
         }
-
+        
         public var body: some ReducerOf<Destination> {
             Scope(state: \.remind, action: \.remind) {
                 RemindScheduler()
