@@ -11,6 +11,7 @@
 		6473439F29A1C4B30032EFF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6473439E29A1C4B30032EFF2 /* Assets.xcassets */; };
 		647343A229A1C4B30032EFF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 647343A129A1C4B30032EFF2 /* Preview Assets.xcassets */; };
 		64D6A69F2A7F4BA400793CF1 /* AnniversariesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 64D6A69E2A7F4BA400793CF1 /* AnniversariesKit */; };
+		D159B36B2B9404C80030A161 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D159B36A2B9404C80030A161 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +19,7 @@
 		6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseApp.swift; sourceTree = "<group>"; };
 		6473439E29A1C4B30032EFF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		647343A129A1C4B30032EFF2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D159B36A2B9404C80030A161 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 				6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */,
 				6473439E29A1C4B30032EFF2 /* Assets.xcassets */,
 				647343A029A1C4B30032EFF2 /* Preview Content */,
+				D159B36A2B9404C80030A161 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Release;
 			sourceTree = "<group>";
@@ -135,6 +138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D159B36B2B9404C80030A161 /* PrivacyInfo.xcprivacy in Resources */,
 				647343A229A1C4B30032EFF2 /* Preview Assets.xcassets in Resources */,
 				6473439F29A1C4B30032EFF2 /* Assets.xcassets in Resources */,
 			);
