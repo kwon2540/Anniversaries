@@ -13,14 +13,18 @@ public struct RemindScheduler {
         var selectedDate: Date
         var isRepeat = true
         var isCustomTime = false
-        let startDate: Date
 
         var isDateExpanded = true
         var isTimeExpanded = false
 
         public init(anniversaryDate: Date) {
             self.selectedDate = anniversaryDate.nearestFutureDate
-            self.startDate = Calendar.current.startOfDay(for: .now)
+        }
+        
+        public init(remind: Remind) {
+            self.selectedDate = remind.date
+            self.isRepeat = remind.isRepeat
+            self.isCustomTime = true
         }
     }
 

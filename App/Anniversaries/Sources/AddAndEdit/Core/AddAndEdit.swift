@@ -92,6 +92,7 @@ public struct AddAndEdit {
         case addButtonTapped
         case doneButtonTapped
         case addRemindButtonTapped
+        case remindTapped(Remind)
         case deleteRemind(IndexSet)
         case saveAnniversaries(Result<Void, Error>)
         case delegate(Delegate)
@@ -158,6 +159,9 @@ public struct AddAndEdit {
                 
             case .addRemindButtonTapped:
                 state.destination = .remind(.init(anniversaryDate: state.date))
+                
+            case .remindTapped(let remind):
+                state.destination = .remind(.init(remind: remind))
                 
             case .saveAnniversaries(.success):
                 return .run { [anniversary = state.resultAnniversary] send in
