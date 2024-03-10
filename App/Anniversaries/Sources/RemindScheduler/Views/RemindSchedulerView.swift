@@ -63,7 +63,7 @@ public struct RemindSchedulerView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        store.send(.applyButtonTapped)
+                        store.send(.navigationTrailingButtonTapped)
                     } label: {
                         Text(store.isEditMode ? #localized("Done") : #localized("Apply"))
                     }

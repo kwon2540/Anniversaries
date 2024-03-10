@@ -40,7 +40,7 @@ public struct RemindScheduler {
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case cancelButtonTapped
-        case applyButtonTapped
+        case navigationTrailingButtonTapped
         case dateTapped
         case timeTapped
 
@@ -67,7 +67,7 @@ public struct RemindScheduler {
                     await dismiss()
                 }
 
-            case .applyButtonTapped:
+            case .navigationTrailingButtonTapped:
                 return .run { [state] send in
                     let remind = Remind(date: state.selectedDate, isRepeat: state.isRepeat)
                     await send(.remindApplied(remind))
