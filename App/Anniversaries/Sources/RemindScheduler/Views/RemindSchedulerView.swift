@@ -65,7 +65,7 @@ public struct RemindSchedulerView: View {
                     Button {
                         store.send(.applyButtonTapped)
                     } label: {
-                        Text(#localized("Apply"))
+                        Text(store.isEditMode ? #localized("Done") : #localized("Apply"))
                     }
                 }
             }
