@@ -10,22 +10,31 @@ import CoreKit
 public struct RemindScheduler {
     @ObservableState
     public struct State: Equatable {
-        var selectedDate: Date
-        var isRepeat = true
-        var isCustomTime = false
-
-        var isDateExpanded = true
-        var isTimeExpanded = false
+        public enum Mode: Equatable {
+            case add
+            case edit
+        }
 
         public init(anniversaryDate: Date) {
             self.selectedDate = anniversaryDate.nearestFutureDate
+            self.mode = .add
         }
         
         public init(remind: Remind) {
             self.selectedDate = remind.date
             self.isRepeat = remind.isRepeat
             self.isCustomTime = true
+            self.mode = .edit
         }
+        var selectedDate: Date
+        var isRepeat = true
+        var isCustomTime = false
+
+        var isDateExpanded = true
+        var isTimeExpanded = false
+        var mode: Mode
+        
+        var isEditMode: Bool { mode == .edit }
     }
 
     public enum Action: BindableAction {
