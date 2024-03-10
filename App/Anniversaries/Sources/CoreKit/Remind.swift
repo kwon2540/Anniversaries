@@ -6,9 +6,9 @@ import Foundation
 import Dependencies
 
 public struct Remind: Hashable, Identifiable, Codable {
-    public init(date: Date, isRepeat: Bool) {
+    public init(id: UUID?, date: Date, isRepeat: Bool) {
         @Dependency(\.uuid) var uuid
-        self.id = uuid()
+        self.id = id ?? uuid()
         self.date = date
         self.isRepeat = isRepeat
     }

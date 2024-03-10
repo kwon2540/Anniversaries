@@ -57,16 +57,21 @@ struct AddAndEditContentView: View {
                 }
 
                 ForEach(store.reminds, id: \.self) { remind in
-                    HStack {
-                        Text(remind.date.formatted(.remindDate))
-                            .padding(.leading, 8)
-                        
-                        Spacer()
-                        
-                        if remind.isRepeat {
-                            TagView(type: .repeat)
+                    Button {
+                        store.send(.remindTapped(remind))
+                    } label: {
+                        HStack {
+                            Text(remind.date.formatted(.remindDate))
+                                .padding(.leading, 8)
+                            
+                            Spacer()
+                            
+                            if remind.isRepeat {
+                                TagView(type: .repeat)
+                            }
                         }
                     }
+                    .tint(.black)
                 }
                 .onDelete { indexSet in
                     store.send(.deleteRemind(indexSet))

@@ -10,28 +10,45 @@ import CoreKit
 public struct RemindScheduler {
     @ObservableState
     public struct State: Equatable {
-        var selectedDate: Date
-        var isRepeat = true
-        var isCustomTime = false
-        let startDate: Date
-
-        var isDateExpanded = true
-        var isTimeExpanded = false
+        public enum Mode: Equatable {
+            case add
+            case edit
+        }
 
         public init(anniversaryDate: Date) {
             self.selectedDate = anniversaryDate.nearestFutureDate
-            self.startDate = Calendar.current.startOfDay(for: .now)
+            self.mode = .add
         }
+        
+        public init(remind: Remind) {
+            self.id = remind.id
+            self.selectedDate = remind.date
+            self.isRepeat = remind.isRepeat
+            self.isCustomTime = true
+            self.mode = .edit
+        }
+        
+        var id: UUID?
+        var selectedDate: Date
+        var isRepeat = true
+        var isCustomTime = false
+
+        var isDateExpanded = true
+        var isTimeExpanded = false
+        var mode: Mode
+        
+        var isEditMode: Bool { mode == .edit }
     }
 
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case cancelButtonTapped
-        case applyButtonTapped
+        case navigationTrailingButtonTapped
         case dateTapped
         case timeTapped
 
         case remindApplied(Remind)
+        case remindEdited(Remind)
     }
 
     public init() {}
@@ -54,13 +71,19 @@ public struct RemindScheduler {
                     await dismiss()
                 }
 
-            case .applyButtonTapped:
+            case .navigationTrailingButtonTapped:
                 return .run { [state] send in
-                    let remind = Remind(date: state.selectedDate, isRepeat: state.isRepeat)
-                    await send(.remindApplied(remind))
+                    let remind = Remind(id: state.id, date: state.selectedDate, isRepeat: state.isRepeat)
+
+                    switch state.mode {
+                    case .add:
+                        await send(.remindApplied(remind))
+                    case .edit:
+                        await send(.remindEdited(remind))
+                    }
                 }
 
-            case .remindApplied:
+            case .remindApplied, .remindEdited:
                 return .run { _ in
                     await dismiss()
                 }

@@ -68,7 +68,7 @@ extension AnniversaryDataClient: TestDependencyKey {
                     othersTitle: "",
                     name: "Test Data",
                     date: .now,
-                    reminds: [.init(date: .now, isRepeat: false)],
+                    reminds: [.init(id: UUID(), date: .now, isRepeat: false)],
                     memo: "Test Memo"
                 ),
                 Anniversary(
