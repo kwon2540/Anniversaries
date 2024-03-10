@@ -21,11 +21,14 @@ public struct RemindScheduler {
         }
         
         public init(remind: Remind) {
+            self.id = remind.id
             self.selectedDate = remind.date
             self.isRepeat = remind.isRepeat
             self.isCustomTime = true
             self.mode = .edit
         }
+        
+        var id: UUID?
         var selectedDate: Date
         var isRepeat = true
         var isCustomTime = false
