@@ -178,6 +178,13 @@ public struct AddAndEdit {
             case .destination(.presented(.remind(.remindApplied(let remind)))):
                 state.reminds.append(remind)
                 
+            case .destination(.presented(.remind(.remindEdited(let remind)))):
+                let index = state.reminds.firstIndex { $0.id == remind.id }
+                guard let index else {
+                    break
+                }
+                state.reminds[index] = remind
+                
             case .deleteRemind(let indexSet):
                 state.reminds.remove(atOffsets: indexSet)
                 

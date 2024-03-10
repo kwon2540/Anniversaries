@@ -48,6 +48,7 @@ public struct RemindScheduler {
         case timeTapped
 
         case remindApplied(Remind)
+        case remindEdited(Remind)
     }
 
     public init() {}
@@ -72,11 +73,17 @@ public struct RemindScheduler {
 
             case .navigationTrailingButtonTapped:
                 return .run { [state] send in
-                    let remind = Remind(date: state.selectedDate, isRepeat: state.isRepeat)
-                    await send(.remindApplied(remind))
+                    let remind = Remind(id: state.id, date: state.selectedDate, isRepeat: state.isRepeat)
+
+                    switch state.mode {
+                    case .add:
+                        await send(.remindApplied(remind))
+                    case .edit:
+                        await send(.remindEdited(remind))
+                    }
                 }
 
-            case .remindApplied:
+            case .remindApplied, .remindEdited:
                 return .run { _ in
                     await dismiss()
                 }
