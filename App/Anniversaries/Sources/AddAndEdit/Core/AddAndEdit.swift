@@ -14,6 +14,14 @@ import RemindScheduler
 
 @Reducer
 public struct AddAndEdit {
+    @Reducer(state: .equatable)
+    public enum Destination {
+        case remind(RemindScheduler)
+        case alert(AlertState<Alert>)
+        
+        public enum Alert: Equatable { }
+    }
+
     @ObservableState
     public struct State: Equatable {
         public enum Mode: Equatable {
@@ -193,9 +201,7 @@ public struct AddAndEdit {
             }
             return .none
         }
-        .ifLet(\.$destination, action: \.destination) {
-            Destination()
-        }
+        .ifLet(\.$destination, action: \.destination)
     }
 }
 
@@ -232,30 +238,6 @@ extension AddAndEdit {
                 content: notificationContent,
                 trigger: trigger
             )
-        }
-    }
-}
-
-// MARK: - Destination
-extension AddAndEdit {
-    @Reducer
-    public struct Destination {
-        public enum State: Equatable {
-            case remind(RemindScheduler.State)
-            case alert(AlertState<Action.Alert>)
-        }
-        
-        public enum Action {
-            public enum Alert: Equatable {
-            }
-            case alert(Alert)
-            case remind(RemindScheduler.Action)
-        }
-        
-        public var body: some ReducerOf<Destination> {
-            Scope(state: \.remind, action: \.remind) {
-                RemindScheduler()
-            }
         }
     }
 }

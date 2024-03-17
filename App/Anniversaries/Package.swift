@@ -22,7 +22,7 @@ let package = Package(
         .library(name: "UserNotificationClient", targets: ["UserNotificationClient"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.7.2"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.9.2"),
         .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
     ],
     targets: [

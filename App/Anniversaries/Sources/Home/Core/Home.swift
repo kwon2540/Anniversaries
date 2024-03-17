@@ -15,6 +15,18 @@ import License
 
 @Reducer
 public struct Home {
+    @Reducer(state: .equatable)
+    public enum Destination {
+        case add(AddAndEdit)
+        case detail(Detail)
+        case license(License)
+        case alert(AlertState<Alert>)
+        
+        public enum Alert: Equatable {
+            case onDismissed
+        }
+    }
+    
     @ObservableState
     public struct State: Equatable {
         public init() {}
@@ -153,37 +165,6 @@ public struct Home {
             }
             return .none
         }
-        .ifLet(\.$destination, action: \.destination) {
-            Destination()
-        }
-    }
-}
-
-// MARK: Destination
-extension Home {
-    @Reducer
-    public struct Destination {
-        public enum State: Equatable {
-            case add(AddAndEdit.State)
-            case detail(Detail.State)
-            case license(License.State)
-            case alert(AlertState<Action.Alert>)
-        }
-        
-        public enum Action {
-            public enum Alert: Equatable {
-                case onDismissed
-            }
-            case add(AddAndEdit.Action)
-            case detail(Detail.Action)
-            case license(License.Action)
-            case alert(Alert)
-        }
-        
-        public var body: some ReducerOf<Self> {
-            Scope(state: \.add, action: \.add, child: AddAndEdit.init)
-            Scope(state: \.detail, action: \.detail, child: Detail.init)
-            Scope(state: \.license, action: \.license, child: License.init)
-        }
+        .ifLet(\.$destination, action: \.destination)
     }
 }
