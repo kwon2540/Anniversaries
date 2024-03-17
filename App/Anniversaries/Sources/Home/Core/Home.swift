@@ -11,6 +11,7 @@ import Foundation
 import SwiftDataClient
 import UserDefaultsClient
 import SwiftUI
+import License
 
 @Reducer
 public struct Home {
@@ -40,6 +41,7 @@ public struct Home {
         case sortByButtonTapped(Sort.Kind)
         case sortOrderButtonTapped(Sort.Order)
         case addButtonTapped
+        case licenseButtonTapped
         case anniversaryTapped(Anniversary)
         case onDeleteAnniversary(Anniversary)
         case deleteAnniversary(Result<Void, Error>)
@@ -104,6 +106,9 @@ public struct Home {
                 
             case .addButtonTapped:
                 state.destination = .add(.init(mode: .add))
+            
+            case .licenseButtonTapped:
+                state.destination = .license(.init())
                 
             case .anniversaryTapped(let anniversary):
                 state.destination = .detail(.init(anniversary: anniversary))
@@ -161,6 +166,7 @@ extension Home {
         public enum State: Equatable {
             case add(AddAndEdit.State)
             case detail(Detail.State)
+            case license(License.State)
             case alert(AlertState<Action.Alert>)
         }
         
@@ -170,12 +176,14 @@ extension Home {
             }
             case add(AddAndEdit.Action)
             case detail(Detail.Action)
+            case license(License.Action)
             case alert(Alert)
         }
         
         public var body: some ReducerOf<Self> {
             Scope(state: \.add, action: \.add, child: AddAndEdit.init)
             Scope(state: \.detail, action: \.detail, child: Detail.init)
+            Scope(state: \.license, action: \.license, child: License.init)
         }
     }
 }

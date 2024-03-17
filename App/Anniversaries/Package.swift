@@ -59,6 +59,7 @@ let package = Package(
                 "AppUI",
                 "AddAndEdit",
                 "Detail",
+                "License",
                 "SwiftDataClient",
                 "UserDefaultsClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
