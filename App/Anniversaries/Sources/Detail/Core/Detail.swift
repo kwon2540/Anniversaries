@@ -10,6 +10,11 @@ import SwiftDataClient
 
 @Reducer
 public struct Detail {
+    @Reducer(state: .equatable)
+    public enum Destination {
+        case edit(AddAndEdit)
+    }
+    
     @ObservableState @dynamicMemberLookup
     public struct State: Equatable {
         public init(anniversary: Anniversary) {
@@ -48,25 +53,6 @@ public struct Detail {
             
             return .none
         }
-        .ifLet(\.$destination, action: \.destination) {
-            Destination()
-        }
-    }
-}
-
-extension Detail {
-    @Reducer
-    public struct Destination {
-        public enum State: Equatable {
-            case edit(AddAndEdit.State)
-        }
-        
-        public enum Action {
-            case edit(AddAndEdit.Action)
-        }
-        
-        public var body: some ReducerOf<Self> {
-            Scope(state: \.edit, action: \.edit, child: AddAndEdit.init)
-        }
+        .ifLet(\.$destination, action: \.destination)
     }
 }
