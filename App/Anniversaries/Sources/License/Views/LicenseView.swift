@@ -34,7 +34,6 @@ public struct LicenseView: View {
                 }
             }
             .navigationTitle(#localized("License"))
-            .onAppear { store.send(.onAppear) }
         }
     }
 }
