@@ -34,6 +34,16 @@ public struct LicenseView: View {
                 }
             }
             .navigationTitle(#localized("License"))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        store.send(.closeButtonTapped)
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .tint(Color.black)
+                }
+            }
         }
     }
 }
