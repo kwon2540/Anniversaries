@@ -75,17 +75,3 @@ struct LicensePlugin: BuildToolPlugin {
         return outputDirectory.appending("Licenses+Generated.swift")
     }
 }
-
-/*
- .target(
-             name: "DebugMenu",
-             dependencies: [
-                 "HomeFeature",
-             ],
-             plugins: [.plugin(name: "BuildDatePlugin")]
-         ),
-         .plugin(
-             name: "BuildDatePlugin",
-             capability: .buildTool()
-         )
- */

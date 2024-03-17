@@ -12,9 +12,7 @@ public struct License {
         public init() { }
     }
     
-    public enum Action {
-        
-    }
+    public enum Action { }
     
     public init() { }
     
