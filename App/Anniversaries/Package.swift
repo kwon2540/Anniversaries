@@ -59,9 +59,20 @@ let package = Package(
                 "AppUI",
                 "AddAndEdit",
                 "Detail",
+                "License",
                 "SwiftDataClient",
                 "UserDefaultsClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "License",
+            dependencies: [
+                "AppUI",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
+            plugins: [
+                .plugin(name: "LicensePlugin")
             ]
         ),
         .target(
@@ -129,5 +140,9 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
+        .plugin(
+            name: "LicensePlugin",
+            capability: .buildTool()
+        )
     ]
 )

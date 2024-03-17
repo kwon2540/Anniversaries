@@ -438,6 +438,29 @@
         }
       }
     },
+    "License" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "License"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンス"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이센스"
+          }
+        }
+      }
+    },
     "Memo" : {
       "extractionState" : "manual",
       "localizations" : {

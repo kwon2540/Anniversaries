@@ -4,6 +4,7 @@
 
 import AddAndEdit
 import Detail
+import License
 import AppUI
 import ComposableArchitecture
 import CoreKit
@@ -97,6 +98,10 @@ public struct HomeView: View {
                 item: $store.scope(state: \.destination?.detail, action: \.destination.detail),
                 destination: DetailView.init(store:)
             )
+            .sheet(
+                item: $store.scope(state: \.destination?.license, action: \.destination.license),
+                content: LicenseView.init(store:)
+            )
             .alert(
                 $store.scope(state: \.destination?.alert, action: \.destination.alert)
             )
@@ -131,6 +136,12 @@ public struct HomeView: View {
                 }
             } label: {
                 Label(#localized("Sort By"), systemImage: "arrow.up.arrow.down")
+            }
+            
+            Button {
+                store.send(.licenseButtonTapped, animation: .default)
+            } label: {
+                Text(#localized("License"))
             }
             
         } label: {
