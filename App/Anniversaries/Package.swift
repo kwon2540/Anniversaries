@@ -129,5 +129,9 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
+        .plugin(
+            name: "LicensePlugin",
+            capability: .buildTool()
+        )
     ]
 )
