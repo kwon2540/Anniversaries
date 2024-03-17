@@ -10,15 +10,22 @@ public struct License {
     @ObservableState
     public struct State: Equatable {
         public init() { }
+        var licenses: [LicensePlugin.License] = []
     }
     
-    public enum Action { }
+    public enum Action { 
+        case onAppear
+    }
     
     public init() { }
     
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
-            return .none
+            switch action {
+            case .onAppear:
+                state.licenses = LicensePlugin.licenses
+                return .none
+            }
         }
     }
 }

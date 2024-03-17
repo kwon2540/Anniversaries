@@ -11,13 +11,12 @@ public struct LicenseView: View {
         self.store = store
     }
     
-    @State private var selectedLicense: LicensePlugin.License?
     @Bindable private var store: StoreOf<License>
     
     public var body: some View {
         NavigationStack {
             List {
-                ForEach(LicensePlugin.licenses) { license in
+                ForEach(store.licenses) { license in
                     NavigationLink {
                         Group {
                             if let licenseText = license.licenseText {
@@ -35,6 +34,7 @@ public struct LicenseView: View {
                 }
             }
             .navigationTitle(#localized("License"))
+            .onAppear { store.send(.onAppear) }
         }
     }
 }
