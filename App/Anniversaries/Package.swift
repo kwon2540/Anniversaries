@@ -65,6 +65,16 @@ let package = Package(
             ]
         ),
         .target(
+            name: "License",
+            dependencies: [
+                "AppUI",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
+            plugins: [
+                .plugin(name: "LicensePlugin")
+            ]
+        ),
+        .target(
             name: "UserDefaultsClient",
             dependencies: [
                 "CoreKit",
