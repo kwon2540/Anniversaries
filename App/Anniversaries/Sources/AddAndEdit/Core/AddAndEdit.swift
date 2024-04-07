@@ -91,6 +91,7 @@ public struct AddAndEdit {
     }
     
     public enum Action: BindableAction {
+        @CasePathable
         public enum Delegate {
             case saveAnniversarySuccessful(Anniversary)
         }
@@ -177,8 +178,7 @@ public struct AddAndEdit {
                     await dismiss()
                 }
                 
-            case .saveAnniversaries(.failure(let error)):
-                assertionFailure(error.localizedDescription)
+            case .saveAnniversaries(.failure):
                 state.destination = .alert(
                     AlertState(title: TextState(#localized("Failed to save data")))
                 )
