@@ -30,6 +30,7 @@ public struct Detail {
         var anniversary: Anniversary
     }
     
+    @CasePathable
     public enum Action {
         case destination(PresentationAction<Destination.Action>)
         

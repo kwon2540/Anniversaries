@@ -150,6 +150,13 @@ let package = Package(
                 "AddAndEdit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
+        ),
+        .testTarget(
+            name: "DetailTests",
+            dependencies: [
+                "Detail",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
         )
     ]
 )
