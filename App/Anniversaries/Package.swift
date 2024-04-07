@@ -113,20 +113,6 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
-        .testTarget(
-            name: "AppMacrosTests",
-            dependencies: [
-                "AppMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-            ]
-        ),
-        .macro(
-            name: "AppMacros",
-            dependencies: [
-                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
-            ]
-        ),
         .target(
             name: "SwiftDataClient",
             dependencies: [
@@ -140,9 +126,30 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
+        .macro(
+            name: "AppMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
         .plugin(
             name: "LicensePlugin",
             capability: .buildTool()
+        ),
+        .testTarget(
+            name: "AppMacrosTests",
+            dependencies: [
+                "AppMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
+        .testTarget(
+            name: "AddAndEditTests",
+            dependencies: [
+                "AddAndEdit",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
         )
     ]
 )
