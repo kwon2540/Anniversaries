@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "20DACF7A-5B29-4FD5-AFA3-19E4641A5FE7",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "AddAndEditTests",
+        "name" : "AddAndEditTests"
+      }
+    }
+  ],
+  "version" : 1
+}
