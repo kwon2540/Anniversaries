@@ -32,12 +32,7 @@ extension DependencyValues {
 }
 
 extension AnniversaryDataClient: TestDependencyKey {
-    public static var testValue = AnniversaryDataClient(
-        insert: unimplemented(),
-        save: unimplemented(),
-        fetch: unimplemented(),
-        delete: unimplemented()
-    )
+    public static var testValue = AnniversaryDataClient.test()
 
     public static var previewValue = AnniversaryDataClient(
         insert: unimplemented(),
@@ -107,6 +102,31 @@ extension AnniversaryDataClient {
             delete: { anniversary in
                 context.delete(anniversary)
             }
+        )
+    }
+    
+    private static func test() -> AnniversaryDataClient {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: Anniversary.self, configurations: config)
+        let context = ModelContext(container)
+        
+        // Note: For test to work, at least one model should be inserted so that the context is used.
+        context.insert(
+            Anniversary(
+                id: .init(),
+                kind: .others,
+                othersTitle: "",
+                name: "", 
+                date: .now,
+                reminds: [],
+                memo: "")
+        )
+
+        return AnniversaryDataClient(
+            insert: unimplemented("\(Self.self).insert"),
+            save: unimplemented("\(Self.self).save"),
+            fetch: unimplemented("\(Self.self).fetch"),
+            delete: unimplemented("\(Self.self).delete")
         )
     }
 }
