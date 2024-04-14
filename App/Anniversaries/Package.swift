@@ -18,6 +18,7 @@ let package = Package(
         .library(name: "AddAndEdit", targets: ["AddAndEdit"]),
         .library(name: "Detail", targets: ["Detail"]),
         .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
+        .library(name: "License", targets: ["License"]),
         .library(name: "SwiftDataClient", targets: ["SwiftDataClient"]),
         .library(name: "UserNotificationClient", targets: ["UserNotificationClient"]),
     ],
@@ -113,20 +114,6 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
-        .testTarget(
-            name: "AppMacrosTests",
-            dependencies: [
-                "AppMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-            ]
-        ),
-        .macro(
-            name: "AppMacros",
-            dependencies: [
-                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
-            ]
-        ),
         .target(
             name: "SwiftDataClient",
             dependencies: [
@@ -140,9 +127,58 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
+        .macro(
+            name: "AppMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
         .plugin(
             name: "LicensePlugin",
             capability: .buildTool()
+        ),
+        .testTarget(
+            name: "AppMacrosTests",
+            dependencies: [
+                "AppMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
+        .testTarget(
+            name: "AddAndEditTests",
+            dependencies: [
+                "AddAndEdit",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .testTarget(
+            name: "DetailTests",
+            dependencies: [
+                "Detail",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .testTarget(
+            name: "HomeTests",
+            dependencies: [
+                "Home",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .testTarget(
+            name: "LicenseTests",
+            dependencies: [
+                "License",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .testTarget(
+            name: "RemindSchedulerTests",
+            dependencies: [
+                "RemindScheduler",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
         )
     ]
 )

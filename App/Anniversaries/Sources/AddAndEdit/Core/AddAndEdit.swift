@@ -51,7 +51,7 @@ public struct AddAndEdit {
         var selectedKind: AnniversaryKind = .birth
         var othersTitle = ""
         var name = ""
-        var date: Date = .now
+        var date: Date = Calendar.current.startOfDay(for: .now)
         var memo = ""
         var focusedField: Field? = .name
         
@@ -91,6 +91,7 @@ public struct AddAndEdit {
     }
     
     public enum Action: BindableAction {
+        @CasePathable
         public enum Delegate {
             case saveAnniversarySuccessful(Anniversary)
         }
@@ -177,16 +178,15 @@ public struct AddAndEdit {
                     await dismiss()
                 }
                 
-            case .saveAnniversaries(.failure(let error)):
-                assertionFailure(error.localizedDescription)
+            case .saveAnniversaries(.failure):
                 state.destination = .alert(
                     AlertState(title: TextState(#localized("Failed to save data")))
                 )
                 
-            case .destination(.presented(.remind(.remindApplied(let remind)))):
+            case .destination(.presented(.remind(.delegate(.remindApplied(let remind))))):
                 state.reminds.append(remind)
                 
-            case .destination(.presented(.remind(.remindEdited(let remind)))):
+            case .destination(.presented(.remind(.delegate(.remindEdited(let remind))))):
                 let index = state.reminds.firstIndex { $0.id == remind.id }
                 guard let index else {
                     break
