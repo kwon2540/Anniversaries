@@ -16,4 +16,7 @@
    <FileRef
       location = "group:Anniversaries/Tests/DetailTests/Detail.xctestplan">
    </FileRef>
+   <FileRef
+      location = "group:Anniversaries/Tests/HomeTests/Home.xctestplan">
+   </FileRef>
 </Workspace>

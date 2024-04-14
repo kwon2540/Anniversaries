@@ -91,8 +91,7 @@ public struct Home {
                 
                 return .send(.sortAnniversaries)
                 
-            case .anniversariesResponse(.failure(let error)):
-                assertionFailure(error.localizedDescription)
+            case .anniversariesResponse(.failure):
                 state.destination = .alert(
                     AlertState(title: TextState(#localized("Failed to load anniversary")))
                 )
