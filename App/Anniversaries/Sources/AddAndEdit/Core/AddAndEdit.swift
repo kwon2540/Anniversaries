@@ -183,10 +183,10 @@ public struct AddAndEdit {
                     AlertState(title: TextState(#localized("Failed to save data")))
                 )
                 
-            case .destination(.presented(.remind(.remindApplied(let remind)))):
+            case .destination(.presented(.remind(.delegate(.remindApplied(let remind))))):
                 state.reminds.append(remind)
                 
-            case .destination(.presented(.remind(.remindEdited(let remind)))):
+            case .destination(.presented(.remind(.delegate(.remindEdited(let remind))))):
                 let index = state.reminds.firstIndex { $0.id == remind.id }
                 guard let index else {
                     break

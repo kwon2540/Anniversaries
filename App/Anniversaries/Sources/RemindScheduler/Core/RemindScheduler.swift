@@ -41,14 +41,17 @@ public struct RemindScheduler {
     }
 
     public enum Action: BindableAction {
+        @CasePathable
+        public enum Delegate {
+            case remindApplied(Remind)
+            case remindEdited(Remind)
+        }
         case binding(BindingAction<State>)
+        case delegate(Delegate)
         case cancelButtonTapped
         case navigationTrailingButtonTapped
         case dateTapped
         case timeTapped
-
-        case remindApplied(Remind)
-        case remindEdited(Remind)
     }
 
     public init() {}
@@ -74,27 +77,23 @@ public struct RemindScheduler {
             case .navigationTrailingButtonTapped:
                 return .run { [state] send in
                     let remind = Remind(id: state.id, date: state.selectedDate, isRepeat: state.isRepeat)
-
+                    await dismiss()
+                    
                     switch state.mode {
                     case .add:
-                        await send(.remindApplied(remind))
+                        await send(.delegate(.remindApplied(remind)))
                     case .edit:
-                        await send(.remindEdited(remind))
+                        await send(.delegate(.remindEdited(remind)))
                     }
                 }
-
-            case .remindApplied, .remindEdited:
-                return .run { _ in
-                    await dismiss()
-                }
-
+                
             case .dateTapped:
                 state.isDateExpanded.toggle()
 
             case .timeTapped:
                 state.isTimeExpanded.toggle()
 
-            case .binding:
+            case .binding, .delegate:
                 break
             }
             return .none
