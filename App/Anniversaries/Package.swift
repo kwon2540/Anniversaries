@@ -165,12 +165,18 @@ let package = Package(
                 "Home",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
-        )
-        ,
+        ),
         .testTarget(
             name: "LicenseTests",
             dependencies: [
                 "License",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .testTarget(
+            name: "RemindSchedulerTests",
+            dependencies: [
+                "RemindScheduler",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         )
