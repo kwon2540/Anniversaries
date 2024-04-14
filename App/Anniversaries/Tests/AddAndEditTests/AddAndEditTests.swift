@@ -13,6 +13,8 @@ import AppUI
 
 @MainActor
 final class AddAndEditTests: XCTestCase {
+    let container = try! ModelContainer(for: Anniversary.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+    
     func test_Binding_SelectedKind() async {
         let store = TestStore(initialState: AddAndEdit.State(mode: .add)) {
             AddAndEdit()
@@ -164,6 +166,46 @@ final class AddAndEditTests: XCTestCase {
         }
         await store.send(.deleteRemind(deleteIndexSet)) {
             $0.reminds.remove(atOffsets: deleteIndexSet)
+        }
+    }
+    
+    func test_Delegate_RemindApplied() async {
+        let remind = Remind(id: UUID(), date: .now, isRepeat: true)
+        let store = TestStore(initialState: AddAndEdit.State(mode: .add)) {
+            AddAndEdit()
+        }
+        
+        await store.send(.addRemindButtonTapped) {
+            $0.destination = .remind(.init(anniversaryDate: .now))
+        }
+        
+        await store.send(.destination(.presented(.remind(.delegate(.remindApplied(remind)))))) {
+            var reminds = $0.reminds
+            reminds.append(remind)
+            $0.reminds = reminds
+        }
+    }
+    
+    func test_Delegate_RemindEdited() async {
+        let index = 0
+        let uuid = UUID()
+        let remind = Remind(id: uuid, date: .now, isRepeat: true)
+        var reminds: [Remind] = []
+        reminds.insert(remind, at: index)
+        
+        let anniversary = Anniversary(id: UUID(), kind: .birth, othersTitle: "", name: "", date: .now, reminds: reminds, memo: "")
+        let store = TestStore(initialState: AddAndEdit.State(mode: .edit(anniversary))) {
+            AddAndEdit()
+        }
+        
+        await store.send(.remindTapped(remind)) {
+            $0.destination = .remind(.init(remind: remind))
+        }
+        
+        let editedRemind = Remind(id: uuid, date: .now, isRepeat: false)
+        
+        await store.send(.destination(.presented(.remind(.delegate(.remindEdited(editedRemind)))))) {
+            $0.reminds[index] = editedRemind
         }
     }
 }
