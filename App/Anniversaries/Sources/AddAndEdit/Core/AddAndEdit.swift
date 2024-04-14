@@ -51,7 +51,7 @@ public struct AddAndEdit {
         var selectedKind: AnniversaryKind = .birth
         var othersTitle = ""
         var name = ""
-        var date: Date = .now
+        var date: Date = Calendar.current.startOfDay(for: .now)
         var memo = ""
         var focusedField: Field? = .name
         
