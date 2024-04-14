@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "4BFD50C1-E113-497D-A578-69ADD7BDB490",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "LicenseTests",
+        "name" : "LicenseTests"
+      }
+    }
+  ],
+  "version" : 1
+}

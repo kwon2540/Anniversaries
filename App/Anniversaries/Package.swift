@@ -18,6 +18,7 @@ let package = Package(
         .library(name: "AddAndEdit", targets: ["AddAndEdit"]),
         .library(name: "Detail", targets: ["Detail"]),
         .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
+        .library(name: "License", targets: ["License"]),
         .library(name: "SwiftDataClient", targets: ["SwiftDataClient"]),
         .library(name: "UserNotificationClient", targets: ["UserNotificationClient"]),
     ],
@@ -157,10 +158,19 @@ let package = Package(
                 "Detail",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
-        ),.testTarget(
+        ),
+        .testTarget(
             name: "HomeTests",
             dependencies: [
                 "Home",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        )
+        ,
+        .testTarget(
+            name: "LicenseTests",
+            dependencies: [
+                "License",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         )
