@@ -151,15 +151,23 @@ public struct Home {
                 )
                 
             case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))),
+                
                     .destination(.presented(.detail(.destination(.presented(.edit(.delegate(.saveAnniversarySuccessful))))))):
+                
                 return .send(.fetchAnniversaries)
                 
             case .destination(.presented(.alert(.onDismissed))):
+                
                 // Clearing grouped anniversary, so that view will re-render
                 state.groupedAnniversariesList = []
+                
                 return .send(.fetchAnniversaries)
                 
             case .binding, .destination, .onAppear:
+                let a: String? = nil
+                if let a = a {
+                    let b = a
+                }
                 break
             }
             return .none
