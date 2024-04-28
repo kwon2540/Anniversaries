@@ -19,6 +19,7 @@ let package = Package(
         .library(name: "Detail", targets: ["Detail"]),
         .library(name: "RemindScheduler", targets: ["RemindScheduler"]),
         .library(name: "License", targets: ["License"]),
+        .library(name: "AppWidget", targets: ["AppWidget"]),
         .library(name: "SwiftDataClient", targets: ["SwiftDataClient"]),
         .library(name: "UserNotificationClient", targets: ["UserNotificationClient"]),
     ],
@@ -74,6 +75,13 @@ let package = Package(
             ],
             plugins: [
                 .plugin(name: "LicensePlugin")
+            ]
+        ),
+        .target(
+            name: "AppWidget",
+            dependencies: [
+                "CoreKit",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
