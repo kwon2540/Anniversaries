@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>others</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="others">
+            <rect id="Rectangle" x="0" y="0" width="500" height="500"></rect>
+            <rect id="Rectangle" stroke="#000000" stroke-width="16" stroke-linejoin="round" x="55" y="102" width="390" height="339" rx="16"></rect>
+            <line x1="148" y1="67" x2="147.5" y2="140.559524" id="Line" stroke="#000000" stroke-width="20" stroke-linecap="round"></line>
+            <line x1="250" y1="67" x2="249.5" y2="140.559524" id="Line-Copy" stroke="#000000" stroke-width="20" stroke-linecap="round"></line>
+            <line x1="352" y1="67" x2="351.5" y2="140.559524" id="Line-Copy-2" stroke="#000000" stroke-width="20" stroke-linecap="round"></line>
+            <polygon id="Star" fill="#000000" points="249 341 190.221475 371.901699 201.447174 306.45085 153.894348 260.098301 219.610737 250.54915 249 191 278.389263 250.54915 344.105652 260.098301 296.552826 306.45085 307.778525 371.901699"></polygon>
+        </g>
+    </g>
+</svg>

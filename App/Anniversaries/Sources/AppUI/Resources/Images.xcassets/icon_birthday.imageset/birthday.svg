@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>birthday</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="birthday">
+            <g id="Group-Copy">
+                <rect id="Rectangle" x="0" y="0" width="500" height="500"></rect>
+                <rect id="Rectangle" stroke="#000000" stroke-width="16" stroke-linejoin="round" x="55" y="102" width="390" height="339" rx="16"></rect>
+                <line x1="148" y1="67" x2="147.5" y2="140.559524" id="Line" stroke="#000000" stroke-width="20" stroke-linecap="round"></line>
+                <line x1="250" y1="67" x2="249.5" y2="140.559524" id="Line-Copy" stroke="#000000" stroke-width="20" stroke-linecap="round"></line>
+                <line x1="352" y1="67" x2="351.5" y2="140.559524" id="Line-Copy-2" stroke="#000000" stroke-width="20" stroke-linecap="round"></line>
+            </g>
+            <g id="Group" transform="translate(143.5, 182)">
+                <path d="M94.7304766,42.1426762 C96.1230833,40.9010199 96.243866,38.7673873 95.0008856,37.3767682 C92.588386,34.6787873 91.2602268,31.2067401 91.2602268,27.5992313 C91.2602268,19.6947547 97.2538439,11.4428483 106.000225,7.09907646 C114.746607,11.4423983 120.740224,19.6943046 120.740224,27.5992313 C120.740224,31.2067401 119.411614,34.6787873 116.999565,37.3767682 C115.756134,38.7669372 115.876917,40.9010199 117.269523,42.1422262 C118.661229,43.3834324 120.798362,43.2632721 122.041793,41.8726531 C125.561618,37.9361661 127.5,32.8673822 127.5,27.5992313 C127.5,16.6925477 119.215567,5.45913608 107.353623,0.282342944 C106.490567,-0.0943393003 105.509433,-0.0938892618 104.646377,0.282342944 C92.7844326,5.45913608 84.5,16.6920976 84.5,27.5987812 C84.5,32.8669322 86.4383824,37.9357161 89.9582071,41.8722031 C90.6256669,42.619717 91.5509166,43.0004496 92.4802224,43 C93.2815346,43 94.0860016,42.7173754 94.7304766,42.1426762 Z" id="Path" fill="#000000" fill-rule="nonzero"></path>
+                <rect id="Rectangle" fill="#000000" x="18.5" y="89" width="176" height="123" rx="16"></rect>
+                <rect id="Rectangle" fill="#000000" x="95.5" y="46" width="21" height="61" rx="8"></rect>
+                <polyline id="Line-2" stroke="#000000" stroke-width="6" stroke-linecap="round" points="4.27391478e-16 213.5 152.502278 213.5 212 213.5"></polyline>
+                <rect id="Rectangle" fill="#000000" x="18.5" y="171" width="176" height="45"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
