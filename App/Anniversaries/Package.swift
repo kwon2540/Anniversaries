@@ -81,6 +81,8 @@ let package = Package(
             name: "AppWidget",
             dependencies: [
                 "CoreKit",
+                "AppUI",
+                "SwiftDataClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
