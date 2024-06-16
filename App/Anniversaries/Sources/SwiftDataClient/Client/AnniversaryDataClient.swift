@@ -119,7 +119,8 @@ extension AnniversaryDataClient {
                 name: "", 
                 date: .now,
                 reminds: [],
-                memo: "")
+                memo: ""
+            )
         )
 
         return AnniversaryDataClient(

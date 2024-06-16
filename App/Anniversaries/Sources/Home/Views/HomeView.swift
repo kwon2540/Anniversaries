@@ -105,7 +105,6 @@ public struct HomeView: View {
             .alert(
                 $store.scope(state: \.destination?.alert, action: \.destination.alert)
             )
-            .modelContainer(anniversaryContainer)
         }
     }
 
