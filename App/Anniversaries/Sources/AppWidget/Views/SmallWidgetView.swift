@@ -21,7 +21,7 @@ struct SmallWidgetView: View {
                         Text(entry.targetDate.daysRemaining)
                             .font(.system(size: 60, weight: .bold))
                             .minimumScaleFactor(0.5)
-                        Text("日前")
+                        Text("日後")
                     }
                 }
                 

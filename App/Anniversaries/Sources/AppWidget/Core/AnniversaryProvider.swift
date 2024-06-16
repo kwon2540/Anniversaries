@@ -15,7 +15,8 @@ struct AnniversaryProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (AnniversaryEntry) -> ()) {
-        completion(createNearestAnniversaryEntry(refreshDate: .now))
+        let placeholderAnniversary = AnniversaryEntry(date: .now, kind: .birth, title: "", name: "John AppleSeed", targetDate: .now + 604800, isEmpty: false)
+        completion(placeholderAnniversary)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<AnniversaryEntry>) -> ()) {
