@@ -24,6 +24,6 @@ public struct AnniversaryWidget: Widget {
 #Preview(as: .systemSmall) {
     AnniversaryWidget()
 } timeline: {
-    AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed", targetDate: .now, isEmpty: false)
-    AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed Jr", targetDate: .now, isEmpty: false)
+    AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed", anniversaryDate: .now, isEmpty: false)
+    AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed Jr", anniversaryDate: .now, isEmpty: false)
 }

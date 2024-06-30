@@ -24,7 +24,7 @@ struct RectangularWidgetView: View {
                 }
                 VStack(alignment: .center) {
                     Text(entry.name)
-                    Text(entry.targetDate.formatted(date: .abbreviated, time: .omitted))
+                    Text(entry.anniversaryDate.formatted(date: .abbreviated, time: .omitted))
                 }
                 .frame(maxWidth: .infinity)
                 .minimumScaleFactor(0.5)
@@ -34,6 +34,6 @@ struct RectangularWidgetView: View {
 }
 
 #Preview {
-    RectangularWidgetView(entry: AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed", targetDate: .now, isEmpty: false))
+    RectangularWidgetView(entry: AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed", anniversaryDate: .now, isEmpty: false))
 }
 

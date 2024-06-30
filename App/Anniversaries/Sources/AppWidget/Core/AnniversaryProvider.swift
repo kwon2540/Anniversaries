@@ -11,11 +11,11 @@ struct AnniversaryProvider: TimelineProvider {
     @Dependency(\.anniversaryDataClient) var anniversaryDataClient
     
     func placeholder(in context: Context) -> AnniversaryEntry {
-        return AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed", targetDate: Date(timeIntervalSince1970: 0), isEmpty: false)
+        return AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed", anniversaryDate: Date(timeIntervalSince1970: 0), isEmpty: false)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (AnniversaryEntry) -> ()) {
-        let placeholderAnniversary = AnniversaryEntry(date: .now, kind: .birth, title: "", name: "John AppleSeed", targetDate: .now + 604800, isEmpty: false)
+        let placeholderAnniversary = AnniversaryEntry(date: .now, kind: .birth, title: "", name: "John AppleSeed", anniversaryDate: .now + 604800, isEmpty: false)
         completion(placeholderAnniversary)
     }
 
@@ -38,7 +38,7 @@ extension AnniversaryProvider {
         guard let anniversaries = try? anniversaryDataClient.fetch(),
               anniversaries.count > 0,
               let nearestAnniversary = nearestAnniversary(from: anniversaries) else {
-            return AnniversaryEntry(date: .now, kind: .birth, title: "", name: "", targetDate: .now, isEmpty: true)
+            return AnniversaryEntry(date: .now, kind: .birth, title: "", name: "", anniversaryDate: .now, isEmpty: true)
         }
         
         return AnniversaryEntry(date: refreshDate, anniversary: nearestAnniversary)

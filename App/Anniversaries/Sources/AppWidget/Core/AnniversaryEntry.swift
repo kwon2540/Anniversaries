@@ -8,11 +8,12 @@ import WidgetKit
 import CoreKit
 
 struct AnniversaryEntry: TimelineEntry {
+    /// The date for WidgetKit to render a widget.
     var date: Date
     var kind: AnniversaryKind
     var title: String
     var name: String
-    var targetDate: Date
+    var anniversaryDate: Date
     var isEmpty: Bool
     
     var imageName: String {
@@ -30,7 +31,7 @@ extension AnniversaryEntry {
         self.kind = anniversary.kind
         self.title = anniversary.kind == .others ? anniversary.othersTitle : anniversary.kind.title
         self.name = anniversary.name
-        self.targetDate = anniversary.date
+        self.anniversaryDate = anniversary.date
         self.isEmpty = false
     }
 }

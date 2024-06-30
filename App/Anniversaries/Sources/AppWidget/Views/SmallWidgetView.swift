@@ -40,5 +40,5 @@ struct SmallWidgetView: View {
 }
 
 #Preview {
-    SmallWidgetView(entry: AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed", targetDate: .now, isEmpty: false))
+    SmallWidgetView(entry: AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed", anniversaryDate: .now, isEmpty: false))
 }
