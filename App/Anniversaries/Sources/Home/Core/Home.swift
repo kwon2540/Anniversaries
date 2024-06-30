@@ -12,6 +12,7 @@ import SwiftDataClient
 import UserDefaultsClient
 import SwiftUI
 import License
+import WidgetCenterClient
 
 @Reducer
 public struct Home {
@@ -64,6 +65,7 @@ public struct Home {
     @Dependency(\.userDefaultsClient) private var userDefaultClient
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
     @Dependency(\.continuousClock) private var clock
+    @Dependency(\.widgetCenterClient) private var widgetCenterClient
     
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -139,6 +141,7 @@ public struct Home {
                 }
                 
             case .deleteAnniversary(.success):
+                widgetCenterClient.reloadAllTimelines()
                 return .send(.fetchAnniversaries)
                 
             case .deleteAnniversary(.failure):
@@ -152,6 +155,7 @@ public struct Home {
                 
             case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))),
                     .destination(.presented(.detail(.destination(.presented(.edit(.delegate(.saveAnniversarySuccessful))))))):
+                widgetCenterClient.reloadAllTimelines()
                 return .send(.fetchAnniversaries)
                 
             case .destination(.presented(.alert(.onDismissed))):
