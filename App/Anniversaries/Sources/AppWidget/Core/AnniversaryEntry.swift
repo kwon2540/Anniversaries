@@ -6,6 +6,7 @@ import Foundation
 import SwiftDataClient
 import WidgetKit
 import CoreKit
+import AppUI
 
 struct AnniversaryEntry: TimelineEntry {
     /// The date for WidgetKit to render a widget.
@@ -23,6 +24,10 @@ struct AnniversaryEntry: TimelineEntry {
         case .others: "icon_others"
         }
     }
+    
+    var daysRemaining: String {
+        anniversaryDate.hasSameMonthAndDayAsToday ? #localized("Today") : anniversaryDate.nearestFutureDate.daysRemaining
+    }
 }
 
 extension AnniversaryEntry {
@@ -33,15 +38,5 @@ extension AnniversaryEntry {
         self.name = anniversary.name
         self.anniversaryDate = anniversary.date
         self.isEmpty = false
-    }
-}
-
-extension Date {
-    var daysRemaining: String {
-        let calendar = Calendar.current
-        let now = calendar.startOfDay(for: .now)
-        let targetDate = calendar.startOfDay(for: self)
-        let components = calendar.dateComponents([.day], from: now, to: targetDate)
-        return String(components.day ?? 0)
     }
 }
