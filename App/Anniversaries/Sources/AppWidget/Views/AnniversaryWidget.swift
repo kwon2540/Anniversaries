@@ -4,6 +4,7 @@
 
 import WidgetKit
 import SwiftUI
+import AppUI
 
 public struct AnniversaryWidget: Widget {
     public init() { }
@@ -15,8 +16,8 @@ public struct AnniversaryWidget: Widget {
             WidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName(#localized("Nearest Anniversary"))
+        .description(#localized("Displays the nearest anniversary."))
         .supportedFamilies([.systemSmall, .accessoryRectangular])
     }
 }
