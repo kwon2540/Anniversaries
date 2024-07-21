@@ -24,12 +24,16 @@ struct SmallWidgetView: View {
                             .minimumScaleFactor(0.5)
                         if !entry.anniversaryDate.hasSameMonthAndDayAsToday {
                             Text(#localized("Days Left"))
+                                .font(.system(size: 10))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
                         }
                     }
                 }
                 
                 VStack {
                     Text(entry.name)
+                        .lineLimit(1)
                         .bold()
                 
                     Text(entry.anniversaryDate.formatted(.widgetDate))
