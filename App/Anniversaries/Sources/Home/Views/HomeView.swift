@@ -105,6 +105,9 @@ public struct HomeView: View {
             .alert(
                 $store.scope(state: \.destination?.alert, action: \.destination.alert)
             )
+            .onOpenURL { id in
+                store.send(.widgetTapped(id: id.absoluteString))
+            }
         }
     }
 

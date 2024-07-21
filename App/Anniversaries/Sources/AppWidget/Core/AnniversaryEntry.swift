@@ -11,6 +11,7 @@ import AppUI
 struct AnniversaryEntry: TimelineEntry {
     /// The date for WidgetKit to render a widget.
     var date: Date
+    var id: String = ""
     var kind: AnniversaryKind
     var title: String
     var name: String
@@ -33,6 +34,7 @@ struct AnniversaryEntry: TimelineEntry {
 extension AnniversaryEntry {
     init(date: Date, anniversary: Anniversary) {
         self.date = date
+        self.id = anniversary.id.uuidString
         self.kind = anniversary.kind
         self.title = anniversary.kind == .others ? anniversary.othersTitle : anniversary.kind.title
         self.name = anniversary.name

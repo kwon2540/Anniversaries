@@ -13,8 +13,10 @@ struct WidgetEntryView : View {
         switch family {
         case .systemSmall:
             SmallWidgetView(entry: entry)
+                .widgetURL(URL(string: entry.id))
         case .accessoryRectangular:
             RectangularWidgetView(entry: entry)
+                .widgetURL(URL(string: entry.id))
         default:
             EmptyView()
         }

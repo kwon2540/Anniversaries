@@ -58,6 +58,8 @@ public struct Home {
         case anniversaryTapped(Anniversary)
         case onDeleteAnniversary(Anniversary)
         case deleteAnniversary(Result<Void, Error>)
+        case widgetTapped(id: String)
+        case queryAnniversary(Result<Anniversary, Error>)
     }
     
     public init() {}
@@ -151,6 +153,25 @@ public struct Home {
                     } actions: {
                         ButtonState(action: .onDismissed) { TextState(#localized("OK")) }
                     }
+                )
+                
+            case .widgetTapped(let id):
+                return .run { send in
+                    await send(
+                        .queryAnniversary(
+                            Result {
+                                try anniversaryDataClient.query(id)
+                            }
+                        )
+                    )
+                }
+                
+            case .queryAnniversary(.success(let anniversary)):
+                state.destination = .detail(.init(anniversary: anniversary))
+                
+            case .queryAnniversary(.failure):
+                state.destination = .alert(
+                    AlertState(title: TextState(#localized("Failed to load anniversary")))
                 )
                 
             case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))),
