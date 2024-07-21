@@ -32,12 +32,10 @@ struct RectangularWidgetView: View {
                 }
                 VStack(alignment: .center) {
                     Text(entry.name)
-                        .font(.system(size: 20))
-                        .bold()
                     Text(entry.anniversaryDate.formatted(.widgetDate))
-                        .font(.system(size: 20))
-                        .bold()
                 }
+                .font(.system(size: 20))
+                .bold()
                 .frame(maxWidth: .infinity)
                 .minimumScaleFactor(0.5)
             }
