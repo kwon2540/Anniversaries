@@ -12,6 +12,7 @@ import SwiftDataClient
 import UserDefaultsClient
 import SwiftUI
 import License
+import WidgetCenterClient
 
 @Reducer
 public struct Home {
@@ -57,6 +58,8 @@ public struct Home {
         case anniversaryTapped(Anniversary)
         case onDeleteAnniversary(Anniversary)
         case deleteAnniversary(Result<Void, Error>)
+        case widgetTapped(id: String)
+        case queryAnniversary(Result<Anniversary, Error>)
     }
     
     public init() {}
@@ -64,6 +67,7 @@ public struct Home {
     @Dependency(\.userDefaultsClient) private var userDefaultClient
     @Dependency(\.anniversaryDataClient) private var anniversaryDataClient
     @Dependency(\.continuousClock) private var clock
+    @Dependency(\.widgetCenterClient) private var widgetCenterClient
     
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -139,6 +143,7 @@ public struct Home {
                 }
                 
             case .deleteAnniversary(.success):
+                widgetCenterClient.reloadAllTimelines()
                 return .send(.fetchAnniversaries)
                 
             case .deleteAnniversary(.failure):
@@ -150,8 +155,28 @@ public struct Home {
                     }
                 )
                 
+            case .widgetTapped(let id):
+                return .run { send in
+                    await send(
+                        .queryAnniversary(
+                            Result {
+                                try anniversaryDataClient.query(id)
+                            }
+                        )
+                    )
+                }
+                
+            case .queryAnniversary(.success(let anniversary)):
+                state.destination = .detail(.init(anniversary: anniversary))
+                
+            case .queryAnniversary(.failure):
+                state.destination = .alert(
+                    AlertState(title: TextState(#localized("Failed to load anniversary")))
+                )
+                
             case .destination(.presented(.add(.delegate(.saveAnniversarySuccessful)))),
                     .destination(.presented(.detail(.destination(.presented(.edit(.delegate(.saveAnniversarySuccessful))))))):
+                widgetCenterClient.reloadAllTimelines()
                 return .send(.fetchAnniversaries)
                 
             case .destination(.presented(.alert(.onDismissed))):

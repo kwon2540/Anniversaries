@@ -6,6 +6,7 @@ import SwiftData
 import CoreKit
 import Dependencies
 import Foundation
+import SwiftUI
 
 /// ModelContainer for Anniversary
 public var anniversaryContainer = {
@@ -19,6 +20,7 @@ public struct AnniversaryDataClient {
     public var insert: (Anniversary) -> Void
     public var save: () throws -> Void
     public var fetch: () throws -> [Anniversary]
+    public var query: (String) throws -> Anniversary
     public var delete: (Anniversary) -> Void
 }
 
@@ -77,6 +79,17 @@ extension AnniversaryDataClient: TestDependencyKey {
                 )
             ]
         },
+        query: { _ in
+            Anniversary(
+                id: UUID(),
+                kind: .birth,
+                othersTitle: "",
+                name: "Test Data",
+                date: .now,
+                reminds: [],
+                memo: "Test Memo"
+            )
+        },
         delete: unimplemented()
     )
 }
@@ -98,7 +111,21 @@ extension AnniversaryDataClient {
             },
             fetch: {
                 try context.fetch(FetchDescriptor<Anniversary>())
-            }, 
+            },
+            query: { id in
+                struct QueryError: Error { }
+                
+                guard let uuid = UUID(uuidString: id),
+                      let anniversary = try context.fetch(
+                        FetchDescriptor<Anniversary>(
+                            predicate: #Predicate<Anniversary> { $0.id == uuid }
+                        )
+                      ).first else {
+                    throw QueryError()
+                }
+                
+                return anniversary
+            },
             delete: { anniversary in
                 context.delete(anniversary)
             }
@@ -119,13 +146,15 @@ extension AnniversaryDataClient {
                 name: "", 
                 date: .now,
                 reminds: [],
-                memo: "")
+                memo: ""
+            )
         )
 
         return AnniversaryDataClient(
             insert: unimplemented("\(Self.self).insert"),
             save: unimplemented("\(Self.self).save"),
             fetch: unimplemented("\(Self.self).fetch"),
+            query: unimplemented("\(Self.self).query"),
             delete: unimplemented("\(Self.self).delete")
         )
     }
