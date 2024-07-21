@@ -41,7 +41,7 @@ public struct LicenseView: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
-                    .tint(Color.black)
+                    .tint(#color("#000000"))
                 }
             }
         }
