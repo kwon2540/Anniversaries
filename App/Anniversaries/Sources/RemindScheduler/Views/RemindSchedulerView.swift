@@ -79,7 +79,7 @@ public struct RemindSchedulerView: View {
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(#localized("Date"))
-                        .foregroundStyle(.black)
+                        .foregroundStyle(#color("#000000"))
                     
                     Text(description)
                         .font(.caption)
@@ -106,7 +106,7 @@ public struct RemindSchedulerView: View {
                     
                     VStack(alignment: .leading, spacing: 2) {
                         Text(#localized("Time"))
-                            .foregroundStyle(.black)
+                            .foregroundStyle(#color("#000000"))
                         if isCustomTime {
                             Text(description)
                                 .font(.caption)

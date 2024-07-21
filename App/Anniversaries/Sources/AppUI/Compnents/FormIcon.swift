@@ -22,7 +22,7 @@ public struct FormIcon: View {
                     .resizable()
                     .scaledToFit()
                     .padding(5)
-                    .foregroundColor(.white)
+                    .foregroundColor(#color("#ffffff"))
             }
     }
 }

@@ -71,7 +71,7 @@ struct AddAndEditContentView: View {
                             }
                         }
                     }
-                    .tint(.black)
+                    .tint(#color("#000000"))
                 }
                 .onDelete { indexSet in
                     store.send(.deleteRemind(indexSet))

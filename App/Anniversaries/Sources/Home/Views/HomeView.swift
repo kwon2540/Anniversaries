@@ -66,7 +66,7 @@ public struct HomeView: View {
                     } header: {
                         Text(groupedAnniversaries.key)
                             .font(.title2)
-                            .foregroundStyle(Color.black)
+                            .foregroundStyle(#color("#000000"))
                             .padding(.leading, -16)
                     }
                     .textCase(nil)
@@ -148,7 +148,7 @@ public struct HomeView: View {
             
         } label: {
             Image(systemName: "ellipsis.circle")
-                .foregroundColor(#color("black"))
+                .foregroundColor(#color("#000000"))
         }
     }
     
@@ -168,7 +168,7 @@ public struct HomeView: View {
                 store.send(.addButtonTapped)
             } label: {
                 Image(systemName: "square.and.pencil")
-                    .foregroundColor(#color("black"))
+                    .foregroundColor(#color("#000000"))
             }
             .buttonStyle(.plain)
         }
@@ -212,7 +212,7 @@ private struct Item: View {
                     }
                 }
             }
-            .foregroundStyle(Color.black)
+            .foregroundStyle(#color("#000000"))
             .lineLimit(1)
         }
     }
@@ -227,14 +227,14 @@ private struct Item: View {
         Text(anniversary.date.formatted(date: .numeric, time: .omitted))
             .font(.subheadline)
             .fontWeight(.semibold)
-            .foregroundStyle(Color.gray)
+            .foregroundStyle(#color("#aaaaaa"))
     }
     
     private var reminds: some View {
         HStack(alignment: .firstTextBaseline) {
             Text("\(#localized("Remind")): ")
                 .bold()
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(#color("#aaaaaa"))
             +
             Text(anniversary.remindDate)
         }
@@ -245,7 +245,7 @@ private struct Item: View {
         HStack(alignment: .firstTextBaseline) {
             Text("\(#localized("Memo")): ")
                 .bold()
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(#color("#aaaaaa"))
             +
             Text(anniversary.memo)
         }
@@ -264,7 +264,7 @@ private struct Item: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(.caption)
             .bold()
-            .foregroundStyle(Color.gray)
+            .foregroundStyle(#color("#aaaaaa"))
     }
 }
 
