@@ -36,6 +36,10 @@ extension Date {
 private extension Date {
     init(dateComponents: DateComponents) {
         let calendar = dateComponents.calendar ?? Calendar.current
-        self = calendar.date(from: dateComponents)!
+        if let date = calendar.date(from: dateComponents) {
+            self = date
+        } else {
+            fatalError("Invalid date components")
+        }
     }
 }
