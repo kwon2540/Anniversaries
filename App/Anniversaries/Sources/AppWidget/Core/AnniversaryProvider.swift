@@ -10,12 +10,14 @@ struct AnniversaryProvider: TimelineProvider {
     
     @Dependency(\.anniversaryDataClient) var anniversaryDataClient
     
+    // Loading the data
     func placeholder(in context: Context) -> AnniversaryEntry {
-        return AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John Appleseed", anniversaryDate: Date(timeIntervalSince1970: 0), isEmpty: false)
+        return AnniversaryEntry(date: .now, kind: .others, title: "", name: "", anniversaryDate: .now, isEmpty: true)
     }
 
+    // Used for preview
     func getSnapshot(in context: Context, completion: @escaping (AnniversaryEntry) -> ()) {
-        let placeholderAnniversary = AnniversaryEntry(date: .now, kind: .birth, title: "", name: "John AppleSeed", anniversaryDate: .now + 604800, isEmpty: false)
+        let placeholderAnniversary = AnniversaryEntry(date: .now, kind: .birth, title: "Birthday", name: "John AppleSeed", anniversaryDate: .now + 604800, isEmpty: false)
         completion(placeholderAnniversary)
     }
 
