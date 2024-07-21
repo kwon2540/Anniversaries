@@ -148,7 +148,7 @@ public struct HomeView: View {
             
         } label: {
             Image(systemName: "ellipsis.circle")
-                .foregroundColor(#color("black"))
+                .foregroundColor(#color("#000000"))
         }
     }
     
@@ -168,7 +168,7 @@ public struct HomeView: View {
                 store.send(.addButtonTapped)
             } label: {
                 Image(systemName: "square.and.pencil")
-                    .foregroundColor(#color("black"))
+                    .foregroundColor(#color("#000000"))
             }
             .buttonStyle(.plain)
         }
