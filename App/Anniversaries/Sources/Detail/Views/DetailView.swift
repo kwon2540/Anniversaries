@@ -56,6 +56,15 @@ public struct DetailView: View {
                     Text(store.memo)
                 }
             }
+            
+            Section {
+                Button(role: .destructive) {
+                    store.send(.deleteButtonTapped)
+                } label: {
+                    Text(#localized("Delete"))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+            }
         }
         .padding(.top, -16)
         .navigationTitle("Detail")
