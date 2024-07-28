@@ -72,7 +72,6 @@ public struct HomeView: View {
                     .textCase(nil)
                 }
             }
-            .disabled(store.editMode == .active)
             .navigationTitle(#localized("Anniversaries"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

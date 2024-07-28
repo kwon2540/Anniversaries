@@ -126,6 +126,7 @@ public struct Home {
                 state.destination = .license(.init())
                 
             case .anniversaryTapped(let anniversary):
+                guard state.editMode == .inactive else { break }
                 state.destination = .detail(.init(anniversary: anniversary))
                 
             case .onDeleteAnniversary(let anniversary):
