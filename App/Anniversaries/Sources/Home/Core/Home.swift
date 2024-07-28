@@ -184,6 +184,9 @@ public struct Home {
                 state.groupedAnniversariesList = []
                 return .send(.fetchAnniversaries)
                 
+            case .destination(.presented(.detail(.delegate(.deleteAnniversarySuccessful)))):
+                return .send(.fetchAnniversaries)
+                
             case .binding, .destination, .onAppear:
                 break
             }
