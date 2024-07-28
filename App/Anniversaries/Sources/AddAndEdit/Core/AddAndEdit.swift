@@ -103,7 +103,7 @@ public struct AddAndEdit {
         case addRemindButtonTapped
         case remindTapped(Remind)
         case deleteRemind(IndexSet)
-        case saveAnniversaries(Result<Void, Error>)
+        case saveAnniversaries(Result<Anniversary, Error>)
         case delegate(Delegate)
     }
     
@@ -137,7 +137,8 @@ public struct AddAndEdit {
                                     try await userNotificationsClient.add(request)
                                 }
                                 anniversaryDataClient.insert(anniversary)
-                                return try anniversaryDataClient.save()
+                                try anniversaryDataClient.save()
+                                return anniversary
                             }
                         )
                     )
@@ -160,7 +161,8 @@ public struct AddAndEdit {
                                 // FIXME: SwiftDataのUpdateがTCAで利用できるようになったら対応する
                                 anniversaryDataClient.delete(originalAnniversary)
                                 anniversaryDataClient.insert(anniversary)
-                                return try anniversaryDataClient.save()
+                                try anniversaryDataClient.save()
+                                return anniversary
                             }
                         )
                     )
@@ -172,8 +174,8 @@ public struct AddAndEdit {
             case .remindTapped(let remind):
                 state.destination = .remind(.init(remind: remind))
                 
-            case .saveAnniversaries(.success):
-                return .run { [anniversary = state.resultAnniversary] send in
+            case .saveAnniversaries(.success(let anniversary)):
+                return .run { send in
                     await send(.delegate(.saveAnniversarySuccessful(anniversary)))
                     await dismiss()
                 }
