@@ -26,7 +26,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.12.1"),
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "510.0.3"),
     ],
     targets: [
         .target(
