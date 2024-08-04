@@ -25,7 +25,7 @@ let package = Package(
         .library(name: "WidgetCenterClient", targets: ["WidgetCenterClient"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.9.2"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.12.1"),
         .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
     ],
     targets: [
