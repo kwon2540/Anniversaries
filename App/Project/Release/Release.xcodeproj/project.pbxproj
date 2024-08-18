@@ -46,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		336FEF972C71731B0098F9B6 /* Release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Release.entitlements; sourceTree = "<group>"; };
+		33D8DDF82C717CD90089D7AD /* AnniversaryWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnniversaryWidgetExtension.entitlements; sourceTree = "<group>"; };
 		6473439729A1C4B10032EFF2 /* Release.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Release.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseApp.swift; sourceTree = "<group>"; };
 		6473439E29A1C4B30032EFF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -84,6 +85,7 @@
 		6473438E29A1C4B10032EFF2 = {
 			isa = PBXGroup;
 			children = (
+				33D8DDF82C717CD90089D7AD /* AnniversaryWidgetExtension.entitlements */,
 				6473439929A1C4B10032EFF2 /* Release */,
 				D165662A2BDDE3DF001420D4 /* AnniversaryWidget */,
 				6473439829A1C4B10032EFF2 /* Products */,
@@ -466,6 +468,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = AnniversaryWidgetExtension.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -502,6 +505,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = AnniversaryWidgetExtension.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
