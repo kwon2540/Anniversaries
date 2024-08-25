@@ -7,8 +7,8 @@ import Foundation
 
 // MARK: Dependency (testValue, previewValue)
 extension UserNotificationClient: TestDependencyKey {
-    public static let testValue = Self()
     public static let previewValue = Self.noop
+    public static let testValue = Self()
 }
 
 extension UserNotificationClient {
