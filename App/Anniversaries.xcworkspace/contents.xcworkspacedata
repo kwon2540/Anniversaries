@@ -25,4 +25,7 @@
    <FileRef
       location = "group:Anniversaries/Tests/RemindSchedulerTests/RemindScheduler.xctestplan">
    </FileRef>
+   <FileRef
+      location = "group:Project/Development/Development.xctestplan">
+   </FileRef>
 </Workspace>
