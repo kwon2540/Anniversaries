@@ -3,11 +3,8 @@
 //
 
 import Dependencies
+import DependenciesMacros
 import WidgetKit
-
-public struct WidgetCenterClient {
-    public var reloadAllTimelines: () -> Void
-}
 
 extension DependencyValues {
     public var widgetCenterClient: WidgetCenterClient {
@@ -16,13 +13,7 @@ extension DependencyValues {
     }
 }
 
-// MARK: Dependency (testValue, previewValue)
-extension WidgetCenterClient: TestDependencyKey {
-    public static let testValue = Self(
-        reloadAllTimelines: unimplemented()
-    )
-
-    public static let previewValue = Self(
-        reloadAllTimelines: {  }
-    )
+@DependencyClient
+public struct WidgetCenterClient {
+    public var reloadAllTimelines: () -> Void = { }
 }

@@ -3,15 +3,22 @@
 //
 
 import Foundation
-import ComposableArchitecture
 import UserNotifications
 import Dependencies
-import XCTestDynamicOverlay
+import DependenciesMacros
 
+extension DependencyValues {
+    public var userNotificationsClient: UserNotificationClient {
+        get { self[UserNotificationClient.self] }
+        set { self[UserNotificationClient.self] = newValue }
+    }
+}
+
+@DependencyClient
 public struct UserNotificationClient {
     public var add: @Sendable (UNNotificationRequest) async throws -> Void
-    public var delegate: @Sendable () -> AsyncStream<DelegateEvent>
-    public var getNotificationSettings: @Sendable () async -> Notification.Settings
+    public var delegate: @Sendable () -> AsyncStream<DelegateEvent> = { .never }
+    public var getNotificationSettings: @Sendable () async -> Notification.Settings = { .init(authorizationStatus: .authorized) }
     public var removeDeliveredNotificationsWithIdentifiers: @Sendable ([String]) async -> Void
     public var removePendingNotificationRequestsWithIdentifiers: @Sendable ([String]) async -> Void
     public var requestAuthorization: @Sendable (UNAuthorizationOptions) async throws -> Bool
@@ -59,41 +66,4 @@ public struct UserNotificationClient {
             }
         }
     }
-}
-
-
-extension DependencyValues {
-    public var userNotificationsClient: UserNotificationClient {
-        get { self[UserNotificationClient.self] }
-        set { self[UserNotificationClient.self] = newValue }
-    }
-}
-
-extension UserNotificationClient: TestDependencyKey {
-    public static let previewValue = Self.noop
-    
-    public static let testValue = Self(
-        add: unimplemented("\(Self.self).add"),
-        delegate: unimplemented("\(Self.self).delegate", placeholder: .finished),
-        getNotificationSettings: unimplemented(
-            "\(Self.self).getNotificationSettings",
-            placeholder: Notification.Settings(authorizationStatus: .notDetermined)
-        ),
-        removeDeliveredNotificationsWithIdentifiers: unimplemented(
-            "\(Self.self).removeDeliveredNotificationsWithIdentifiers"),
-        removePendingNotificationRequestsWithIdentifiers: unimplemented(
-            "\(Self.self).removePendingNotificationRequestsWithIdentifiers"),
-        requestAuthorization: unimplemented("\(Self.self).requestAuthorization")
-    )
-}
-
-extension UserNotificationClient {
-    public static let noop = Self(
-        add: { _ in },
-        delegate: { AsyncStream { _ in } },
-        getNotificationSettings: { Notification.Settings(authorizationStatus: .notDetermined) },
-        removeDeliveredNotificationsWithIdentifiers: { _ in },
-        removePendingNotificationRequestsWithIdentifiers: { _ in },
-        requestAuthorization: { _ in false }
-    )
 }

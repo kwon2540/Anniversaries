@@ -5,6 +5,7 @@
 import SwiftData
 import CoreKit
 import Dependencies
+import DependenciesMacros
 import Foundation
 import SwiftUI
 
@@ -16,16 +17,6 @@ public var anniversaryContainer = {
     return container
 }()
 
-public struct AnniversaryDataClient {
-    public var insert: (Anniversary) -> Void
-    public var save: () throws -> Void
-    public var fetch: () throws -> [Anniversary]
-    public var query: (String) throws -> Anniversary
-    public var delete: (Anniversary) -> Void
-}
-
-// MARK: - Register as a DependencyValue
-
 extension DependencyValues {
     public var anniversaryDataClient: AnniversaryDataClient {
         get { self[AnniversaryDataClient.self] }
@@ -33,130 +24,12 @@ extension DependencyValues {
     }
 }
 
-extension AnniversaryDataClient: TestDependencyKey {
-    public static var testValue = AnniversaryDataClient.test()
-
-    public static var previewValue = AnniversaryDataClient(
-        insert: unimplemented(),
-        save: unimplemented(),
-        fetch: {
-            [
-                Anniversary(
-                    id: UUID(),
-                    kind: .birth,
-                    othersTitle: "",
-                    name: "Test Data",
-                    date: .now,
-                    reminds: [],
-                    memo: "Test Memo"
-                ),
-                Anniversary(
-                    id: UUID(),
-                    kind: .others,
-                    othersTitle: "Test Title",
-                    name: "Test Data",
-                    date: .now,
-                    reminds: [],
-                    memo: "Test Memo"
-                ),
-                Anniversary(
-                    id: UUID(),
-                    kind: .birth,
-                    othersTitle: "",
-                    name: "Test Data",
-                    date: .now,
-                    reminds: [.init(id: UUID(), date: .now, isRepeat: false)],
-                    memo: "Test Memo"
-                ),
-                Anniversary(
-                    id: UUID(),
-                    kind: .birth,
-                    othersTitle: "",
-                    name: "Test Data",
-                    date: .now,
-                    reminds: [],
-                    memo: ""
-                )
-            ]
-        },
-        query: { _ in
-            Anniversary(
-                id: UUID(),
-                kind: .birth,
-                othersTitle: "",
-                name: "Test Data",
-                date: .now,
-                reminds: [],
-                memo: "Test Memo"
-            )
-        },
-        delete: unimplemented()
-    )
-}
-
-extension AnniversaryDataClient: DependencyKey {
-    public static var liveValue = AnniversaryDataClient.live()
-}
-
-extension AnniversaryDataClient {
-    private static func live() -> AnniversaryDataClient {
-        let context = ModelContext(anniversaryContainer)
-
-        return AnniversaryDataClient(
-            insert: { anniversary in
-                context.insert(anniversary)
-            },
-            save: {
-                try context.save()
-            },
-            fetch: {
-                try context.fetch(FetchDescriptor<Anniversary>())
-            },
-            query: { id in
-                struct QueryError: Error { }
-                
-                guard let uuid = UUID(uuidString: id),
-                      let anniversary = try context.fetch(
-                        FetchDescriptor<Anniversary>(
-                            predicate: #Predicate<Anniversary> { $0.id == uuid }
-                        )
-                      ).first else {
-                    throw QueryError()
-                }
-                
-                return anniversary
-            },
-            delete: { anniversary in
-                context.delete(anniversary)
-            }
-        )
-    }
-    
-    private static func test() -> AnniversaryDataClient {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try! ModelContainer(for: Anniversary.self, configurations: config)
-        let context = ModelContext(container)
-        
-        // Note: For test to work, at least one model should be inserted so that the context is used.
-        context.insert(
-            Anniversary(
-                id: .init(),
-                kind: .others,
-                othersTitle: "",
-                name: "", 
-                date: .now,
-                reminds: [],
-                memo: ""
-            )
-        )
-
-        return AnniversaryDataClient(
-            insert: unimplemented("\(Self.self).insert"),
-            save: unimplemented("\(Self.self).save"),
-            fetch: unimplemented("\(Self.self).fetch"),
-            query: unimplemented("\(Self.self).query"),
-            delete: unimplemented("\(Self.self).delete")
-        )
-    }
+@DependencyClient
+public struct AnniversaryDataClient {
+    public var insert: (Anniversary) -> Void
+    public var save: () throws -> Void
+    public var fetch: () throws -> [Anniversary]
+    public var query: (String) throws -> Anniversary
+    public var delete: (Anniversary) -> Void
 }
 

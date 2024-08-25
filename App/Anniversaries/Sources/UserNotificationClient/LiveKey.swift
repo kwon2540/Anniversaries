@@ -3,9 +3,10 @@
 //
 
 import Combine
-import ComposableArchitecture
+import Dependencies
 import UserNotifications
 
+// - MARK: Dependency (liveValue)
 extension UserNotificationClient: DependencyKey {
     public static let liveValue = Self(
         add: { try await UNUserNotificationCenter.current().add($0) },
