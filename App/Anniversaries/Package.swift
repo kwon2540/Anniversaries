@@ -116,6 +116,7 @@ let package = Package(
             name: "Detail",
             dependencies: [
                 "AddAndEdit",
+                "WidgetCenterClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
