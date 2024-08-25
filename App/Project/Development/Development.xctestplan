@@ -1,0 +1,64 @@
+{
+  "configurations" : [
+    {
+      "id" : "9FE64059-16E5-4FA6-87C3-C607EEA1601F",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Development.xcodeproj",
+      "identifier" : "3390348F29A1B5A500245388",
+      "name" : "Development"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/Anniversaries",
+        "identifier" : "AddAndEditTests",
+        "name" : "AddAndEditTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/Anniversaries",
+        "identifier" : "AppMacrosTests",
+        "name" : "AppMacrosTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/Anniversaries",
+        "identifier" : "DetailTests",
+        "name" : "DetailTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/Anniversaries",
+        "identifier" : "HomeTests",
+        "name" : "HomeTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/Anniversaries",
+        "identifier" : "LicenseTests",
+        "name" : "LicenseTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/Anniversaries",
+        "identifier" : "RemindSchedulerTests",
+        "name" : "RemindSchedulerTests"
+      }
+    }
+  ],
+  "version" : 1
+}
