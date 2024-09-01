@@ -400,7 +400,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9WKN3P3PYL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ../Shared/Info.plist;
+				INFOPLIST_FILE = ../Shared/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -438,7 +438,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9WKN3P3PYL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ../Shared/Info.plist;
+				INFOPLIST_FILE = ../Shared/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -476,8 +476,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9WKN3P3PYL;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AnniversaryWidget/Info.plist;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ../Shared/Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AnniversaryWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -513,8 +513,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9WKN3P3PYL;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AnniversaryWidget/Info.plist;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ../Shared/Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AnniversaryWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
