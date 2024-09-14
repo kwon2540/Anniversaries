@@ -32,6 +32,7 @@ public struct AddAndEdit {
         public enum Field: String {
             case title
             case name
+            case memo
         }
         
         public init(mode: Mode) {
@@ -102,6 +103,7 @@ public struct AddAndEdit {
         case doneButtonTapped
         case addRemindButtonTapped
         case remindTapped(Remind)
+        case dismissKeyboardViewTapped
         case deleteRemind(IndexSet)
         case saveAnniversaries(Result<Anniversary, Error>)
         case delegate(Delegate)
@@ -177,6 +179,9 @@ public struct AddAndEdit {
             case .remindTapped(let remind):
                 state.destination = .remind(.init(remind: remind))
                 
+            case .dismissKeyboardViewTapped:
+                state.focusedField = nil
+
             case .saveAnniversaries(.success(let anniversary)):
                 return .run { send in
                     await send(.delegate(.saveAnniversarySuccessful(anniversary)))

@@ -80,9 +80,24 @@ struct AddAndEditContentView: View {
             Section {
                 TextField(#localized("Memo"), text: $store.memo, axis: .vertical)
                     .frame(height: 100, alignment: .top)
+                    .focused($focusedField, equals: .memo)
             }
         }
         .padding(.top, -24)
         .bind($store.focusedField, to: self.$focusedField)
+        .overlay {
+            if store.focusedField != nil {
+                dismissKeyboardView
+            }
+        }
+    }
+
+    private var dismissKeyboardView: some View {
+        Color.clear
+            .contentShape(Rectangle())
+            .edgesIgnoringSafeArea(.all)
+            .onTapGesture {
+                store.send(.dismissKeyboardViewTapped)
+            }
     }
 }
