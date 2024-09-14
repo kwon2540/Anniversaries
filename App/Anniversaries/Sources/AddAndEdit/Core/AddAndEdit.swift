@@ -122,6 +122,9 @@ public struct AddAndEdit {
             case .binding(\.selectedKind) where state.selectedKind == .others:
                 state.focusedField = .title
                 
+            case .binding(\.selectedKind) where state.selectedKind != .others:
+                state.othersTitle = ""
+
             case .cancelButtonTapped:
                 return .run { _ in
                     await dismiss()
