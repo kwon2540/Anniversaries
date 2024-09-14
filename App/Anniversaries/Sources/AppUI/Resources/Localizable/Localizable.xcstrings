@@ -82,13 +82,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アニバーサリーズ"
+            "value" : "Anniversaries"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "애니버서리즈"
+            "value" : "Anniversaries"
           }
         }
       }
