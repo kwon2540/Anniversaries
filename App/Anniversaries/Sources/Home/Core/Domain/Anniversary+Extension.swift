@@ -13,7 +13,7 @@ extension Anniversary {
     }
 
     var digitsMonth: Int {
-        Int(date.formatted(.dateTime.month(.defaultDigits))) ?? 0
+        Int(date.formatted(.twoDigits)) ?? 0
     }
 
     var remindDate: String {
