@@ -24,25 +24,19 @@
         }
       }
     },
-    "%lld`s %lld" : {
+    "`s" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld`s %lld"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lldの%lld"
+            "value" : "の"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld 의  %lld"
+            "value" : "의 "
           }
         }
       }

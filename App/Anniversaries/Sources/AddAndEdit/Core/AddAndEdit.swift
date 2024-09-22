@@ -219,8 +219,8 @@ public struct AddAndEdit {
 extension AddAndEdit {
     private func createNotificationRequests(for anniversary: Anniversary) -> [UNNotificationRequest] {
         let notificationContent = UNMutableNotificationContent()
-        notificationContent.title = #localized("\(anniversary.name)`s \(anniversary.kind.title)")
         
+        notificationContent.title = "\(anniversary.name)\(#localized("`s"))\(anniversary.kind.title)"
         // Multiple Remind
         return anniversary.reminds.map { remind -> UNNotificationRequest in
             let targetDate = anniversary.date.nearestFutureDate
