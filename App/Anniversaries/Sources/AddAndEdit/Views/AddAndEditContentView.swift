@@ -80,7 +80,15 @@ struct AddAndEditContentView: View {
             Section {
                 TextField(#localized("Memo"), text: $store.memo, axis: .vertical)
                     .frame(height: 100, alignment: .top)
+                    .fixedSize(horizontal: false, vertical: true)
                     .focused($focusedField, equals: .memo)
+                    .background {
+                        Color.clear
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                focusedField = .memo
+                            }
+                    }
             }
         }
         .padding(.top, -24)
