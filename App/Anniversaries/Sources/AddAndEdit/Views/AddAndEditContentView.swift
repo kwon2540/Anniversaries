@@ -44,15 +44,17 @@ struct AddAndEditContentView: View {
             }
             Section {
                 LabeledContent(#localized("Remind")) {
-                    Button {
-                        store.send(.addRemindButtonTapped)
-                        // +タップしたらモーダルでDateとTimeとRepeatを決める画面を表示する
-                        // 全てToggleでOn/OffできるようにしてDefaultはDateはOn、TimeはOff
-                        // RepeatはDefaultはOnで下に毎年リマインドすることを案内し
-                        // 次リマインドする年月日を表示する
-                        // 全体的にRemindアプリを参考する
-                    } label: {
-                        Image(systemName: "plus")
+                    if store.reminds.count < 5 {
+                        Button {
+                            store.send(.addRemindButtonTapped)
+                            // +タップしたらモーダルでDateとTimeとRepeatを決める画面を表示する
+                            // 全てToggleでOn/OffできるようにしてDefaultはDateはOn、TimeはOff
+                            // RepeatはDefaultはOnで下に毎年リマインドすることを案内し
+                            // 次リマインドする年月日を表示する
+                            // 全体的にRemindアプリを参考する
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                     }
                 }
 
