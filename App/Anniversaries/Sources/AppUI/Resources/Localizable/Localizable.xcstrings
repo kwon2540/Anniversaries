@@ -639,6 +639,23 @@
         }
       }
     },
+    "nth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "番目の"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "번째 "
+          }
+        }
+      }
+    },
     "Others" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -183,12 +183,10 @@ private struct Item: View {
             if editMode == .inactive { chevron }
         } label: {
             VStack(spacing: 8) {
-                if !anniversary.othersTitle.isEmpty {
-                    HStack {
-                        othersTitle(anniversary.othersTitle)
-                        Spacer()
-                        date
-                    }
+                HStack {
+                    nthTitle(anniversary.nthTitle)
+                    Spacer()
+                    date
                 }
                 
                 HStack(alignment: .firstTextBaseline) {
@@ -258,7 +256,7 @@ private struct Item: View {
             .frame(height: 12)
     }
     
-    private func othersTitle(_ title: String) -> some View {
+    private func nthTitle(_ title: String) -> some View {
         Text(title)
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(.caption)
