@@ -21,6 +21,19 @@ extension Anniversary {
             .map { $0.date.formatted(.remindDate) }
             .joined(separator: " / ")
     }
+
+    var nthTitle: String {
+        let prefix: String
+        let languageCode = Locale.current.language.languageCode?.identifier
+        switch languageCode {
+        case "ko", "ja":
+            prefix = "\(String(date.nthAnniversary))\(#localized("nth"))"
+        default:
+            prefix = "\(date.nthAnniversary.ordinalString) "
+        }
+
+        return kind == .others ? prefix + othersTitle : prefix + kind.title
+    }
 }
 
 extension Array where Element == Anniversary {
@@ -69,5 +82,44 @@ extension Array where Element == Anniversary {
                 .sorted(using: KeyPathComparator(\.name, order: order == .ascending ? .forward : .reverse))
             return [GroupedAnniversaries(key: #localized("Name"), anniversaries: sortedAnniversaries)]
         }
+    }
+}
+
+private extension Int {
+    var ordinalString: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .ordinal
+        return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
+    }
+}
+
+private extension Date {
+    var nthAnniversary: Int {
+        let calendar = Calendar.current
+
+        let anniversaryDateComponents = calendar.dateComponents([.year, .month, .day], from: self)
+        let futureDateComponents = calendar.dateComponents([.year, .month, .day], from: .now)
+
+        // Calculate the difference in years between the future date and the anniversary
+        guard let anniversaryYear = anniversaryDateComponents.year,
+              let futureYear = futureDateComponents.year else {
+            return 0
+        }
+
+        var anniversary = futureYear - anniversaryYear
+
+        // If the future date is before the anniversary date in the same year, subtract one from the anniversary
+        if (futureDateComponents.month! < anniversaryDateComponents.month!) ||
+            (futureDateComponents.month == anniversaryDateComponents.month && futureDateComponents.day! < anniversaryDateComponents.day!) {
+            anniversary -= 1
+        }
+
+        // If the future date matches the anniversary date (same month and day), keep the anniversary the same
+        if futureDateComponents.month == anniversaryDateComponents.month &&
+            futureDateComponents.day == anniversaryDateComponents.day {
+            anniversary -= 1
+        }
+
+        return anniversary + 1
     }
 }
