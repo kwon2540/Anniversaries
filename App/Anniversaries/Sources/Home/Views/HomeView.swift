@@ -188,15 +188,10 @@ private struct Item: View {
                     Spacer()
                     date
                 }
-                
-                HStack(alignment: .firstTextBaseline) {
-                    name
-                    Spacer()
-                    if anniversary.othersTitle.isEmpty {
-                        date
-                    }
-                }
-                
+
+                name
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
                 if !anniversary.reminds.isEmpty || !anniversary.memo.isEmpty {
                     HStack {
                         if !anniversary.reminds.isEmpty {
