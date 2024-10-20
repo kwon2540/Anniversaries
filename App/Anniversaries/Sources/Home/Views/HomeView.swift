@@ -216,7 +216,7 @@ private struct Item: View {
     }
     
     private var date: some View {
-        Text(anniversary.date.formatted(date: .numeric, time: .omitted))
+        Text(anniversary.date.formatted(.anniversaryDate))
             .font(.subheadline)
             .fontWeight(.semibold)
             .foregroundStyle(#color("#aaaaaa"))
