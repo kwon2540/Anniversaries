@@ -38,6 +38,7 @@ struct AddAndEditContentView: View {
                 DatePicker(
                     #localized("Date"),
                     selection: $store.date,
+                    in: ...Date.now,
                     displayedComponents: [.date]
                 )
                 .datePickerStyle(.compact)

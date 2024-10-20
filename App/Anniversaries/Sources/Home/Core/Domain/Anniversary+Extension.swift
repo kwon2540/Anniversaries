@@ -23,15 +23,7 @@ extension Anniversary {
     }
 
     var nthTitle: String {
-        let prefix: String
-        let languageCode = Locale.current.language.languageCode?.identifier
-        switch languageCode {
-        case "ko", "ja":
-            prefix = "\(String(date.nthAnniversary))\(#localized("nth"))"
-        default:
-            prefix = "\(date.nthAnniversary.ordinalString) "
-        }
-
+        let prefix = "\(date.nthAnniversary.ordinalString) "
         return kind == .others ? prefix + othersTitle : prefix + kind.title
     }
 }
@@ -89,6 +81,7 @@ private extension Int {
     var ordinalString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .ordinal
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
     }
 }
