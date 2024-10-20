@@ -32,7 +32,7 @@ public struct DetailView: View {
                     Text(store.name)
                 }
                 LabeledContent(#localized("Date")) {
-                    Text(store.date.formatted(date: .numeric, time: .omitted))
+                    Text(store.date.formatted(.anniversaryDate))
                 }
             }
             if store.reminds.count > 0 {
