@@ -40,8 +40,12 @@ public struct DetailView: View {
                     Text("Remind")
                     ForEach(store.reminds, id: \.self) { remind in
                         HStack {
-                            Text(remind.date.formatted(.remindDate))
-                            
+                            if remind.isRepeat {
+                                Text(remind.date.formatted(.remindDateNoYear))
+                            } else {
+                                Text(remind.date.formatted(.remindDate))
+                            }
+
                             Spacer()
                             
                             if remind.isRepeat {
