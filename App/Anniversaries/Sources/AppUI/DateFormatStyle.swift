@@ -18,7 +18,20 @@ public enum DateFormatStyle {
             return formatStyle.format(value)
         }
     }
-    
+
+    public struct RemindDateNoYear: FormatStyle {
+        public func format(_ value: Date) -> String {
+            let formatStyle = Date.FormatStyle()
+                .month()
+                .day()
+                .weekday()
+                .hour()
+                .minute()
+
+            return formatStyle.format(value)
+        }
+    }
+
     public struct WidgetDate: FormatStyle {
         public func format(_ value: Date) -> String {
             let formatter = DateFormatter()
@@ -58,6 +71,10 @@ public enum DateFormatStyle {
 
 extension FormatStyle where Self == DateFormatStyle.RemindDate {
     public static var remindDate: DateFormatStyle.RemindDate { .init() }
+}
+
+extension FormatStyle where Self == DateFormatStyle.RemindDateNoYear {
+    public static var remindDateNoYear: DateFormatStyle.RemindDateNoYear { .init() }
 }
 
 extension FormatStyle where Self == DateFormatStyle.WidgetDate {
