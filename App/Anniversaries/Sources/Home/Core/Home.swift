@@ -97,11 +97,7 @@ public struct Home {
                     }
 
                     let nonNotifiedReminds = anniversary.reminds.filter {
-                        return if $0.isRepeat {
-                            true
-                        } else {
-                            $0.date > .now
-                        }
+                        $0.isRepeat ? true : $0.date > .now
                     }
                     return Anniversary(
                         id: anniversary.id,
