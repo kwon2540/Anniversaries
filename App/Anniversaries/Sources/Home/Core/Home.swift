@@ -91,9 +91,40 @@ public struct Home {
                 }
                 
             case .anniversariesResponse(.success(let anniversaries)):
-                state.anniversaries = anniversaries
-                
-                return .send(.sortAnniversaries)
+                let anniversariesWithNonNotifiedReminds = anniversaries.map { anniversary in
+                    guard !anniversary.reminds.isEmpty else {
+                        return anniversary
+                    }
+
+                    let nonNotifiedReminds = anniversary.reminds.filter {
+                        return if $0.isRepeat {
+                            true
+                        } else {
+                            $0.date > .now
+                        }
+                    }
+                    return Anniversary(
+                        id: anniversary.id,
+                        kind: anniversary.kind,
+                        othersTitle: anniversary.othersTitle,
+                        name: anniversary.name,
+                        date: anniversary.date,
+                        reminds: nonNotifiedReminds,
+                        memo: anniversary.memo
+                    )
+                }
+
+                state.anniversaries = anniversariesWithNonNotifiedReminds
+
+                return .run { send in
+                    try zip(anniversaries, anniversariesWithNonNotifiedReminds).forEach { (anniversary, anniversaryWithNonNotifiedReminds) in
+                        anniversaryDataClient.delete(anniversary)
+                        anniversaryDataClient.insert(anniversaryWithNonNotifiedReminds)
+                        try anniversaryDataClient.save()
+                    }
+
+                    await send(.sortAnniversaries)
+                }
                 
             case .anniversariesResponse(.failure):
                 state.destination = .alert(
