@@ -26,10 +26,10 @@ extension DependencyValues {
 
 @DependencyClient
 public struct AnniversaryDataClient {
-    public var insert: (Anniversary) -> Void
-    public var save: () throws -> Void
-    public var fetch: () throws -> [Anniversary]
-    public var query: (String) throws -> Anniversary
-    public var delete: (Anniversary) -> Void
+    public var insert: @Sendable (Anniversary) async -> Void
+    public var save: @Sendable () async throws -> Void
+    public var fetch: @Sendable () async throws -> [Anniversary]
+    public var query: @Sendable (String) async throws -> Anniversary
+    public var delete: @Sendable (Anniversary) async -> Void
 }
 

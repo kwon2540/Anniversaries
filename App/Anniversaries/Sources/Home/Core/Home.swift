@@ -84,7 +84,7 @@ public struct Home {
                     await send(
                         .anniversariesResponse(
                             Result {
-                                try anniversaryDataClient.fetch()
+                                try await anniversaryDataClient.fetch()
                             }
                         )
                     )
@@ -136,8 +136,8 @@ public struct Home {
                     await send(
                         .deleteAnniversary(
                             Result {
-                                anniversaryDataClient.delete(anniversary)
-                                return try anniversaryDataClient.save()
+                                await anniversaryDataClient.delete(anniversary)
+                                return try await anniversaryDataClient.save()
                             }
                         )
                     )
@@ -161,7 +161,7 @@ public struct Home {
                     await send(
                         .queryAnniversary(
                             Result {
-                                try anniversaryDataClient.query(id)
+                                try await anniversaryDataClient.query(id)
                             }
                         )
                     )
