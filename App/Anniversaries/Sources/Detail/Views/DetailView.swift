@@ -35,10 +35,10 @@ public struct DetailView: View {
                     Text(store.date.formatted(.anniversaryDate))
                 }
             }
-            if store.reminds.count > 0 {
+            if store.nonNotifiedReminds.count > 0 {
                 Section {
                     Text("Remind")
-                    ForEach(store.reminds, id: \.self) { remind in
+                    ForEach(store.nonNotifiedReminds, id: \.self) { remind in
                         HStack {
                             if remind.isRepeat {
                                 Text(remind.date.formatted(.remindDateNoYear))
