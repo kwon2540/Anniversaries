@@ -27,17 +27,19 @@ struct AnniversaryProvider: TimelineProvider {
             fatalError("Failed to calculate the next refresh date.")
         }
         
-        let entry = createNearestAnniversaryEntry(refreshDate: nextRefreshDate)
-        
-        let timeline = Timeline(entries: [entry], policy: .after(nextRefreshDate))
-        completion(timeline)
+        Task {
+            let entry = await createNearestAnniversaryEntry(refreshDate: nextRefreshDate)
+
+            let timeline = Timeline(entries: [entry], policy: .after(nextRefreshDate))
+            completion(timeline)
+        }
     }
 }
 
 // MARK: Database
 extension AnniversaryProvider {
-    private func createNearestAnniversaryEntry(refreshDate: Date) -> AnniversaryEntry {
-        guard let anniversaries = try? anniversaryDataClient.fetch(),
+    private func createNearestAnniversaryEntry(refreshDate: Date) async -> AnniversaryEntry {
+        guard let anniversaries = try? await anniversaryDataClient.fetch(),
               anniversaries.count > 0,
               let nearestAnniversary = nearestAnniversary(from: anniversaries) else {
             return AnniversaryEntry(date: .now, kind: .birth, title: "", name: "", anniversaryDate: .now, isEmpty: true)

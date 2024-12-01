@@ -68,8 +68,8 @@ public struct Detail {
                     await send(
                         .deleteAnniversary(
                             Result {
-                                anniversaryDataClient.delete(anniversary)
-                                return try anniversaryDataClient.save()
+                                await anniversaryDataClient.delete(anniversary)
+                                return try await anniversaryDataClient.save()
                             }
                         )
                     )

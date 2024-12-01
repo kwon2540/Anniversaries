@@ -141,8 +141,8 @@ public struct AddAndEdit {
                                 for request in notificationRequest {
                                     try await userNotificationsClient.add(request)
                                 }
-                                anniversaryDataClient.insert(anniversary)
-                                try anniversaryDataClient.save()
+                                await anniversaryDataClient.insert(anniversary)
+                                try await anniversaryDataClient.save()
                                 return anniversary
                             }
                         )
@@ -164,9 +164,9 @@ public struct AddAndEdit {
                                 }
                                 
                                 // FIXME: SwiftDataのUpdateがTCAで利用できるようになったら対応する
-                                anniversaryDataClient.delete(originalAnniversary)
-                                anniversaryDataClient.insert(anniversary)
-                                try anniversaryDataClient.save()
+                                await anniversaryDataClient.delete(originalAnniversary)
+                                await anniversaryDataClient.insert(anniversary)
+                                try await anniversaryDataClient.save()
                                 return anniversary
                             }
                         )
