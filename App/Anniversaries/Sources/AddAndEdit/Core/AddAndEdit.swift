@@ -43,7 +43,7 @@ public struct AddAndEdit {
                 self.othersTitle = anniversary.othersTitle
                 self.name = anniversary.name
                 self.date = anniversary.date
-                self.reminds = anniversary.reminds
+                self.reminds = anniversary.nonNotifiedReminds
                 self.memo = anniversary.memo
             }
         }

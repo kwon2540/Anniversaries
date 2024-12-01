@@ -192,9 +192,9 @@ private struct Item: View {
                 name
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                if !anniversary.reminds.isEmpty || !anniversary.memo.isEmpty {
+                if !anniversary.nonNotifiedReminds.isEmpty || !anniversary.memo.isEmpty {
                     HStack {
-                        if !anniversary.reminds.isEmpty {
+                        if !anniversary.nonNotifiedReminds.isEmpty {
                             TagView(type: .remind)
                         }
                         if !anniversary.memo.isEmpty {
