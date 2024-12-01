@@ -42,4 +42,13 @@ public class Anniversary: Identifiable, Equatable {
     public var date: Date
     public var reminds: [Remind]
     public var memo: String
+    public var nonNotifiedReminds: [Remind] {
+        reminds.filter {
+            if $0.isRepeat {
+                true
+            } else {
+                $0.date > .now
+            }
+        }
+    }
 }
