@@ -65,9 +65,16 @@ struct AppDelegateReducer {
             case .userNotifications(.willPresentNotification(_, let completionHandler)):
                 return .run { _ in completionHandler(.banner) }
                 
-            case .userNotifications(.didReceiveResponse(_, let completionHandler)):
-                return .run { @MainActor _ in completionHandler() }
-                
+            case .userNotifications(.didReceiveResponse(let response, let completionHandler)):
+                return .run { send in
+                    if let anniversaryID = response.notification.request.content.userInfo[UserNotificationClient.anniversaryIDKey] as? String {
+                        await send(.rootAction(.homeAction(.userNotificationTapped(id: anniversaryID))))
+                    }
+                    await MainActor.run {
+                        completionHandler()
+                    }
+                }
+
             case .rootAction, .userNotifications:
                 break
             }

@@ -7,6 +7,10 @@ import UserNotifications
 import Dependencies
 import DependenciesMacros
 
+public extension UserNotificationClient {
+    static let anniversaryIDKey = "anniversaryID"
+}
+
 extension DependencyValues {
     public var userNotificationsClient: UserNotificationClient {
         get { self[UserNotificationClient.self] }

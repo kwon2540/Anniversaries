@@ -59,6 +59,7 @@ public struct Home {
         case onDeleteAnniversary(Anniversary)
         case deleteAnniversary(Result<Void, Error>)
         case widgetTapped(id: String)
+        case userNotificationTapped(id: String)
         case queryAnniversary(Result<Anniversary, Error>)
     }
     
@@ -156,7 +157,8 @@ public struct Home {
                     }
                 )
                 
-            case .widgetTapped(let id):
+            case .widgetTapped(let id),
+                    .userNotificationTapped(let id):
                 return .run { send in
                     await send(
                         .queryAnniversary(
