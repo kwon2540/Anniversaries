@@ -234,6 +234,7 @@ extension AddAndEdit {
             let daysRemaining = dateFormatter.string(from: timeRemaining) ?? ""
             
             notificationContent.body = #localized("\(anniversary.date.formatted(date: .abbreviated, time: .omitted)) (\(daysRemaining))")
+            notificationContent.userInfo = [UserNotificationClient.anniversaryIDKey : anniversary.id.uuidString]
             // Specifying the units for notification trigger
             let components = Calendar.current.dateComponents(
                 [.calendar, .year, .month, .day, .hour, .minute],
