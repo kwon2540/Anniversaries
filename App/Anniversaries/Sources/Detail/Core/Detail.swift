@@ -19,6 +19,7 @@ public struct Detail {
         
         public enum Alert: Equatable {
             case onDismissed
+            case onDelete
         }
     }
     
@@ -64,16 +65,18 @@ public struct Detail {
                 state.destination = .edit(.init(mode: .edit(state.anniversary)))
                 
             case .deleteButtonTapped:
-                return .run { [anniversary = state.anniversary] send in
-                    await send(
-                        .deleteAnniversary(
-                            Result {
-                                await anniversaryDataClient.delete(anniversary)
-                                return try await anniversaryDataClient.save()
-                            }
-                        )
-                    )
-                }
+                state.destination = .alert(
+                    AlertState {
+                        TextState(#localized("Do you want to delete it?"))
+                    } actions: {
+                        ButtonState(role: .destructive, action: .onDelete) {
+                            TextState(#localized("Delete"))
+                        }
+                        ButtonState(role: .cancel) {
+                            TextState(#localized("Cancel"))
+                        }
+                    }
+                )
                 
             case .deleteAnniversary(.success):
                 widgetCenterClient.reloadAllTimelines()
@@ -93,7 +96,19 @@ public struct Detail {
 
             case .destination(.presented(.edit(.delegate(.saveAnniversarySuccessful(let anniversary))))):
                 state.anniversary = anniversary
-                
+
+            case .destination(.presented(.alert(.onDelete))):
+                return .run { [anniversary = state.anniversary] send in
+                    await send(
+                        .deleteAnniversary(
+                            Result {
+                                await anniversaryDataClient.delete(anniversary)
+                                return try await anniversaryDataClient.save()
+                            }
+                        )
+                    )
+                }
+
             case .destination, .delegate:
                 break
             }
