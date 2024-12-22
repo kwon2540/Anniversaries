@@ -84,6 +84,9 @@ public struct DetailView: View {
             item: $store.scope(state: \.destination?.edit, action: \.destination.edit),
             content: EditView.init
         )
+        .alert(
+            $store.scope(state: \.destination?.alert, action: \.destination.alert)
+        )
     }
 }
 
