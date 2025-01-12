@@ -36,6 +36,7 @@ let package = Package(
                 "AppFeature",
                 "UserNotificationClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk"),
             ]
         ),
         .target(
