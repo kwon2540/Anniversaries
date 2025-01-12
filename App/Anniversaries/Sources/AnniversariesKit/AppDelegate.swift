@@ -3,6 +3,7 @@
 //
 
 import AppFeature
+import FirebaseCore
 import UIKit
 import ComposableArchitecture
 import UserNotificationClient
@@ -46,6 +47,7 @@ struct AppDelegateReducer {
         Reduce { state, action in
             switch action {
             case .didFinishLaunching:
+                FirebaseApp.configure()
                 let userNotificationsEventStream = userNotificationsClient.delegate()
                 
                 return .run { send in
