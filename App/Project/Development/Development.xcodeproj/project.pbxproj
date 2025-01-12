@@ -10,6 +10,7 @@
 		3390349429A1B5A500245388 /* DevelopmentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390349329A1B5A500245388 /* DevelopmentApp.swift */; };
 		3390349829A1B5A600245388 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3390349729A1B5A600245388 /* Assets.xcassets */; };
 		3390349B29A1B5A600245388 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3390349A29A1B5A600245388 /* Preview Assets.xcassets */; };
+		33A906A62D334F4D0043AD5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33A906A52D334F4D0043AD5A /* GoogleService-Info.plist */; };
 		64D6A69D2A7F4B9200793CF1 /* AnniversariesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 64D6A69C2A7F4B9200793CF1 /* AnniversariesKit */; };
 		D165660D2BDDE093001420D4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D165660C2BDDE093001420D4 /* WidgetKit.framework */; };
 		D165660F2BDDE093001420D4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D165660E2BDDE093001420D4 /* SwiftUI.framework */; };
@@ -48,6 +49,7 @@
 		3390349329A1B5A500245388 /* DevelopmentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentApp.swift; sourceTree = "<group>"; };
 		3390349729A1B5A600245388 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3390349A29A1B5A600245388 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		33A906A52D334F4D0043AD5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		33AB557B2C951433002FA4A4 /* DevelopmentRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevelopmentRelease.entitlements; sourceTree = "<group>"; };
 		33AB557C2C951451002FA4A4 /* AnniversaryWidgetExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnniversaryWidgetExtensionRelease.entitlements; sourceTree = "<group>"; };
 		D148FD722C1E7FF600678367 /* AnniversaryWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnniversaryWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		3390349229A1B5A500245388 /* Development */ = {
 			isa = PBXGroup;
 			children = (
+				33A906A52D334F4D0043AD5A /* GoogleService-Info.plist */,
 				33AB557B2C951433002FA4A4 /* DevelopmentRelease.entitlements */,
 				D148FD732C1E801400678367 /* Development.entitlements */,
 				3390349329A1B5A500245388 /* DevelopmentApp.swift */,
@@ -153,6 +156,7 @@
 				3390348D29A1B5A500245388 /* Frameworks */,
 				3390348E29A1B5A500245388 /* Resources */,
 				D165661B2BDDE094001420D4 /* Embed Foundation Extensions */,
+				33A906A72D3351480043AD5A /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -231,6 +235,7 @@
 			files = (
 				3390349B29A1B5A600245388 /* Preview Assets.xcassets in Resources */,
 				3390349829A1B5A600245388 /* Assets.xcassets in Resources */,
+				33A906A62D334F4D0043AD5A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +248,33 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		33A906A72D3351480043AD5A /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = Crashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3390348C29A1B5A500245388 /* Sources */ = {
@@ -305,7 +337,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -411,6 +443,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anniversaries.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -449,6 +482,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anniversaries.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

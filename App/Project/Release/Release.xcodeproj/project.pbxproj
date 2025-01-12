@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33A906AA2D3352A80043AD5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33A906A92D3352A80043AD5A /* GoogleService-Info.plist */; };
 		6473439B29A1C4B10032EFF2 /* ReleaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */; };
 		6473439F29A1C4B30032EFF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6473439E29A1C4B30032EFF2 /* Assets.xcassets */; };
 		647343A229A1C4B30032EFF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 647343A129A1C4B30032EFF2 /* Preview Assets.xcassets */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		336FEF972C71731B0098F9B6 /* Release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Release.entitlements; sourceTree = "<group>"; };
+		33A906A92D3352A80043AD5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		33D8DDF82C717CD90089D7AD /* AnniversaryWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnniversaryWidgetExtension.entitlements; sourceTree = "<group>"; };
 		6473439729A1C4B10032EFF2 /* Release.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Release.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseApp.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		6473439929A1C4B10032EFF2 /* Release */ = {
 			isa = PBXGroup;
 			children = (
+				33A906A92D3352A80043AD5A /* GoogleService-Info.plist */,
 				336FEF972C71731B0098F9B6 /* Release.entitlements */,
 				6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */,
 				6473439E29A1C4B30032EFF2 /* Assets.xcassets */,
@@ -152,6 +155,7 @@
 				6473439429A1C4B10032EFF2 /* Frameworks */,
 				6473439529A1C4B10032EFF2 /* Resources */,
 				D16566352BDDE3E0001420D4 /* Embed Foundation Extensions */,
+				33A906A82D3351CA0043AD5A /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -229,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D159B36B2B9404C80030A161 /* PrivacyInfo.xcprivacy in Resources */,
+				33A906AA2D3352A80043AD5A /* GoogleService-Info.plist in Resources */,
 				647343A229A1C4B30032EFF2 /* Preview Assets.xcassets in Resources */,
 				6473439F29A1C4B30032EFF2 /* Assets.xcassets in Resources */,
 			);
@@ -243,6 +248,33 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		33A906A82D3351CA0043AD5A /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = Crashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6473439329A1C4B10032EFF2 /* Sources */ = {
@@ -305,7 +337,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -411,6 +443,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anniversaries.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -449,6 +482,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anniversaries.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
