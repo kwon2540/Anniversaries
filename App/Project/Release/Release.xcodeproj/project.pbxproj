@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33A906AA2D3352A80043AD5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33A906A92D3352A80043AD5A /* GoogleService-Info.plist */; };
 		6473439B29A1C4B10032EFF2 /* ReleaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */; };
 		6473439F29A1C4B30032EFF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6473439E29A1C4B30032EFF2 /* Assets.xcassets */; };
 		647343A229A1C4B30032EFF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 647343A129A1C4B30032EFF2 /* Preview Assets.xcassets */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		336FEF972C71731B0098F9B6 /* Release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Release.entitlements; sourceTree = "<group>"; };
+		33A906A92D3352A80043AD5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		33D8DDF82C717CD90089D7AD /* AnniversaryWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnniversaryWidgetExtension.entitlements; sourceTree = "<group>"; };
 		6473439729A1C4B10032EFF2 /* Release.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Release.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseApp.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		6473439929A1C4B10032EFF2 /* Release */ = {
 			isa = PBXGroup;
 			children = (
+				33A906A92D3352A80043AD5A /* GoogleService-Info.plist */,
 				336FEF972C71731B0098F9B6 /* Release.entitlements */,
 				6473439A29A1C4B10032EFF2 /* ReleaseApp.swift */,
 				6473439E29A1C4B30032EFF2 /* Assets.xcassets */,
@@ -229,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D159B36B2B9404C80030A161 /* PrivacyInfo.xcprivacy in Resources */,
+				33A906AA2D3352A80043AD5A /* GoogleService-Info.plist in Resources */,
 				647343A229A1C4B30032EFF2 /* Preview Assets.xcassets in Resources */,
 				6473439F29A1C4B30032EFF2 /* Assets.xcassets in Resources */,
 			);

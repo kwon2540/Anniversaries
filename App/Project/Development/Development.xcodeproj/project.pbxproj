@@ -10,6 +10,7 @@
 		3390349429A1B5A500245388 /* DevelopmentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390349329A1B5A500245388 /* DevelopmentApp.swift */; };
 		3390349829A1B5A600245388 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3390349729A1B5A600245388 /* Assets.xcassets */; };
 		3390349B29A1B5A600245388 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3390349A29A1B5A600245388 /* Preview Assets.xcassets */; };
+		33A906A62D334F4D0043AD5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33A906A52D334F4D0043AD5A /* GoogleService-Info.plist */; };
 		64D6A69D2A7F4B9200793CF1 /* AnniversariesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 64D6A69C2A7F4B9200793CF1 /* AnniversariesKit */; };
 		D165660D2BDDE093001420D4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D165660C2BDDE093001420D4 /* WidgetKit.framework */; };
 		D165660F2BDDE093001420D4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D165660E2BDDE093001420D4 /* SwiftUI.framework */; };
@@ -48,6 +49,7 @@
 		3390349329A1B5A500245388 /* DevelopmentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentApp.swift; sourceTree = "<group>"; };
 		3390349729A1B5A600245388 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3390349A29A1B5A600245388 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		33A906A52D334F4D0043AD5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		33AB557B2C951433002FA4A4 /* DevelopmentRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevelopmentRelease.entitlements; sourceTree = "<group>"; };
 		33AB557C2C951451002FA4A4 /* AnniversaryWidgetExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnniversaryWidgetExtensionRelease.entitlements; sourceTree = "<group>"; };
 		D148FD722C1E7FF600678367 /* AnniversaryWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnniversaryWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		3390349229A1B5A500245388 /* Development */ = {
 			isa = PBXGroup;
 			children = (
+				33A906A52D334F4D0043AD5A /* GoogleService-Info.plist */,
 				33AB557B2C951433002FA4A4 /* DevelopmentRelease.entitlements */,
 				D148FD732C1E801400678367 /* Development.entitlements */,
 				3390349329A1B5A500245388 /* DevelopmentApp.swift */,
@@ -231,6 +234,7 @@
 			files = (
 				3390349B29A1B5A600245388 /* Preview Assets.xcassets in Resources */,
 				3390349829A1B5A600245388 /* Assets.xcassets in Resources */,
+				33A906A62D334F4D0043AD5A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
