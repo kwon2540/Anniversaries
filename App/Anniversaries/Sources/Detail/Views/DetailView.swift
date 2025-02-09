@@ -71,7 +71,7 @@ public struct DetailView: View {
             }
         }
         .padding(.top, -16)
-        .navigationTitle("Detail")
+        .navigationTitle(#localized("Detail"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
