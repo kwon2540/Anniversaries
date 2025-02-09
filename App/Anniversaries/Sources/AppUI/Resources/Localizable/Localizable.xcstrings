@@ -27,6 +27,12 @@
     "`s" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`s"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -313,6 +319,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "내림차순"
+          }
+        }
+      }
+    },
+    "Detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "상세"
           }
         }
       }
@@ -665,6 +694,12 @@
     "nth" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nth"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",

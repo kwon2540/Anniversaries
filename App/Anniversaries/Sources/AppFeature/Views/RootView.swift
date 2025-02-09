@@ -2,6 +2,7 @@
 //  Created by Maharjan Binish on 2023/02/19.
 //
 
+import AppUI
 import ComposableArchitecture
 import Home
 import SwiftUI
@@ -15,6 +16,7 @@ public struct RootView: View {
 
     public var body: some View {
         HomeView(store: store.scope(state: \.homeState, action: \.homeAction))
+            .tint(#color("tint"))
     }
 }
 

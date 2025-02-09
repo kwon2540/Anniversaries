@@ -42,6 +42,7 @@ struct AddAndEditContentView: View {
                     displayedComponents: [.date]
                 )
                 .datePickerStyle(.compact)
+                .tint(#color("tint"))
             }
             Section {
                 LabeledContent(#localized("Remind")) {
@@ -74,7 +75,6 @@ struct AddAndEditContentView: View {
                             }
                         }
                     }
-                    .tint(#color("#000000"))
                 }
                 .onDelete { indexSet in
                     store.send(.deleteRemind(indexSet))
@@ -94,6 +94,7 @@ struct AddAndEditContentView: View {
                     }
             }
         }
+        .tint(#color("#000000"))
         .padding(.top, -24)
         .bind($store.focusedField, to: self.$focusedField)
         .overlay {
