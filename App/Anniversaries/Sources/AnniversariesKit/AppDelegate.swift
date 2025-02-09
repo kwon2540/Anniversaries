@@ -3,9 +3,11 @@
 //
 
 import AppFeature
-import FirebaseCore
-import UIKit
+import AppUI
 import ComposableArchitecture
+import FirebaseCore
+import SwiftUI
+import UIKit
 import UserNotificationClient
 
 public final class AppDelegate: NSObject, UIApplicationDelegate {
@@ -23,7 +25,11 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
     private(set) lazy var viewStore = ViewStore(store, observe: { $0 })
     
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(#color("tint"))]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(#color("tint"))]
+
         viewStore.send(.didFinishLaunching)
+
         return true
     }
 }
