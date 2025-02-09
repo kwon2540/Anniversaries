@@ -27,6 +27,12 @@
     "`s" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`s"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -320,6 +326,12 @@
     "Detail" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detail"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -682,6 +694,12 @@
     "nth" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nth"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
